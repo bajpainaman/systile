@@ -4,3 +4,6 @@
 //! `T::default()` so it can never leak into a result. On hardware these map to
 //! the vector unit, which is why they preserve tiling exactly.
 
+use crate::error::{LatticeError, Result};
+use crate::lattice::PaddedTileLattice;
+
