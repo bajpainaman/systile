@@ -182,3 +182,10 @@ fn signum_reports_sign() {
     assert!(Bf16::from_f32(0.0).signum().is_zero());
 }
 
+#[test]
+fn one_is_normal() {
+    assert!(Bf16::ONE.is_normal());
+    assert!(!Bf16::ZERO.is_normal());
+    assert!(!Bf16::INFINITY.is_normal());
+}
+
