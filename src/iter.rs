@@ -44,3 +44,10 @@ impl<T: Clone> PaddedTileLattice<T> {
     }
 }
 
+/// Iterator returned by [`PaddedTileLattice::iter_tiles`].
+pub struct TileIter<'a, T> {
+    lattice: &'a PaddedTileLattice<T>,
+    next: usize,
+    total: usize,
+}
+
