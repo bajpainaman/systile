@@ -7,3 +7,9 @@ fn symmetric_zero_point_is_zero() {
     assert_eq!(QuantParams::symmetric(1.0).zero_point, 0);
 }
 
+#[test]
+fn symmetric_max_maps_to_127() {
+    let q = QuantParams::symmetric(1.0);
+    assert_eq!(q.quantize(1.0), 127);
+}
+
