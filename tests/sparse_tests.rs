@@ -57,3 +57,8 @@ fn density_complements_sparsity() {
     assert!((l.tile_density() + l.tile_sparsity() - 1.0).abs() < 1e-9);
 }
 
+#[test]
+fn fully_dense_has_zero_sparsity() {
+    let l = PaddedTileLattice::from_dense(2, 4, &[1.0; 8], Geometry::TINY).unwrap();
+    assert_eq!(l.tile_sparsity(), 0.0);
+}
