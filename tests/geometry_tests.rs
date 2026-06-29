@@ -95,3 +95,11 @@ fn exact_shape_has_no_padding() {
     assert_eq!(s.padding_len(), 0);
 }
 
+#[test]
+fn shape_contains_logical_region_only() {
+    let s = Shape::new(3, 5, &Geometry::TPU_V);
+    assert!(s.contains(2, 4));
+    assert!(!s.contains(3, 0));
+    assert!(!s.contains(0, 5));
+}
+
