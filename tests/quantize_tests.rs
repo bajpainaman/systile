@@ -19,3 +19,9 @@ fn symmetric_negation_is_representable() {
     assert_eq!(q.quantize(-1.0), -127);
 }
 
+#[test]
+fn symmetric_zero_input_handled() {
+    let q = QuantParams::symmetric(0.0);
+    assert_eq!(q.quantize(0.0), 0);
+}
+
