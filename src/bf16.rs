@@ -13,3 +13,11 @@ use core::fmt;
 use core::iter::Sum;
 use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
+/// A brain floating point number (bfloat16).
+///
+/// The value is stored as the raw 16 bits that would occupy the high half of the
+/// corresponding `f32`.
+#[derive(Clone, Copy)]
+#[repr(transparent)]
+pub struct Bf16(u16);
+
