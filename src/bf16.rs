@@ -103,3 +103,9 @@ impl Bf16 {
         (self.0 & 0x7f80) != 0x7f80
     }
 
+    /// True if this value is exactly zero (positive or negative).
+    #[inline]
+    pub fn is_zero(self) -> bool {
+        (self.0 & 0x7fff) == 0
+    }
+
