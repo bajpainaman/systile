@@ -26,3 +26,9 @@ fn mean_is_average() {
     assert_eq!(sample().mean(), Some(3.5));
 }
 
+#[test]
+fn empty_max_is_none() {
+    let l = PaddedTileLattice::<f32>::zeroed(0, 0, Geometry::TPU_V).unwrap();
+    assert_eq!(l.max(), None);
+}
+
