@@ -83,3 +83,5 @@ impl fmt::Display for LatticeError {
 #[cfg(feature = "std")]
 impl std::error::Error for LatticeError {}
 
+/// Convenience alias for results from this crate.
+pub type Result<T> = core::result::Result<T, LatticeError>;
