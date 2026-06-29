@@ -33,3 +33,10 @@ fn wrong_buffer_length_is_rejected() {
     );
 }
 
+#[test]
+fn get_returns_logical_values() {
+    let l = sample();
+    assert_eq!(l.get(0, 0), Some(&1.0));
+    assert_eq!(l.get(1, 2), Some(&6.0));
+}
+
