@@ -64,3 +64,9 @@ impl Geometry {
         Geometry::round_up(rows, self.sublanes)
     }
 
+    /// Pad a column count up to a whole number of lane tiles.
+    #[inline]
+    pub const fn pad_cols(&self, cols: usize) -> usize {
+        Geometry::round_up(cols, self.lanes)
+    }
+
