@@ -9,3 +9,12 @@
 use crate::error::Result;
 use crate::lattice::PaddedTileLattice;
 
+/// Parameters of an affine int8 quantisation: `real = scale * (q - zero_point)`.
+#[derive(Clone, Copy, PartialEq, Debug)]
+pub struct QuantParams {
+    /// The size of one quantisation step in real units.
+    pub scale: f32,
+    /// The int8 value that maps to real zero.
+    pub zero_point: i8,
+}
+
