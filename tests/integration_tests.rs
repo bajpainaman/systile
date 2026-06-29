@@ -173,3 +173,10 @@ fn empty_lattice_to_dense_is_empty() {
     assert!(l.to_dense().is_empty());
 }
 
+#[test]
+fn single_element_matmul() {
+    let a = PaddedTileLattice::from_dense(1, 1, &[3.0], Geometry::TPU_V).unwrap();
+    let b = PaddedTileLattice::from_dense(1, 1, &[4.0], Geometry::TPU_V).unwrap();
+    assert_eq!(a.matmul(&b).unwrap().to_dense(), vec![12.0]);
+}
+
