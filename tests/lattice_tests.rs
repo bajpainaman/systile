@@ -40,3 +40,10 @@ fn get_returns_logical_values() {
     assert_eq!(l.get(1, 2), Some(&6.0));
 }
 
+#[test]
+fn get_out_of_bounds_is_none() {
+    let l = sample();
+    assert_eq!(l.get(2, 0), None);
+    assert_eq!(l.get(0, 3), None);
+}
+
