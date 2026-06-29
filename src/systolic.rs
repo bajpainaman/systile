@@ -32,3 +32,14 @@ impl Numeric for f32 {
     }
 }
 
+impl Numeric for Bf16 {
+    #[inline]
+    fn to_acc(self) -> f32 {
+        self.to_f32()
+    }
+    #[inline]
+    fn from_acc(value: f32) -> Self {
+        Bf16::from_f32(value)
+    }
+}
+
