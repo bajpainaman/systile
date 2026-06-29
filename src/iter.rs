@@ -51,3 +51,6 @@ pub struct TileIter<'a, T> {
     total: usize,
 }
 
+impl<'a, T> Iterator for TileIter<'a, T> {
+    type Item = (usize, usize, &'a [T]);
+
