@@ -54,3 +54,9 @@ fn asymmetric_maps_min_near_floor() {
     assert!((back - (-3.0)).abs() < q.scale * 2.0);
 }
 
+#[test]
+fn lattice_abs_max_finds_extreme() {
+    let l = PaddedTileLattice::from_dense(2, 2, &[-7.0, 1.0, 2.0, 3.0], Geometry::TPU_V).unwrap();
+    assert_eq!(l.abs_max(), 7.0);
+}
+
