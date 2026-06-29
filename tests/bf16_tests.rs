@@ -22,3 +22,11 @@ fn negation_flips_sign_bit() {
     assert_eq!((-Bf16::ONE).to_bits(), 0xbf80);
 }
 
+#[test]
+fn small_integers_are_exact() {
+    for i in -64..=64 {
+        let x = i as f32;
+        assert_eq!(Bf16::from_f32(x).to_f32(), x, "i={i}");
+    }
+}
+
