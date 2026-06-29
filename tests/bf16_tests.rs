@@ -38,3 +38,10 @@ fn powers_of_two_are_exact() {
     }
 }
 
+#[test]
+fn addition_matches_f32_for_exact_values() {
+    let a = Bf16::from_f32(2.0);
+    let b = Bf16::from_f32(3.0);
+    assert_eq!((a + b).to_f32(), 5.0);
+}
+
