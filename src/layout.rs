@@ -63,3 +63,9 @@ impl Layout {
         (tile_row * self.tiles_per_row + tile_col) * self.tile_len
     }
 
+    /// Number of storage tiles along the column axis.
+    #[inline]
+    pub fn tiles_per_row(&self) -> usize {
+        self.tiles_per_row
+    }
+}
