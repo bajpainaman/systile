@@ -31,3 +31,16 @@ impl QuantParams {
         }
     }
 
+    /// Derive asymmetric parameters from an observed `[min, max]` range, mapping
+    /// it onto the full `-128..=127` int8 interval.
+    pub fn asymmetric(min: f32, max: f32) -> Self {
+        let span = (max - min).max(f32::MIN_POSITIVE);
+        let scale = span / 255.0;
+        // Solve for the zero point that sends `min` to -128.
+        let zp = (-128.0 - min / scale).round().clamp(-128.0, 127.0);
+        QuantParams {
+            scale,
+            zero_point: zp as i8,
+        }
+    }
+
