@@ -1,0 +1,33 @@
+[package]
+name = "systile"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.74"
+description = "A TPU-native tiled tensor data structure: the Systolic Tile Lattice. Padding-aware, sublane/lane laid out, bf16/int8 first, with a CPU reference simulator of systolic dataflow."
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/bajpainaman/systile"
+homepage = "https://github.com/bajpainaman/systile"
+documentation = "https://docs.rs/systile"
+readme = "README.md"
+keywords = ["tpu", "tensor", "systolic", "bf16", "tiling"]
+categories = ["data-structures", "science", "hardware-support"]
+exclude = ["/.github", "/scripts"]
+
+[features]
+default = ["std"]
+std = []
+# Enable extra invariant checks on every lattice operation (slow, for debugging layouts).
+paranoid = []
+
+[lib]
+name = "systile"
+path = "src/lib.rs"
+
+[[bench]]
+name = "lattice_bench"
+harness = false
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
