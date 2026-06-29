@@ -82,3 +82,9 @@ fn padded_len_includes_padding() {
     assert_eq!(l.padded_len(), 8 * 128);
 }
 
+#[test]
+fn one_small_matrix_is_a_single_tile() {
+    let l = sample();
+    assert_eq!(l.num_tiles(), 1);
+}
+
