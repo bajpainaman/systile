@@ -44,3 +44,17 @@ a sentinel would return the sentinel (not fine). The `Mask` records exactly whic
 slots are logical, so every reduction and every dense round-trip can ignore padding
 deliberately rather than by luck.
 
+## The address map
+
+Element `(row, col)` lives at:
+
+```
+tile_index = (row / sublanes) * tiles_per_row + (col / lanes)
+offset     = tile_index * (sublanes * lanes) + (row % sublanes) * lanes + (col % lanes)
+```
+
+Tiles are visited row-major; within a tile, elements are row-major over
+`(sublane, lane)`. This is precisely the order a TPU's vector memory uses, which is
+what makes `as_storage_slice()` copy-ready. `Layout` precomputes the strides and
+also provides the inverse map, which the sparsity and padding-fill paths rely on.
+
