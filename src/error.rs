@@ -56,3 +56,27 @@ impl fmt::Debug for LatticeError {
     }
 }
 
+impl fmt::Display for LatticeError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            LatticeError::BufferLengthMismatch { expected, actual } => write!(
+                f,
+                "dense buffer length mismatch: expected {expected} elements, got {actual}"
+            ),
+            LatticeError::ZeroTileDimension => {
+                write!(f, "tile dimensions must be non-zero")
+            }
+            LatticeError::GeometryMismatch => {
+                write!(f, "operands do not share the same tile geometry")
+            }
+            LatticeError::ContractionMismatch { lhs_cols, rhs_rows } => write!(
+                f,
+                "contraction mismatch: lhs has {lhs_cols} columns but rhs has {rhs_rows} rows"
+            ),
+            LatticeError::IndexOutOfBounds { row, col } => {
+                write!(f, "index ({row}, {col}) is out of bounds")
+            }
+        }
+    }
+}
+
