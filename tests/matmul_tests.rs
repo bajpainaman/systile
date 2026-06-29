@@ -61,3 +61,16 @@ fn multi_mxu_block_matches_naive() {
     assert_eq!(c.to_dense(), naive(&a, &b, 6, 6, 6));
 }
 
+#[test]
+fn contraction_mismatch_is_rejected() {
+    let a = PaddedTileLattice::<f32>::zeroed(2, 3, Geometry::TPU_V).unwrap();
+    let b = PaddedTileLattice::<f32>::zeroed(4, 2, Geometry::TPU_V).unwrap();
+    assert_eq!(
+        a.matmul(&b).unwrap_err(),
+        LatticeError::ContractionMismatch {
+            lhs_cols: 3,
+            rhs_rows: 4
+        }
+    );
+}
+
