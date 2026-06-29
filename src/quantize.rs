@@ -51,3 +51,10 @@ impl QuantParams {
         q.clamp(-128.0, 127.0) as i8
     }
 
+    /// Dequantise a single int8 value back to real units.
+    #[inline]
+    pub fn dequantize(&self, q: i8) -> f32 {
+        self.scale * (q as f32 - self.zero_point as f32)
+    }
+}
+
