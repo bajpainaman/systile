@@ -16,3 +16,9 @@ impl<T> PaddedTileLattice<T> {
         self.shape().padded_rows / self.geometry().sublanes
     }
 
+    /// Number of storage tiles along the column axis.
+    #[inline]
+    pub fn tile_cols(&self) -> usize {
+        self.shape().padded_cols / self.geometry().lanes
+    }
+
