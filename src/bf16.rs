@@ -91,3 +91,9 @@ impl Bf16 {
         (self.0 & 0x7f80) == 0x7f80 && (self.0 & 0x007f) != 0
     }
 
+    /// True if this value is positive or negative infinity.
+    #[inline]
+    pub fn is_infinite(self) -> bool {
+        (self.0 & 0x7fff) == 0x7f80
+    }
+
