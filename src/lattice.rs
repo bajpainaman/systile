@@ -97,3 +97,12 @@ impl<T> PaddedTileLattice<T> {
         &mut self.data
     }
 
+    /// Borrow the logical element at `(row, col)`, or `None` if out of bounds.
+    #[inline]
+    pub fn get(&self, row: usize, col: usize) -> Option<&T> {
+        if !self.shape.contains(row, col) {
+            return None;
+        }
+        Some(&self.data[self.layout.offset(row, col)])
+    }
+
