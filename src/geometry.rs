@@ -19,3 +19,11 @@ pub struct Geometry {
     pub mxu: usize,
 }
 
+impl Geometry {
+    /// The canonical TPU v-class geometry: 8 sublanes, 128 lanes, 128x128 MXU.
+    pub const TPU_V: Geometry = Geometry {
+        sublanes: 8,
+        lanes: 128,
+        mxu: 128,
+    };
+
