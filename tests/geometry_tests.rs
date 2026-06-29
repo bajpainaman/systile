@@ -82,3 +82,9 @@ fn shape_padded_len() {
     assert_eq!(Shape::new(3, 5, &Geometry::TPU_V).padded_len(), 8 * 128);
 }
 
+#[test]
+fn shape_padding_len() {
+    let s = Shape::new(3, 5, &Geometry::TPU_V);
+    assert_eq!(s.padding_len(), 8 * 128 - 15);
+}
+
