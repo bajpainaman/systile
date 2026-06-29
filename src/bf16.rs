@@ -288,3 +288,11 @@ impl PartialOrd for Bf16 {
     }
 }
 
+impl Neg for Bf16 {
+    type Output = Bf16;
+    #[inline]
+    fn neg(self) -> Self {
+        Bf16(self.0 ^ 0x8000)
+    }
+}
+
