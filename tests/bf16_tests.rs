@@ -116,3 +116,9 @@ fn copysign_takes_sign_of_other() {
     assert!(m.is_sign_negative());
 }
 
+#[test]
+fn ordering_is_sane() {
+    assert!(Bf16::from_f32(1.0) < Bf16::from_f32(2.0));
+    assert!(Bf16::from_f32(-1.0) < Bf16::from_f32(0.0));
+}
+
