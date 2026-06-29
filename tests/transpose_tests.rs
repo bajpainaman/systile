@@ -34,3 +34,11 @@ fn transpose_is_involutive_helper() {
     assert!(l.is_transpose_involutive());
 }
 
+#[test]
+fn relayout_preserves_logical_data() {
+    let data: Vec<f32> = (0..12).map(|x| x as f32).collect();
+    let l = PaddedTileLattice::from_dense(3, 4, &data, Geometry::TPU_V).unwrap();
+    let r = l.relayout(Geometry::TINY).unwrap();
+    assert_eq!(r.to_dense(), data);
+}
+
