@@ -349,3 +349,10 @@ impl MulAssign for Bf16 {
     }
 }
 
+impl DivAssign for Bf16 {
+    #[inline]
+    fn div_assign(&mut self, rhs: Self) {
+        *self = *self / rhs;
+    }
+}
+
