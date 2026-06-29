@@ -356,3 +356,11 @@ impl DivAssign for Bf16 {
     }
 }
 
+impl Sum for Bf16 {
+    #[inline]
+    fn sum<I: Iterator<Item = Bf16>>(iter: I) -> Self {
+        // Accumulate in f32 to mirror a TPU's f32 accumulator, then narrow once.
+        Bf16::from_f32(iter.map(|x| x.to_f32()).sum())
+    }
+}
+
