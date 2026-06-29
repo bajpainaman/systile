@@ -11,3 +11,8 @@ fn sum_ignores_padding() {
     assert_eq!(sample().sum(), 21.0);
 }
 
+#[test]
+fn max_finds_largest() {
+    assert_eq!(sample().max(), Some(6.0));
+}
+
