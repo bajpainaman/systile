@@ -11,3 +11,8 @@ fn tpu_v_geometry_dims() {
     assert_eq!(g.mxu, 128);
 }
 
+#[test]
+fn tile_len_is_product() {
+    assert_eq!(Geometry::TPU_V.tile_len(), 8 * 128);
+}
+
