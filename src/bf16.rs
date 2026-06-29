@@ -335,3 +335,10 @@ impl AddAssign for Bf16 {
     }
 }
 
+impl SubAssign for Bf16 {
+    #[inline]
+    fn sub_assign(&mut self, rhs: Self) {
+        *self = *self - rhs;
+    }
+}
+
