@@ -191,3 +191,10 @@ impl Bf16 {
         }
     }
 
+    /// True if this value is a normal (not zero, subnormal, infinite, or NaN) number.
+    #[inline]
+    pub fn is_normal(self) -> bool {
+        let exp = self.0 & 0x7f80;
+        exp != 0 && exp != 0x7f80
+    }
+
