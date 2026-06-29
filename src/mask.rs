@@ -7,3 +7,13 @@
 
 use crate::shape::Shape;
 
+/// A dense bitset over the padded coordinate grid marking logical elements.
+#[derive(Clone, PartialEq, Eq)]
+pub struct Mask {
+    padded_rows: usize,
+    padded_cols: usize,
+    rows: usize,
+    cols: usize,
+    words: Vec<u64>,
+}
+
