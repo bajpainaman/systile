@@ -17,3 +17,14 @@ pub struct Layout {
     tiles_per_row: usize,
 }
 
+impl Layout {
+    /// Build a layout for a padded shape under a geometry.
+    pub fn new(shape: &Shape, geom: &Geometry) -> Self {
+        Layout {
+            sublanes: geom.sublanes,
+            lanes: geom.lanes,
+            tile_len: geom.tile_len(),
+            tiles_per_row: shape.padded_cols / geom.lanes,
+        }
+    }
+
