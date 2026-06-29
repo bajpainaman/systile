@@ -14,3 +14,18 @@ and target a TPU, *every* handoff pays for a layout transform.
 
 `systile` pays that cost once, at construction, and never again.
 
+## Three hardware facts
+
+The whole design follows from three properties of the hardware:
+
+1. **Vector memory is tiled.** It is addressed as a grid of `8 × 128`
+   `(sublane, lane)` tiles, not as a flat span.
+2. **The matrix unit is square.** Matmul is performed by a `128 × 128` systolic
+   array, so contraction happens in `mxu`-sized blocks whether your data fills them
+   or not.
+3. **The native dtypes are narrow.** `bf16` and `int8` feed the array; `f32` is the
+   accumulator, not the input.
+
+`Geometry` captures the first two as `(sublanes, lanes, mxu)`. The dtype facts live
+in the `bf16` and `quantize` modules.
+
