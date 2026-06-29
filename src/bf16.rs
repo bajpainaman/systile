@@ -260,3 +260,10 @@ impl From<i16> for Bf16 {
     }
 }
 
+impl Default for Bf16 {
+    #[inline]
+    fn default() -> Self {
+        Bf16::ZERO
+    }
+}
+
