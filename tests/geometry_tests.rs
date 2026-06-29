@@ -33,3 +33,10 @@ fn round_up_rounds_to_multiple() {
     assert_eq!(Geometry::round_up(9, 8), 16);
 }
 
+#[test]
+fn pad_rows_uses_sublanes() {
+    assert_eq!(Geometry::TPU_V.pad_rows(3), 8);
+    assert_eq!(Geometry::TPU_V.pad_rows(8), 8);
+    assert_eq!(Geometry::TPU_V.pad_rows(9), 16);
+}
+
