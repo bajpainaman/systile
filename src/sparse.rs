@@ -56,3 +56,10 @@ impl<T: IsZero> PaddedTileLattice<T> {
             .all(|x| x.is_zero())
     }
 
+    /// Count how many storage tiles are entirely zero.
+    pub fn count_zero_tiles(&self) -> usize {
+        self.iter_tiles()
+            .filter(|(_, _, slice)| slice.iter().all(|x| x.is_zero()))
+            .count()
+    }
+
