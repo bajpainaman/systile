@@ -64,3 +64,10 @@ impl Shape {
         self.rows == self.padded_rows && self.cols == self.padded_cols
     }
 
+    /// True if `(row, col)` falls inside the logical (non-padding) region.
+    #[inline]
+    pub const fn contains(&self, row: usize, col: usize) -> bool {
+        row < self.rows && col < self.cols
+    }
+}
+
