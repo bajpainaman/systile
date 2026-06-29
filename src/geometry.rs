@@ -52,3 +52,9 @@ impl Geometry {
         self.sublanes * self.lanes
     }
 
+    /// Round `n` up to the next multiple of `to`.
+    #[inline]
+    pub const fn round_up(n: usize, to: usize) -> usize {
+        n.div_ceil(to) * to
+    }
+
