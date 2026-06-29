@@ -54,3 +54,18 @@ pub struct TileIter<'a, T> {
 impl<'a, T> Iterator for TileIter<'a, T> {
     type Item = (usize, usize, &'a [T]);
 
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.next >= self.total {
+            return None;
+        }
+        let tiles_per_row = self.lattice.tile_cols();
+        let tile_row = self.next / tiles_per_row;
+        let tile_col = self.next % tiles_per_row;
+        self.next += 1;
+        Some((
+            tile_row,
+            tile_col,
+            self.lattice.tile_slice(tile_row, tile_col),
+        ))
+    }
+
