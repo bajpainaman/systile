@@ -36,3 +36,11 @@ is stored as a full `8 × 128` tile with 1009 padding slots. The structure there
 tracks two shapes at once — the logical one the user reasons about and the padded
 one the hardware stores — in the `Shape` type.
 
+## Why keep a mask
+
+Padding is not free of consequences: a naive `sum` over the padded buffer would add
+in 1009 zeros (fine) but a naive `max` over a buffer whose padding was filled with
+a sentinel would return the sentinel (not fine). The `Mask` records exactly which
+slots are logical, so every reduction and every dense round-trip can ignore padding
+deliberately rather than by luck.
+
