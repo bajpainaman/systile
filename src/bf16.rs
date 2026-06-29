@@ -25,3 +25,6 @@ impl Bf16 {
     /// Positive zero.
     pub const ZERO: Bf16 = Bf16(0x0000);
 
+    /// One.
+    pub const ONE: Bf16 = Bf16(0x3f80);
+
