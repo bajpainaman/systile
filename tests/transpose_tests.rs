@@ -20,3 +20,10 @@ fn transpose_swaps_elements() {
     assert_eq!(t.get(1, 0), Some(&2.0));
 }
 
+#[test]
+fn double_transpose_is_identity() {
+    let data: Vec<f32> = (0..12).map(|x| x as f32).collect();
+    let l = PaddedTileLattice::from_dense(3, 4, &data, Geometry::TPU_V).unwrap();
+    assert_eq!(l.transpose().transpose().to_dense(), data);
+}
+
