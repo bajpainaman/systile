@@ -32,3 +32,11 @@ impl PaddedTileLattice<f32> {
             })
     }
 
+    /// Arithmetic mean of every logical element, or `None` if empty.
+    pub fn mean(&self) -> Option<f32> {
+        if self.is_empty() {
+            return None;
+        }
+        Some(self.sum() / self.len() as f32)
+    }
+
