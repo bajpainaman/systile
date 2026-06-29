@@ -72,3 +72,9 @@ impl<T> PaddedTileLattice<T> {
         self.shape.logical_len() == 0
     }
 
+    /// Number of stored elements including padding.
+    #[inline]
+    pub fn padded_len(&self) -> usize {
+        self.shape.padded_len()
+    }
+
