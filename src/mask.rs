@@ -59,3 +59,9 @@ impl Mask {
         self.rows * self.cols
     }
 
+    /// Total number of padding elements covered by this mask.
+    #[inline]
+    pub fn count_padding(&self) -> usize {
+        self.padded_rows * self.padded_cols - self.rows * self.cols
+    }
+
