@@ -18,3 +18,18 @@ need a TPU to use it — the point is to model the constraints a TPU imposes
 matrix-unit blocking) so you can prepare, validate, and reason about layouts before
 anything touches real silicon.
 
+## Why a data structure "for TPUs"?
+
+A TPU is not a flat array machine. Three hardware facts drive its data layout, and
+`systile` encodes all three:
+
+| Hardware fact | What it forces | Where `systile` handles it |
+| --- | --- | --- |
+| Vector memory is addressed as `8 × 128` `(sublane, lane)` tiles | Data must be tiled and padded to tile boundaries | [`Geometry`], [`Layout`], [`Shape`] |
+| The matrix unit is a `128 × 128` systolic array | Matmul runs in square `mxu` blocks, padding included | [`systolic`] |
+| Native dtypes are `bf16` and `int8`, not `f32` | You quantise/narrow before compute, accumulate in `f32` | [`bf16`], [`quantize`] |
+
+Because padding is mandatory, the structure tracks both the *logical* shape you
+asked for and the *padded* shape it actually stores, plus a validity [`Mask`] so
+reductions and dense round-trips never fold in garbage.
+
