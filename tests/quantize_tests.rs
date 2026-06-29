@@ -25,3 +25,13 @@ fn symmetric_zero_input_handled() {
     assert_eq!(q.quantize(0.0), 0);
 }
 
+#[test]
+fn quantize_dequantize_is_close() {
+    let q = QuantParams::symmetric(4.0);
+    for i in -16..=16 {
+        let x = i as f32 * 0.25;
+        let back = q.dequantize(q.quantize(x));
+        assert!((x - back).abs() <= q.scale, "x={x} back={back}");
+    }
+}
+
