@@ -43,3 +43,6 @@ impl Bf16 {
     /// The largest finite `bf16`.
     pub const MAX: Bf16 = Bf16(0x7f7f);
 
+    /// The smallest (most negative) finite `bf16`.
+    pub const MIN: Bf16 = Bf16(0xff7f);
+
