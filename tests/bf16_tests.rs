@@ -175,3 +175,10 @@ fn mul_add_matches_f32() {
     assert_eq!(r.to_f32(), 7.0);
 }
 
+#[test]
+fn signum_reports_sign() {
+    assert_eq!(Bf16::from_f32(5.0).signum(), Bf16::ONE);
+    assert_eq!(Bf16::from_f32(-5.0).signum(), Bf16::NEG_ONE);
+    assert!(Bf16::from_f32(0.0).signum().is_zero());
+}
+
