@@ -43,3 +43,16 @@ impl Numeric for Bf16 {
     }
 }
 
+/// Work counters describing a single simulated matmul.
+#[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
+pub struct SystolicStats {
+    /// Total scalar multiply-accumulate operations performed.
+    pub macs: u64,
+    /// Number of stationary `mxu x mxu` weight blocks loaded into the array.
+    pub weight_block_loads: u64,
+    /// Number of `mxu x mxu` output blocks produced.
+    pub output_blocks: u64,
+    /// MAC slots that were spent on padding rather than logical data.
+    pub padding_macs: u64,
+}
+
