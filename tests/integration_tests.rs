@@ -39,3 +39,18 @@ fn gram_matrix_is_symmetric() {
     }
 }
 
+#[test]
+fn quantize_roundtrip_preserves_sign_pattern() {
+    let data: Vec<f32> = (0..16).map(|i| (i as f32 - 8.0)).collect();
+    let l = PaddedTileLattice::from_dense(4, 4, &data, Geometry::TPU_V).unwrap();
+    let params = QuantParams::symmetric(l.abs_max());
+    let back = l.quantize(params).unwrap().dequantize(params).unwrap();
+    for (orig, got) in l.to_dense().iter().zip(back.to_dense().iter()) {
+        assert_eq!(
+            orig.signum() as i32,
+            got.signum() as i32,
+            "orig={orig} got={got}"
+        );
+    }
+}
+
