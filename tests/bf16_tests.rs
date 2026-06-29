@@ -110,3 +110,9 @@ fn abs_clears_sign() {
     assert_eq!(Bf16::from_f32(-3.0).abs(), Bf16::from_f32(3.0));
 }
 
+#[test]
+fn copysign_takes_sign_of_other() {
+    let m = Bf16::from_f32(3.0).copysign(Bf16::from_f32(-1.0));
+    assert!(m.is_sign_negative());
+}
+
