@@ -71,3 +71,13 @@ fn map_then_reduce_composes() {
     assert_eq!(squared.sum(), (0..6).map(|i| (i * i) as f32).sum());
 }
 
+#[test]
+fn zip_add_matches_elementwise_sum() {
+    let a = ramp(3, 3);
+    let b = ramp(3, 3);
+    let c = a.zip_with(&b, |x, y| x + y).unwrap();
+    for (got, base) in c.to_dense().iter().zip(a.to_dense().iter()) {
+        assert_eq!(*got, base * 2.0);
+    }
+}
+
