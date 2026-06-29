@@ -61,3 +61,21 @@ impl Bf16 {
         self.0
     }
 
+    /// Convert an `f32` to `bf16` using round-to-nearest-even.
+    ///
+    /// NaNs are preserved as quiet NaNs. The rounding bias is the standard
+    /// "round half to even" used by hardware bf16 truncation units.
+    #[inline]
+    pub fn from_f32(value: f32) -> Self {
+        let bits = value.to_bits();
+        if value.is_nan() {
+            // Force a quiet NaN with a non-zero payload so it survives narrowing.
+            return Bf16((bits >> 16) as u16 | 0x0040);
+        }
+        // Round to nearest even: add the rounding bias derived from the bit that
+        // will be dropped plus the lsb of the kept mantissa.
+        let rounding_bias = 0x7fff + ((bits >> 16) & 1);
+        let rounded = bits.wrapping_add(rounding_bias);
+        Bf16((rounded >> 16) as u16)
+    }
+
