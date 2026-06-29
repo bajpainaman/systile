@@ -71,3 +71,24 @@ impl Mask {
         self.count_padding() == 0
     }
 
+    /// Count how many of a tile's slots are logical, for a `sublanes x lanes` tile
+    /// whose top-left padded coordinate is `(base_row, base_col)`.
+    pub fn count_valid_in_tile(
+        &self,
+        base_row: usize,
+        base_col: usize,
+        sublanes: usize,
+        lanes: usize,
+    ) -> usize {
+        let mut count = 0;
+        for r in base_row..(base_row + sublanes) {
+            for c in base_col..(base_col + lanes) {
+                if self.is_valid(r, c) {
+                    count += 1;
+                }
+            }
+        }
+        count
+    }
+}
+
