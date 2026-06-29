@@ -30,3 +30,11 @@ fn small_integers_are_exact() {
     }
 }
 
+#[test]
+fn powers_of_two_are_exact() {
+    for e in -30..30 {
+        let x = 2.0f32.powi(e);
+        assert_eq!(Bf16::from_f32(x).to_f32(), x, "e={e}");
+    }
+}
+
