@@ -32,3 +32,10 @@ fn within_tile_is_row_major_sublane_lane() {
     assert_eq!(layout.offset(1, 0), 128);
 }
 
+#[test]
+fn second_tile_starts_after_first() {
+    let shape = Shape::new(8, 256, &Geometry::TPU_V);
+    let layout = Layout::new(&shape, &Geometry::TPU_V);
+    assert_eq!(layout.offset(0, 128), Geometry::TPU_V.tile_len());
+}
+
