@@ -26,3 +26,10 @@ fn valid_geometry_is_accepted() {
     assert!(Geometry::new(8, 128, 128).is_ok());
 }
 
+#[test]
+fn round_up_rounds_to_multiple() {
+    assert_eq!(Geometry::round_up(1, 8), 8);
+    assert_eq!(Geometry::round_up(8, 8), 8);
+    assert_eq!(Geometry::round_up(9, 8), 16);
+}
+
