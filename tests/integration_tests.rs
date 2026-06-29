@@ -64,3 +64,10 @@ fn sparsity_survives_relayout() {
     assert_eq!(dense_nonzero, dense_nonzero_after);
 }
 
+#[test]
+fn map_then_reduce_composes() {
+    let l = ramp(2, 3);
+    let squared = l.map(|x| x * x);
+    assert_eq!(squared.sum(), (0..6).map(|i| (i * i) as f32).sum());
+}
+
