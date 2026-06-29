@@ -33,3 +33,13 @@ fn zip_with_adds() {
     assert_eq!(c.to_dense(), vec![11.0, 22.0, 33.0]);
 }
 
+#[test]
+fn zip_with_shape_mismatch_errors() {
+    let a = PaddedTileLattice::<f32>::zeroed(2, 3, Geometry::TPU_V).unwrap();
+    let b = PaddedTileLattice::<f32>::zeroed(3, 2, Geometry::TPU_V).unwrap();
+    assert!(matches!(
+        a.zip_with(&b, |x, y| x + y),
+        Err(LatticeError::ContractionMismatch { .. })
+    ));
+}
+
