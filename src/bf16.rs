@@ -320,3 +320,11 @@ impl Mul for Bf16 {
     }
 }
 
+impl Div for Bf16 {
+    type Output = Bf16;
+    #[inline]
+    fn div(self, rhs: Self) -> Self {
+        Bf16::from_f32(self.to_f32() / rhs.to_f32())
+    }
+}
+
