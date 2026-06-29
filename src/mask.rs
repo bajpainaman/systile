@@ -43,3 +43,13 @@ impl Mask {
         row * self.padded_cols + col
     }
 
+    /// True if `(row, col)` is a logical (non-padding) element.
+    #[inline]
+    pub fn is_valid(&self, row: usize, col: usize) -> bool {
+        if row >= self.padded_rows || col >= self.padded_cols {
+            return false;
+        }
+        let idx = self.bit_index(row, col);
+        (self.words[idx / 64] >> (idx % 64)) & 1 == 1
+    }
+
