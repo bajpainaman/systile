@@ -51,3 +51,18 @@ assert_eq!(c.to_dense(), vec![58.0, 64.0, 139.0, 154.0]);
 println!("array utilisation: {:.1}%", stats.utilisation() * 100.0);
 ```
 
+## Features
+
+- **`PaddedTileLattice<T>`** — the core 2-D tiled tensor, generic over element type.
+- **`bf16`** — a from-scratch bfloat16 with round-to-nearest-even and a full set of
+  arithmetic / comparison / conversion impls.
+- **Systolic matmul simulator** — weight-stationary, `f32`-accumulated, verified
+  bit-for-bit against a naive triple loop, and it reports MAC utilisation.
+- **Tile-level sparsity** — find and skip the all-zero tiles a kernel would waste
+  cycles on.
+- **Affine int8 quantisation** — symmetric and asymmetric calibration that
+  preserves the hardware tiling end to end.
+- **Transpose & relayout** — re-tile the same logical data under a new geometry.
+- **Element-wise maps and reductions** — padding-correct by construction.
+- `#![forbid(unsafe_code)]`, no required dependencies.
+
