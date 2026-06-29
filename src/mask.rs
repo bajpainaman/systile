@@ -53,3 +53,9 @@ impl Mask {
         (self.words[idx / 64] >> (idx % 64)) & 1 == 1
     }
 
+    /// Total number of logical elements covered by this mask.
+    #[inline]
+    pub fn count_valid(&self) -> usize {
+        self.rows * self.cols
+    }
+
