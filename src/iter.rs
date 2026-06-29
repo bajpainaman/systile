@@ -33,3 +33,14 @@ impl<T> PaddedTileLattice<T> {
     }
 }
 
+impl<T: Clone> PaddedTileLattice<T> {
+    /// Iterate the logical elements in row-major order, yielding `(row, col, value)`.
+    pub fn iter_logical(&self) -> impl Iterator<Item = (usize, usize, T)> + '_ {
+        let rows = self.rows();
+        let cols = self.cols();
+        (0..rows).flat_map(move |row| {
+            (0..cols).map(move |col| (row, col, self.get(row, col).unwrap().clone()))
+        })
+    }
+}
+
