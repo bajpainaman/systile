@@ -73,3 +73,8 @@ fn add_assign_works() {
     assert_eq!(a.to_f32(), 2.0);
 }
 
+#[test]
+fn dynamic_range_survives_large() {
+    assert!(Bf16::from_f32(1e30).is_finite());
+}
+
