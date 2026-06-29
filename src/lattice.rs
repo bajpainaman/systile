@@ -179,3 +179,17 @@ impl<T: Clone + Default> PaddedTileLattice<T> {
         out
     }
 
+    /// Overwrite every padding slot with `value`, leaving logical elements intact.
+    ///
+    /// Useful before a reduction where the padding identity matters (e.g. fill
+    /// with the additive identity before a sum, or a large negative before a max).
+    pub fn fill_padding(&mut self, value: T) {
+        for off in 0..self.data.len() {
+            let (row, col) = self.layout.coord(off);
+            if !self.shape.contains(row, col) {
+                self.data[off] = value.clone();
+            }
+        }
+    }
+}
+
