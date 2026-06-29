@@ -28,3 +28,6 @@ impl Bf16 {
     /// One.
     pub const ONE: Bf16 = Bf16(0x3f80);
 
+    /// Negative one.
+    pub const NEG_ONE: Bf16 = Bf16(0xbf80);
+
