@@ -27,3 +27,10 @@ impl Geometry {
         mxu: 128,
     };
 
+    /// A small geometry handy for tests and documentation examples.
+    pub const TINY: Geometry = Geometry {
+        sublanes: 2,
+        lanes: 4,
+        mxu: 4,
+    };
+
