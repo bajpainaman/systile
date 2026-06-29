@@ -7,3 +7,8 @@ fn zero_roundtrips() {
     assert_eq!(Bf16::from_f32(0.0).to_f32(), 0.0);
 }
 
+#[test]
+fn one_roundtrips() {
+    assert_eq!(Bf16::from_f32(1.0).to_f32(), 1.0);
+}
+
