@@ -8,3 +8,8 @@
 //! bit-for-bit in the f32 case and closely in the bf16 case. It also reports the
 //! work performed so you can reason about utilisation before deploying.
 
+use crate::bf16::Bf16;
+use crate::error::{LatticeError, Result};
+use crate::geometry::Geometry;
+use crate::lattice::PaddedTileLattice;
+
