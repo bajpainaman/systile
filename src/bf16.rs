@@ -246,3 +246,10 @@ impl From<i8> for Bf16 {
     }
 }
 
+impl From<u8> for Bf16 {
+    #[inline]
+    fn from(value: u8) -> Self {
+        Bf16::from_f32(value as f32)
+    }
+}
+
