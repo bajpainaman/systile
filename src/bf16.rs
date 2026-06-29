@@ -225,3 +225,10 @@ impl From<Bf16> for f32 {
     }
 }
 
+impl From<f64> for Bf16 {
+    #[inline]
+    fn from(value: f64) -> Self {
+        Bf16::from_f32(value as f32)
+    }
+}
+
