@@ -65,3 +65,9 @@ impl Mask {
         self.padded_rows * self.padded_cols - self.rows * self.cols
     }
 
+    /// True if every padded slot is logical (no padding at all).
+    #[inline]
+    pub fn is_full(&self) -> bool {
+        self.count_padding() == 0
+    }
+
