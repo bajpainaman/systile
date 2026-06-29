@@ -7,3 +7,21 @@
 use crate::error::{LatticeError, Result};
 use crate::lattice::PaddedTileLattice;
 
+impl<T: Clone + Default> PaddedTileLattice<T> {
+    /// Apply `f` to every logical element, returning a new lattice of the same shape.
+    pub fn map<U, F>(&self, mut f: F) -> PaddedTileLattice<U>
+    where
+        U: Clone + Default,
+        F: FnMut(&T) -> U,
+    {
+        let mut out = PaddedTileLattice::<U>::zeroed(self.rows(), self.cols(), *self.geometry())
+            .expect("shape is preserved, so geometry stays valid");
+        for row in 0..self.rows() {
+            for col in 0..self.cols() {
+                let mapped = f(self.get(row, col).unwrap());
+                out.set(row, col, mapped).unwrap();
+            }
+        }
+        out
+    }
+
