@@ -41,3 +41,9 @@ fn quantize_saturates_high() {
     assert_eq!(q.quantize(1000.0), 127);
 }
 
+#[test]
+fn quantize_saturates_low() {
+    let q = QuantParams::symmetric(1.0);
+    assert_eq!(q.quantize(-1000.0), -128);
+}
+
