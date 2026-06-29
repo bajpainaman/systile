@@ -100,3 +100,8 @@ fn infinity_is_infinite() {
     assert!(!Bf16::INFINITY.is_finite());
 }
 
+#[test]
+fn positive_and_negative_zero_are_equal() {
+    assert_eq!(Bf16::from_f32(0.0), Bf16::from_f32(-0.0));
+}
+
