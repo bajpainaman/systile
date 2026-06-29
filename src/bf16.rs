@@ -204,3 +204,10 @@ impl Bf16 {
         self.0.to_le_bytes()
     }
 
+    /// Reconstruct a value from its little-endian byte representation.
+    #[inline]
+    pub fn from_le_bytes(bytes: [u8; 2]) -> Self {
+        Bf16(u16::from_le_bytes(bytes))
+    }
+}
+
