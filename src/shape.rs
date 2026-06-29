@@ -42,3 +42,9 @@ impl Shape {
         self.padded_rows * self.padded_cols
     }
 
+    /// Number of padding elements that exist only to fill out edge tiles.
+    #[inline]
+    pub const fn padding_len(&self) -> usize {
+        self.padded_len() - self.logical_len()
+    }
+
