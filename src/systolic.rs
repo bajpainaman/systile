@@ -139,3 +139,8 @@ impl<T: Numeric> PaddedTileLattice<T> {
         Ok((out, stats))
     }
 
+    /// Multiply two lattices, discarding the dataflow statistics.
+    pub fn matmul(&self, rhs: &PaddedTileLattice<T>) -> Result<PaddedTileLattice<T>> {
+        self.matmul_with_stats(rhs).map(|(out, _)| out)
+    }
+}
