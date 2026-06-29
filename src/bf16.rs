@@ -198,3 +198,9 @@ impl Bf16 {
         exp != 0 && exp != 0x7f80
     }
 
+    /// The little-endian byte representation of the raw bits.
+    #[inline]
+    pub fn to_le_bytes(self) -> [u8; 2] {
+        self.0.to_le_bytes()
+    }
+
