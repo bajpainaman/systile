@@ -74,3 +74,10 @@ Element-level sparsity does not help a systolic array: it pays for a zero the sa
 as a one. The unit of savings is the *tile*. So `sparse` answers exactly one
 question — which tiles are entirely zero — and lets a kernel skip them.
 
+## Quantisation keeps the tiling
+
+Int8 matmul is roughly four times the throughput of bf16, but only if you quantise
+without destroying the layout. The `quantize` module maps an `f32` lattice to an
+`i8` lattice element-by-element through the same `(row, col)` accessors, so the
+hardware tiling survives the dtype change untouched.
+
