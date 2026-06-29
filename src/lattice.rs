@@ -193,3 +193,12 @@ impl<T: Clone + Default> PaddedTileLattice<T> {
     }
 }
 
+impl<T> core::fmt::Debug for PaddedTileLattice<T> {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        f.debug_struct("PaddedTileLattice")
+            .field("shape", &self.shape)
+            .field("geometry", &self.geom)
+            .field("tiles", &self.num_tiles())
+            .finish()
+    }
+}
