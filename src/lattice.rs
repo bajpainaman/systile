@@ -42,3 +42,9 @@ impl<T> PaddedTileLattice<T> {
         &self.layout
     }
 
+    /// The validity mask separating logical elements from padding.
+    #[inline]
+    pub fn mask(&self) -> &Mask {
+        &self.mask
+    }
+
