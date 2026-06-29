@@ -150,3 +150,8 @@ fn default_is_zero() {
     assert_eq!(Bf16::default(), Bf16::ZERO);
 }
 
+#[test]
+fn from_i8_works() {
+    assert_eq!(Bf16::from(7i8).to_f32(), 7.0);
+}
+
