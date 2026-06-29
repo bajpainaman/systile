@@ -83,3 +83,8 @@ fn dynamic_range_survives_small() {
     assert!(Bf16::from_f32(1e-30).to_f32() > 0.0);
 }
 
+#[test]
+fn nan_is_nan() {
+    assert!(Bf16::from_f32(f32::NAN).is_nan());
+}
+
