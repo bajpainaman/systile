@@ -23,3 +23,10 @@ pub struct PaddedTileLattice<T> {
     data: Vec<T>,
 }
 
+impl<T> PaddedTileLattice<T> {
+    /// The geometry this lattice was built with.
+    #[inline]
+    pub fn geometry(&self) -> &Geometry {
+        &self.geom
+    }
+
