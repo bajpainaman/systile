@@ -75,3 +75,4 @@ impl<'a, T> Iterator for TileIter<'a, T> {
     }
 }
 
+impl<'a, T> ExactSizeIterator for TileIter<'a, T> {}
