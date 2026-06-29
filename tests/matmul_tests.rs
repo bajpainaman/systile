@@ -74,3 +74,10 @@ fn contraction_mismatch_is_rejected() {
     );
 }
 
+#[test]
+fn geometry_mismatch_is_rejected() {
+    let a = PaddedTileLattice::<f32>::zeroed(2, 2, Geometry::TPU_V).unwrap();
+    let b = PaddedTileLattice::<f32>::zeroed(2, 2, Geometry::TINY).unwrap();
+    assert_eq!(a.matmul(&b).unwrap_err(), LatticeError::GeometryMismatch);
+}
+
