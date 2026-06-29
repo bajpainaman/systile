@@ -43,3 +43,8 @@ fn row_sums_are_per_row() {
     assert_eq!(sample().row_sums(), vec![6.0, 15.0]);
 }
 
+#[test]
+fn col_sums_are_per_column() {
+    assert_eq!(sample().col_sums(), vec![5.0, 7.0, 9.0]);
+}
+
