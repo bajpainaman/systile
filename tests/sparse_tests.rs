@@ -33,3 +33,11 @@ fn diagonal_leaves_off_diagonal_tiles_zero() {
     assert!(l.count_zero_tiles() > 0);
 }
 
+#[test]
+fn nonzero_coords_match_live_tiles() {
+    let mut l = PaddedTileLattice::<f32>::zeroed(4, 8, Geometry::TINY).unwrap();
+    l.set(0, 0, 1.0).unwrap();
+    let coords = l.nonzero_tile_coords();
+    assert_eq!(coords, vec![(0, 0)]);
+}
+
