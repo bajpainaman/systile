@@ -47,3 +47,10 @@ fn get_out_of_bounds_is_none() {
     assert_eq!(l.get(0, 3), None);
 }
 
+#[test]
+fn set_updates_value() {
+    let mut l = sample();
+    l.set(0, 0, 99.0).unwrap();
+    assert_eq!(l.get(0, 0), Some(&99.0));
+}
+
