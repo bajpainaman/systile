@@ -37,3 +37,6 @@ impl Bf16 {
     /// Negative infinity.
     pub const NEG_INFINITY: Bf16 = Bf16(0xff80);
 
+    /// A quiet not-a-number.
+    pub const NAN: Bf16 = Bf16(0x7fc0);
+
