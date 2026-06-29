@@ -122,3 +122,11 @@ fn ordering_is_sane() {
     assert!(Bf16::from_f32(-1.0) < Bf16::from_f32(0.0));
 }
 
+#[test]
+fn max_picks_larger() {
+    assert_eq!(
+        Bf16::from_f32(1.0).max(Bf16::from_f32(2.0)),
+        Bf16::from_f32(2.0)
+    );
+}
+
