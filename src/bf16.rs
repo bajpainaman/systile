@@ -8,3 +8,8 @@
 //! widening to `f32`, computing in `f32`, and narrowing back with round-to-nearest-even.
 //! That mirrors how a TPU accumulates bf16 products into an f32 accumulator.
 
+use core::cmp::Ordering;
+use core::fmt;
+use core::iter::Sum;
+use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
+
