@@ -20,3 +20,10 @@ impl IsZero for f32 {
     }
 }
 
+impl IsZero for f64 {
+    #[inline]
+    fn is_zero(&self) -> bool {
+        *self == 0.0
+    }
+}
+
