@@ -5,3 +5,6 @@
 //! Relayout re-tiles the same logical data under a different [`Geometry`], which
 //! is what you do when handing a tensor from the vector unit to the matrix unit.
 
+use crate::geometry::Geometry;
+use crate::lattice::PaddedTileLattice;
+
