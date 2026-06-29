@@ -364,3 +364,9 @@ impl Sum for Bf16 {
     }
 }
 
+impl fmt::Debug for Bf16 {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Bf16({} /* 0x{:04x} */)", self.to_f32(), self.0)
+    }
+}
+
