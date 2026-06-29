@@ -68,3 +68,9 @@ bit-identical to the device and a `bf16` result tracks it closely. The simulator
 also reports padding MACs, so you can see the utilisation cost of an awkward shape
 before you pay for it on real silicon.
 
+## Sparsity at tile granularity
+
+Element-level sparsity does not help a systolic array: it pays for a zero the same
+as a one. The unit of savings is the *tile*. So `sparse` answers exactly one
+question — which tiles are entirely zero — and lets a kernel skip them.
+
