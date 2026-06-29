@@ -85,3 +85,9 @@ impl Bf16 {
         f32::from_bits((self.0 as u32) << 16)
     }
 
+    /// True if this value is NaN.
+    #[inline]
+    pub fn is_nan(self) -> bool {
+        (self.0 & 0x7f80) == 0x7f80 && (self.0 & 0x007f) != 0
+    }
+
