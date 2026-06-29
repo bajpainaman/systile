@@ -8,3 +8,15 @@ fn ramp(rows: usize, cols: usize) -> PaddedTileLattice<f32> {
     PaddedTileLattice::from_dense(rows, cols, &data, Geometry::TPU_V).unwrap()
 }
 
+#[test]
+fn dense_roundtrip_through_geometry_relayout() {
+    let l = ramp(5, 7);
+    let original = l.to_dense();
+    let back = l
+        .relayout(Geometry::TINY)
+        .unwrap()
+        .relayout(Geometry::TPU_V)
+        .unwrap();
+    assert_eq!(back.to_dense(), original);
+}
+
