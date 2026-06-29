@@ -63,3 +63,10 @@ fn set_out_of_bounds_errors() {
     );
 }
 
+#[test]
+fn get_mut_allows_mutation() {
+    let mut l = sample();
+    *l.get_mut(1, 1).unwrap() = 42.0;
+    assert_eq!(l.get(1, 1), Some(&42.0));
+}
+
