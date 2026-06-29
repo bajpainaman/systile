@@ -28,3 +28,15 @@ fn small_square_matches_naive() {
     assert_eq!(c.to_dense(), naive(&a, &b, 2, 2, 2));
 }
 
+#[test]
+fn identity_is_neutral() {
+    let mut id = PaddedTileLattice::<f32>::zeroed(4, 4, Geometry::TPU_V).unwrap();
+    for i in 0..4 {
+        id.set(i, i, 1.0).unwrap();
+    }
+    let data: Vec<f32> = (0..16).map(|x| x as f32).collect();
+    let m = PaddedTileLattice::from_dense(4, 4, &data, Geometry::TPU_V).unwrap();
+    let c = m.matmul(&id).unwrap();
+    assert_eq!(c.to_dense(), data);
+}
+
