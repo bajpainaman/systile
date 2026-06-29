@@ -6,3 +6,9 @@
 //! the [`Shape`], [`Layout`], and [`Mask`] needed to present a clean logical view
 //! on top of that hardware layout.
 
+use crate::error::{LatticeError, Result};
+use crate::geometry::Geometry;
+use crate::layout::Layout;
+use crate::mask::Mask;
+use crate::shape::Shape;
+
