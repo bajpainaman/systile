@@ -32,3 +32,9 @@ fn empty_max_is_none() {
     assert_eq!(l.max(), None);
 }
 
+#[test]
+fn empty_mean_is_none() {
+    let l = PaddedTileLattice::<f32>::zeroed(0, 0, Geometry::TPU_V).unwrap();
+    assert_eq!(l.mean(), None);
+}
+
