@@ -21,3 +21,15 @@ fn count_zero_tiles_on_empty() {
     assert_eq!(l.count_zero_tiles(), l.num_tiles());
 }
 
+#[test]
+fn diagonal_leaves_off_diagonal_tiles_zero() {
+    let n = 8;
+    let mut l = PaddedTileLattice::<f32>::zeroed(n, n, Geometry::TINY).unwrap();
+    for i in 0..n {
+        l.set(i, i, 1.0).unwrap();
+    }
+    // Tile grid is (8/2) x (8/4) = 4 x 2 = 8 tiles; the diagonal touches some.
+    assert!(l.count_zero_tiles() < l.num_tiles());
+    assert!(l.count_zero_tiles() > 0);
+}
+
