@@ -130,3 +130,11 @@ fn max_picks_larger() {
     );
 }
 
+#[test]
+fn min_picks_smaller() {
+    assert_eq!(
+        Bf16::from_f32(1.0).min(Bf16::from_f32(2.0)),
+        Bf16::from_f32(1.0)
+    );
+}
+
