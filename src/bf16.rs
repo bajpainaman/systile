@@ -165,3 +165,9 @@ impl Bf16 {
         self.max(lo).min(hi)
     }
 
+    /// The reciprocal `1.0 / self`.
+    #[inline]
+    pub fn recip(self) -> Self {
+        Bf16::from_f32(self.to_f32().recip())
+    }
+
