@@ -71,3 +71,12 @@ impl Shape {
     }
 }
 
+impl core::fmt::Debug for Shape {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(
+            f,
+            "Shape {{ {}x{} logical -> {}x{} padded }}",
+            self.rows, self.cols, self.padded_rows, self.padded_cols
+        )
+    }
+}
