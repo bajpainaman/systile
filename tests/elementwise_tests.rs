@@ -43,3 +43,12 @@ fn zip_with_shape_mismatch_errors() {
     ));
 }
 
+#[test]
+fn zip_with_geometry_mismatch_errors() {
+    let a = PaddedTileLattice::<f32>::zeroed(2, 2, Geometry::TPU_V).unwrap();
+    let b = PaddedTileLattice::<f32>::zeroed(2, 2, Geometry::TINY).unwrap();
+    assert_eq!(
+        a.zip_with(&b, |x, y| x + y).unwrap_err(),
+        LatticeError::GeometryMismatch
+    );
+}
