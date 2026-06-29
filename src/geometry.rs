@@ -76,3 +76,9 @@ impl Geometry {
         rows.div_ceil(self.sublanes)
     }
 
+    /// How many storage tiles wide a padded `cols` is.
+    #[inline]
+    pub const fn tile_cols(&self, cols: usize) -> usize {
+        cols.div_ceil(self.lanes)
+    }
+
