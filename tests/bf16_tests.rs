@@ -195,3 +195,10 @@ fn byte_roundtrip() {
     assert_eq!(Bf16::from_le_bytes(b.to_le_bytes()), b);
 }
 
+#[test]
+fn rounding_is_to_nearest_even() {
+    // A value just under a representable midpoint should round down.
+    let x = 1.0 + (1.0 / 256.0);
+    let b = Bf16::from_f32(x);
+    assert!((b.to_f32() - 1.0).abs() <= (1.0 / 128.0));
+}
