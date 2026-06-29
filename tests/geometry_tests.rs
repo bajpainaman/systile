@@ -58,3 +58,8 @@ fn alignment_detection() {
     assert!(!Geometry::TPU_V.is_aligned(3, 5));
 }
 
+#[test]
+fn default_geometry_is_tpu_v() {
+    assert_eq!(Geometry::default(), Geometry::TPU_V);
+}
+
