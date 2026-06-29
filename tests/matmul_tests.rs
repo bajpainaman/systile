@@ -50,3 +50,14 @@ fn rectangular_matches_naive() {
     assert_eq!(c.to_dense(), naive(&a, &b, 2, 3, 2));
 }
 
+#[test]
+fn multi_mxu_block_matches_naive() {
+    // Use the tiny geometry so a 6x6 spans several mxu blocks.
+    let a: Vec<f32> = (0..36).map(|x| (x % 5) as f32).collect();
+    let b: Vec<f32> = (0..36).map(|x| (x % 3) as f32).collect();
+    let la = PaddedTileLattice::from_dense(6, 6, &a, Geometry::TINY).unwrap();
+    let lb = PaddedTileLattice::from_dense(6, 6, &b, Geometry::TINY).unwrap();
+    let c = la.matmul(&lb).unwrap();
+    assert_eq!(c.to_dense(), naive(&a, &b, 6, 6, 6));
+}
+
