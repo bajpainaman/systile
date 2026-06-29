@@ -48,3 +48,9 @@ impl<T> PaddedTileLattice<T> {
         &self.mask
     }
 
+    /// Logical row count.
+    #[inline]
+    pub fn rows(&self) -> usize {
+        self.shape.rows
+    }
+
