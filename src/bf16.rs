@@ -218,3 +218,10 @@ impl From<f32> for Bf16 {
     }
 }
 
+impl From<Bf16> for f32 {
+    #[inline]
+    fn from(value: Bf16) -> Self {
+        value.to_f32()
+    }
+}
+
