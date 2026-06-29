@@ -78,3 +78,9 @@ impl<T> PaddedTileLattice<T> {
         self.shape.padded_len()
     }
 
+    /// Number of storage tiles in the lattice.
+    #[inline]
+    pub fn num_tiles(&self) -> usize {
+        (self.shape.padded_rows / self.geom.sublanes) * (self.shape.padded_cols / self.geom.lanes)
+    }
+
