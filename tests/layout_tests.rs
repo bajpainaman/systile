@@ -11,3 +11,15 @@ fn offset_of_origin_is_zero() {
     assert_eq!(layout.offset(0, 0), 0);
 }
 
+#[test]
+fn offset_and_coord_are_inverses() {
+    let shape = Shape::new(16, 256, &Geometry::TPU_V);
+    let layout = Layout::new(&shape, &Geometry::TPU_V);
+    for row in 0..16 {
+        for col in 0..256 {
+            let off = layout.offset(row, col);
+            assert_eq!(layout.coord(off), (row, col));
+        }
+    }
+}
+
