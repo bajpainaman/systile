@@ -159,3 +159,9 @@ impl Bf16 {
         }
     }
 
+    /// Clamp to the inclusive range `[lo, hi]`.
+    #[inline]
+    pub fn clamp(self, lo: Self, hi: Self) -> Self {
+        self.max(lo).min(hi)
+    }
+
