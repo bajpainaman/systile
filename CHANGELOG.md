@@ -6,6 +6,18 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- **Holographic Tensor Store** (`holo` module): `HoloMemory`, a key→value
+  associative store that holds all entries in superposition inside a single
+  fixed-width vector, with batched lookup realized as one systolic matmul.
+- `hyper` module: `Hyper`, the bipolar MAP/VSA algebra (bind, bundle, permute,
+  similarity) with deterministic atom generation.
+- `codebook` module: `Codebook`, a tile-aligned symbol vocabulary whose cleanup is
+  a matmul through the systolic engine.
+- `holo_kv` and `holo_capacity` examples; `hyper`, `codebook`, and `holo` test
+  suites; `HOLOGRAPHIC.md` design note with capacity math and citations.
+
 ## [0.1.0]
 
 ### Added

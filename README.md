@@ -53,8 +53,39 @@ assert_eq!(c.to_dense(), vec![58.0, 64.0, 139.0, 154.0]);
 println!("array utilisation: {:.1}%", stats.utilisation() * 100.0);
 ```
 
+## The headline: a data structure whose operations *are* matmuls
+
+On top of the tiling substrate, `systile` ships an invented container — the
+**Holographic Tensor Store** ([`HoloMemory`]) — a key→value map that holds **every
+entry summed on top of every other** inside a single fixed-width vector, and
+recovers a value by algebra plus one matrix multiply.
+
+```rust
+use systile::prelude::*;
+
+let mut book = HoloMemory::new(8192, 1000, 0xC0FFEE); // 8192-dim, 1000 value symbols
+for name in 0..200 {
+    book.insert(name, (name * 7 + 3) % 1000);          // bind + bundle into ONE vector
+}
+
+// Look up all 200 names at once — a single (200 × 8192)·(8192 × 1000) matmul.
+let hits = book.batch_get(&(0..200).collect::<Vec<_>>());
+let correct = (0..200).filter(|&n| hits[n].0 == (n * 7 + 3) % 1000).count();
+assert_eq!(correct, 200); // 100% recall, well under the d/(2 ln M) capacity bound
+```
+
+200 entries live in 32 KB of `f32`; lookup of the whole batch is one MXU-shaped
+GEMM. On a CPU this is a *worse* map than a hash table — it only pays off where
+dense matmul is the cheap primitive and you batch thousands of probes: a TPU. It's
+approximate and bounded (`K_max ≈ d / (2 ln M)`), degrading gracefully past
+capacity. The full mechanism, capacity math, honest novelty assessment, and
+citations are in **[HOLOGRAPHIC.md](HOLOGRAPHIC.md)**; run it with
+`cargo run --release --example holo_kv` and `--example holo_capacity`.
+
 ## Features
 
+- **`HoloMemory`** — the holographic key→value store above, with `Hyper` (VSA
+  algebra: bind/bundle/permute) and `Codebook` (matmul-backed cleanup) beneath it.
 - **`PaddedTileLattice<T>`** — the core 2-D tiled tensor, generic over element type.
 - **`bf16`** — a from-scratch bfloat16 with round-to-nearest-even and a full set of
   arithmetic / comparison / conversion impls.
@@ -103,6 +134,7 @@ order** of a systolic array (and so its numerics), not its timing.
 Licensed under either of [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE) at your
 option.
 
+[`HoloMemory`]: https://docs.rs/systile/latest/systile/holo/struct.HoloMemory.html
 [`Geometry`]: https://docs.rs/systile/latest/systile/geometry/struct.Geometry.html
 [`Layout`]: https://docs.rs/systile/latest/systile/layout/struct.Layout.html
 [`Shape`]: https://docs.rs/systile/latest/systile/shape/struct.Shape.html
