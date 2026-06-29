@@ -58,3 +58,9 @@ impl Geometry {
         n.div_ceil(to) * to
     }
 
+    /// Pad a row count up to a whole number of sublane tiles.
+    #[inline]
+    pub const fn pad_rows(&self, rows: usize) -> usize {
+        Geometry::round_up(rows, self.sublanes)
+    }
+
