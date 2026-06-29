@@ -12,3 +12,14 @@ use crate::layout::Layout;
 use crate::mask::Mask;
 use crate::shape::Shape;
 
+/// A tensor laid out for systolic hardware: logically `rows x cols`, physically a
+/// padded lattice of tiles.
+#[derive(Clone)]
+pub struct PaddedTileLattice<T> {
+    geom: Geometry,
+    shape: Shape,
+    layout: Layout,
+    mask: Mask,
+    data: Vec<T>,
+}
+
