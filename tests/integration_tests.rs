@@ -214,3 +214,11 @@ fn transpose_of_quantized_matches_quantized_transpose() {
     assert_eq!(a.to_dense(), b.to_dense());
 }
 
+#[test]
+fn full_tiles_beat_padded_tiles_on_utilisation() {
+    let (_, small) = ramp(1, 1).matmul_with_stats(&ramp(1, 1)).unwrap();
+    let (_, full) = ramp(128, 128).matmul_with_stats(&ramp(128, 128)).unwrap();
+    // A 1x1 wastes almost an entire mxu block; a full 128x128 wastes nothing.
+    assert!(full.utilisation() > small.utilisation());
+    assert_eq!(full.utilisation(), 1.0);
+}
