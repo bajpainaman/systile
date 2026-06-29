@@ -21,3 +21,7 @@ use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAss
 #[repr(transparent)]
 pub struct Bf16(u16);
 
+impl Bf16 {
+    /// Positive zero.
+    pub const ZERO: Bf16 = Bf16(0x0000);
+
