@@ -88,3 +88,10 @@ fn bf16_lattice_roundtrips_through_dense() {
     assert_eq!(l.to_dense(), data);
 }
 
+#[test]
+fn f32_to_bf16_lattice_via_map() {
+    let l = ramp(2, 3);
+    let b: PaddedTileLattice<Bf16> = l.map(|x| Bf16::from_f32(*x));
+    assert_eq!(b.get(1, 2).unwrap().to_f32(), 5.0);
+}
+
