@@ -31,3 +31,6 @@ impl Bf16 {
     /// Negative one.
     pub const NEG_ONE: Bf16 = Bf16(0xbf80);
 
+    /// Positive infinity.
+    pub const INFINITY: Bf16 = Bf16(0x7f80);
+
