@@ -92,3 +92,13 @@ impl Mask {
     }
 }
 
+impl core::fmt::Debug for Mask {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(
+            f,
+            "Mask {{ {} valid, {} padding }}",
+            self.count_valid(),
+            self.count_padding()
+        )
+    }
+}
