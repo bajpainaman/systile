@@ -21,3 +21,8 @@ fn min_finds_smallest() {
     assert_eq!(sample().min(), Some(1.0));
 }
 
+#[test]
+fn mean_is_average() {
+    assert_eq!(sample().mean(), Some(3.5));
+}
+
