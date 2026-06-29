@@ -84,3 +84,10 @@ impl<T> PaddedTileLattice<T> {
         (self.shape.padded_rows / self.geom.sublanes) * (self.shape.padded_cols / self.geom.lanes)
     }
 
+    /// Borrow the raw padded storage buffer in tiled order. This is exactly the
+    /// byte sequence you would copy to device memory.
+    #[inline]
+    pub fn as_storage_slice(&self) -> &[T] {
+        &self.data
+    }
+
