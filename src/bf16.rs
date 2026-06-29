@@ -232,3 +232,10 @@ impl From<f64> for Bf16 {
     }
 }
 
+impl From<Bf16> for f64 {
+    #[inline]
+    fn from(value: Bf16) -> Self {
+        value.to_f32() as f64
+    }
+}
+
