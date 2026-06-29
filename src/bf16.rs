@@ -97,3 +97,9 @@ impl Bf16 {
         (self.0 & 0x7fff) == 0x7f80
     }
 
+    /// True if this value is neither NaN nor infinite.
+    #[inline]
+    pub fn is_finite(self) -> bool {
+        (self.0 & 0x7f80) != 0x7f80
+    }
+
