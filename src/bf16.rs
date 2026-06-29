@@ -115,3 +115,9 @@ impl Bf16 {
         (self.0 & 0x8000) != 0
     }
 
+    /// Return the absolute value.
+    #[inline]
+    pub fn abs(self) -> Self {
+        Bf16(self.0 & 0x7fff)
+    }
+
