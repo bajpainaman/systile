@@ -189,3 +189,9 @@ fn one_is_normal() {
     assert!(!Bf16::INFINITY.is_normal());
 }
 
+#[test]
+fn byte_roundtrip() {
+    let b = Bf16::from_f32(3.5);
+    assert_eq!(Bf16::from_le_bytes(b.to_le_bytes()), b);
+}
+
