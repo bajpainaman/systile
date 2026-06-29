@@ -18,3 +18,10 @@ fn map_can_change_type() {
     assert_eq!(ints.to_dense(), vec![1, 2]);
 }
 
+#[test]
+fn map_in_place_mutates() {
+    let mut l = PaddedTileLattice::from_dense(1, 3, &[1.0, 2.0, 3.0], Geometry::TPU_V).unwrap();
+    l.map_in_place(|x| x + 1.0);
+    assert_eq!(l.to_dense(), vec![2.0, 3.0, 4.0]);
+}
+
