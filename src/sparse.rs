@@ -74,3 +74,12 @@ impl<T: IsZero> PaddedTileLattice<T> {
             .collect()
     }
 
+    /// Fraction of storage tiles that are entirely zero, in `0.0..=1.0`.
+    pub fn tile_sparsity(&self) -> f64 {
+        let total = self.num_tiles();
+        if total == 0 {
+            return 0.0;
+        }
+        self.count_zero_tiles() as f64 / total as f64
+    }
+
