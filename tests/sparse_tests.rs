@@ -15,3 +15,9 @@ fn nonzero_tile_is_not_zero() {
     assert!(!l.is_tile_zero(0, 0));
 }
 
+#[test]
+fn count_zero_tiles_on_empty() {
+    let l = PaddedTileLattice::<f32>::zeroed(4, 8, Geometry::TINY).unwrap();
+    assert_eq!(l.count_zero_tiles(), l.num_tiles());
+}
+
