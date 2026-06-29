@@ -90,3 +90,8 @@ fn iter_logical_yields_len_items() {
     assert_eq!(l.iter_logical().count(), 6);
 }
 
+#[test]
+fn tile_slice_has_tile_len() {
+    let l = PaddedTileLattice::<f32>::zeroed(8, 128, Geometry::TPU_V).unwrap();
+    assert_eq!(l.tile_slice(0, 0).len(), Geometry::TPU_V.tile_len());
+}
