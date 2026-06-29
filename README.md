@@ -90,3 +90,9 @@ offset = tile_index * (sublanes * lanes) + sublane * lanes + lane
 over `(sublane, lane)`. That is exactly the order a TPU's vector memory expects, so
 `as_storage_slice()` is copy-ready.
 
+## Status
+
+`systile` is young and the API may shift before `1.0`. The simulator is a reference
+model, not a cycle-accurate one: it reproduces the **blocking and accumulation
+order** of a systolic array (and so its numerics), not its timing.
+
