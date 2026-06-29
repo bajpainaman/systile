@@ -46,3 +46,9 @@ fn pad_cols_uses_lanes() {
     assert_eq!(Geometry::TPU_V.pad_cols(129), 256);
 }
 
+#[test]
+fn tile_counts_are_correct() {
+    assert_eq!(Geometry::TPU_V.tile_rows(9), 2);
+    assert_eq!(Geometry::TPU_V.tile_cols(129), 2);
+}
+
