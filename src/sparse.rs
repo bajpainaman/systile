@@ -7,3 +7,9 @@
 use crate::bf16::Bf16;
 use crate::lattice::PaddedTileLattice;
 
+/// A type that knows what its additive-identity "zero" is.
+pub trait IsZero {
+    /// True if this value is the additive identity.
+    fn is_zero(&self) -> bool;
+}
+
