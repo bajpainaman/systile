@@ -42,3 +42,10 @@ fn relayout_preserves_logical_data() {
     assert_eq!(r.to_dense(), data);
 }
 
+#[test]
+fn relayout_changes_geometry() {
+    let l = PaddedTileLattice::from_dense(3, 4, &[1.0; 12], Geometry::TPU_V).unwrap();
+    let r = l.relayout(Geometry::TINY).unwrap();
+    assert_eq!(*r.geometry(), Geometry::TINY);
+}
+
