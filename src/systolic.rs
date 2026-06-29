@@ -56,3 +56,9 @@ pub struct SystolicStats {
     pub padding_macs: u64,
 }
 
+impl SystolicStats {
+    /// Total MAC slots the array spun through, useful plus padding.
+    pub fn total_macs(&self) -> u64 {
+        self.macs + self.padding_macs
+    }
+
