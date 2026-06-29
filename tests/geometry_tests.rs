@@ -16,3 +16,8 @@ fn tile_len_is_product() {
     assert_eq!(Geometry::TPU_V.tile_len(), 8 * 128);
 }
 
+#[test]
+fn zero_dimension_is_rejected() {
+    assert_eq!(Geometry::new(0, 4, 4), Err(LatticeError::ZeroTileDimension));
+}
+
