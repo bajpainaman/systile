@@ -8,3 +8,14 @@
 
 use crate::error::{LatticeError, Result};
 
+/// The hardware tile shape a lattice is padded and laid out to.
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub struct Geometry {
+    /// Rows per storage tile (the sublane count of a vector register).
+    pub sublanes: usize,
+    /// Columns per storage tile (the lane count of a vector register).
+    pub lanes: usize,
+    /// Side length of the square systolic matrix-unit block.
+    pub mxu: usize,
+}
+
