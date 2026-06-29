@@ -46,3 +46,6 @@ impl Bf16 {
     /// The smallest (most negative) finite `bf16`.
     pub const MIN: Bf16 = Bf16(0xff7f);
 
+    /// The smallest positive normal `bf16`.
+    pub const MIN_POSITIVE: Bf16 = Bf16(0x0080);
+
