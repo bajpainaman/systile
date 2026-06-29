@@ -44,3 +44,19 @@
 #![forbid(unsafe_code)]
 #![warn(missing_docs)]
 
+pub mod bf16;
+pub mod elementwise;
+pub mod error;
+pub mod geometry;
+pub mod iter;
+pub mod lattice;
+pub mod layout;
+pub mod mask;
+pub mod prelude;
+pub mod quantize;
+pub mod reduce;
+pub mod shape;
+pub mod sparse;
+pub mod systolic;
+pub mod transpose;
+
