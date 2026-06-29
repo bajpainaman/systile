@@ -68,3 +68,14 @@ impl PaddedTileLattice<f32> {
         m
     }
 
+    /// Quantise this f32 lattice to an int8 lattice with the given parameters,
+    /// preserving geometry and padding layout.
+    pub fn quantize(&self, params: QuantParams) -> Result<PaddedTileLattice<i8>> {
+        let mut out = PaddedTileLattice::<i8>::zeroed(self.rows(), self.cols(), *self.geometry())?;
+        for (row, col, v) in self.iter_logical() {
+            out.set(row, col, params.quantize(v))?;
+        }
+        Ok(out)
+    }
+}
+
