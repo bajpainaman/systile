@@ -105,3 +105,8 @@ fn positive_and_negative_zero_are_equal() {
     assert_eq!(Bf16::from_f32(0.0), Bf16::from_f32(-0.0));
 }
 
+#[test]
+fn abs_clears_sign() {
+    assert_eq!(Bf16::from_f32(-3.0).abs(), Bf16::from_f32(3.0));
+}
+
