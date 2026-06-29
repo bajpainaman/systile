@@ -147,3 +147,24 @@ impl<T: Clone + Default> PaddedTileLattice<T> {
         })
     }
 
+    /// Build a lattice from a dense, logical, row-major buffer.
+    ///
+    /// The buffer must contain exactly `rows * cols` elements. Padding slots are
+    /// filled with `T::default()`.
+    pub fn from_dense(rows: usize, cols: usize, dense: &[T], geom: Geometry) -> Result<Self> {
+        if dense.len() != rows * cols {
+            return Err(LatticeError::BufferLengthMismatch {
+                expected: rows * cols,
+                actual: dense.len(),
+            });
+        }
+        let mut lattice = PaddedTileLattice::zeroed(rows, cols, geom)?;
+        for row in 0..rows {
+            for col in 0..cols {
+                let off = lattice.layout.offset(row, col);
+                lattice.data[off] = dense[row * cols + col].clone();
+            }
+        }
+        Ok(lattice)
+    }
+
