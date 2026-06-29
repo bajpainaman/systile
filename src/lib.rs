@@ -41,3 +41,6 @@
 //!
 //! See the `examples/` directory for end-to-end walkthroughs.
 
+#![forbid(unsafe_code)]
+#![warn(missing_docs)]
+
