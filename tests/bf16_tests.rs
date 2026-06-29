@@ -78,3 +78,8 @@ fn dynamic_range_survives_large() {
     assert!(Bf16::from_f32(1e30).is_finite());
 }
 
+#[test]
+fn dynamic_range_survives_small() {
+    assert!(Bf16::from_f32(1e-30).to_f32() > 0.0);
+}
+
