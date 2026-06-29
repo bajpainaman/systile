@@ -14,3 +14,10 @@ fn from_dense_preserves_dims() {
     assert_eq!(l.cols(), 3);
 }
 
+#[test]
+fn dense_roundtrip_is_identity() {
+    let data = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+    let l = PaddedTileLattice::from_dense(2, 3, &data, Geometry::TPU_V).unwrap();
+    assert_eq!(l.to_dense(), data.to_vec());
+}
+
