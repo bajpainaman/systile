@@ -46,3 +46,12 @@ fn tile_base_is_multiple_of_tile_len() {
     assert_eq!(layout.tile_base(1, 1), 3 * Geometry::TPU_V.tile_len());
 }
 
+#[test]
+fn mask_marks_logical_region() {
+    let shape = Shape::new(3, 5, &Geometry::TPU_V);
+    let mask = Mask::from_shape(&shape);
+    assert!(mask.is_valid(2, 4));
+    assert!(!mask.is_valid(3, 0));
+    assert!(!mask.is_valid(0, 5));
+}
+
