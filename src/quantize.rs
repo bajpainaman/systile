@@ -44,3 +44,10 @@ impl QuantParams {
         }
     }
 
+    /// Quantise a single real value to int8 with saturation.
+    #[inline]
+    pub fn quantize(&self, value: f32) -> i8 {
+        let q = (value / self.scale).round() + self.zero_point as f32;
+        q.clamp(-128.0, 127.0) as i8
+    }
+
