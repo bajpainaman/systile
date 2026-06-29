@@ -77,3 +77,16 @@ cargo run --example padding_inspect
 cargo bench
 ```
 
+## Layout, in one picture
+
+A `3 × 5` logical matrix on `Geometry::TPU_V` (8 sublanes × 128 lanes) pads up to a
+single `8 × 128` tile. Element `(row, col)` lives at:
+
+```
+offset = tile_index * (sublanes * lanes) + sublane * lanes + lane
+```
+
+`tile_index` walks tiles in row-major order; within a tile the order is row-major
+over `(sublane, lane)`. That is exactly the order a TPU's vector memory expects, so
+`as_storage_slice()` is copy-ready.
+
