@@ -18,3 +18,13 @@ fn naive(a: &[f32], b: &[f32], m: usize, k: usize, n: usize) -> Vec<f32> {
     c
 }
 
+#[test]
+fn small_square_matches_naive() {
+    let a = [1.0, 2.0, 3.0, 4.0];
+    let b = [5.0, 6.0, 7.0, 8.0];
+    let la = PaddedTileLattice::from_dense(2, 2, &a, Geometry::TPU_V).unwrap();
+    let lb = PaddedTileLattice::from_dense(2, 2, &b, Geometry::TPU_V).unwrap();
+    let c = la.matmul(&lb).unwrap();
+    assert_eq!(c.to_dense(), naive(&a, &b, 2, 2, 2));
+}
+
