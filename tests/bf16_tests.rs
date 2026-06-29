@@ -94,3 +94,9 @@ fn nan_never_equals_itself() {
     assert!(n != n);
 }
 
+#[test]
+fn infinity_is_infinite() {
+    assert!(Bf16::INFINITY.is_infinite());
+    assert!(!Bf16::INFINITY.is_finite());
+}
+
