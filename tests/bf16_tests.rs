@@ -138,3 +138,10 @@ fn min_picks_smaller() {
     );
 }
 
+#[test]
+fn sum_accumulates_in_f32() {
+    let xs = [Bf16::from_f32(0.1); 10];
+    let total: Bf16 = xs.into_iter().sum();
+    assert!((total.to_f32() - 1.0).abs() < 0.05);
+}
+
