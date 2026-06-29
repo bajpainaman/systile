@@ -79,3 +79,13 @@ impl PaddedTileLattice<f32> {
     }
 }
 
+impl PaddedTileLattice<i8> {
+    /// Dequantise this int8 lattice back to f32, preserving geometry and layout.
+    pub fn dequantize(&self, params: QuantParams) -> Result<PaddedTileLattice<f32>> {
+        let mut out = PaddedTileLattice::<f32>::zeroed(self.rows(), self.cols(), *self.geometry())?;
+        for (row, col, q) in self.iter_logical() {
+            out.set(row, col, params.dequantize(q))?;
+        }
+        Ok(out)
+    }
+}
