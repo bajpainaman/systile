@@ -38,3 +38,8 @@ impl Mask {
         }
     }
 
+    #[inline]
+    fn bit_index(&self, row: usize, col: usize) -> usize {
+        row * self.padded_cols + col
+    }
+
