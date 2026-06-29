@@ -47,3 +47,10 @@ fn quantize_saturates_low() {
     assert_eq!(q.quantize(-1000.0), -128);
 }
 
+#[test]
+fn asymmetric_maps_min_near_floor() {
+    let q = QuantParams::asymmetric(-3.0, 5.0);
+    let back = q.dequantize(q.quantize(-3.0));
+    assert!((back - (-3.0)).abs() < q.scale * 2.0);
+}
+
