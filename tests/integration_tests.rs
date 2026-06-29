@@ -180,3 +180,9 @@ fn single_element_matmul() {
     assert_eq!(a.matmul(&b).unwrap().to_dense(), vec![12.0]);
 }
 
+#[test]
+fn mean_matches_sum_over_len() {
+    let l = ramp(4, 4);
+    assert_eq!(l.mean().unwrap(), l.sum() / l.len() as f32);
+}
+
