@@ -40,3 +40,12 @@ impl PaddedTileLattice<f32> {
         Some(self.sum() / self.len() as f32)
     }
 
+    /// Per-row sums, length `rows`.
+    pub fn row_sums(&self) -> Vec<f32> {
+        let mut out = vec![0.0f32; self.rows()];
+        for (row, _, v) in self.iter_logical() {
+            out[row] += v;
+        }
+        out
+    }
+
