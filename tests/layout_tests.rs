@@ -55,3 +55,11 @@ fn mask_marks_logical_region() {
     assert!(!mask.is_valid(0, 5));
 }
 
+#[test]
+fn mask_counts_match_shape() {
+    let shape = Shape::new(3, 5, &Geometry::TPU_V);
+    let mask = Mask::from_shape(&shape);
+    assert_eq!(mask.count_valid(), 15);
+    assert_eq!(mask.count_padding(), 8 * 128 - 15);
+}
+
