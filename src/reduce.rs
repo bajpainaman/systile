@@ -12,3 +12,13 @@ impl PaddedTileLattice<f32> {
         self.iter_logical().map(|(_, _, v)| v).sum()
     }
 
+    /// Largest logical element, or `None` if the lattice is empty.
+    pub fn max(&self) -> Option<f32> {
+        self.iter_logical()
+            .map(|(_, _, v)| v)
+            .fold(None, |acc, v| match acc {
+                None => Some(v),
+                Some(m) => Some(if v > m { v } else { m }),
+            })
+    }
+
