@@ -27,3 +27,10 @@ impl IsZero for f64 {
     }
 }
 
+impl IsZero for i8 {
+    #[inline]
+    fn is_zero(&self) -> bool {
+        *self == 0
+    }
+}
+
