@@ -304,3 +304,11 @@ impl Add for Bf16 {
     }
 }
 
+impl Sub for Bf16 {
+    type Output = Bf16;
+    #[inline]
+    fn sub(self, rhs: Self) -> Self {
+        Bf16::from_f32(self.to_f32() - rhs.to_f32())
+    }
+}
+
