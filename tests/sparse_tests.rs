@@ -50,3 +50,10 @@ fn sparsity_is_fraction_of_zero_tiles() {
     assert!((l.tile_sparsity() - expected).abs() < 1e-9);
 }
 
+#[test]
+fn density_complements_sparsity() {
+    let mut l = PaddedTileLattice::<f32>::zeroed(4, 8, Geometry::TINY).unwrap();
+    l.set(0, 0, 1.0).unwrap();
+    assert!((l.tile_density() + l.tile_sparsity() - 1.0).abs() < 1e-9);
+}
+
