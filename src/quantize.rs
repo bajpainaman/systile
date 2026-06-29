@@ -18,3 +18,16 @@ pub struct QuantParams {
     pub zero_point: i8,
 }
 
+impl QuantParams {
+    /// Derive symmetric parameters (zero_point = 0) from a value's magnitude bound.
+    ///
+    /// `abs_max` is the largest absolute value the tensor takes. The int8 range is
+    /// treated as `-127..=127` so that negation stays representable.
+    pub fn symmetric(abs_max: f32) -> Self {
+        let scale = if abs_max == 0.0 { 1.0 } else { abs_max / 127.0 };
+        QuantParams {
+            scale,
+            zero_point: 0,
+        }
+    }
+
