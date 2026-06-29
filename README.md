@@ -96,3 +96,16 @@ over `(sublane, lane)`. That is exactly the order a TPU's vector memory expects,
 model, not a cycle-accurate one: it reproduces the **blocking and accumulation
 order** of a systolic array (and so its numerics), not its timing.
 
+## License
+
+Licensed under either of [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE) at your
+option.
+
+[`Geometry`]: https://docs.rs/systile/latest/systile/geometry/struct.Geometry.html
+[`Layout`]: https://docs.rs/systile/latest/systile/layout/struct.Layout.html
+[`Shape`]: https://docs.rs/systile/latest/systile/shape/struct.Shape.html
+[`Mask`]: https://docs.rs/systile/latest/systile/mask/struct.Mask.html
+[`bf16`]: https://docs.rs/systile/latest/systile/bf16/index.html
+[`systolic`]: https://docs.rs/systile/latest/systile/systolic/index.html
+[`quantize`]: https://docs.rs/systile/latest/systile/quantize/index.html
+[`transpose`]: https://docs.rs/systile/latest/systile/transpose/index.html
