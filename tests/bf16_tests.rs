@@ -59,3 +59,10 @@ fn multiplication_matches_f32_for_exact_values() {
     assert_eq!((a * b).to_f32(), 2.0);
 }
 
+#[test]
+fn division_matches_f32_for_exact_values() {
+    let a = Bf16::from_f32(6.0);
+    let b = Bf16::from_f32(2.0);
+    assert_eq!((a / b).to_f32(), 3.0);
+}
+
