@@ -21,3 +21,14 @@ pub trait Numeric: Copy + Default {
     fn from_acc(value: f32) -> Self;
 }
 
+impl Numeric for f32 {
+    #[inline]
+    fn to_acc(self) -> f32 {
+        self
+    }
+    #[inline]
+    fn from_acc(value: f32) -> Self {
+        value
+    }
+}
+
