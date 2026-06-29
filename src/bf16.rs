@@ -109,3 +109,9 @@ impl Bf16 {
         (self.0 & 0x7fff) == 0
     }
 
+    /// True if the sign bit is set. Note that `-0.0` is negative under this test.
+    #[inline]
+    pub fn is_sign_negative(self) -> bool {
+        (self.0 & 0x8000) != 0
+    }
+
