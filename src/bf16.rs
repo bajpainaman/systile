@@ -328,3 +328,10 @@ impl Div for Bf16 {
     }
 }
 
+impl AddAssign for Bf16 {
+    #[inline]
+    fn add_assign(&mut self, rhs: Self) {
+        *self = *self + rhs;
+    }
+}
+
