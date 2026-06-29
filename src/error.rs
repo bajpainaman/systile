@@ -80,3 +80,6 @@ impl fmt::Display for LatticeError {
     }
 }
 
+#[cfg(feature = "std")]
+impl std::error::Error for LatticeError {}
+
