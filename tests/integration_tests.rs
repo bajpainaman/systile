@@ -81,3 +81,10 @@ fn zip_add_matches_elementwise_sum() {
     }
 }
 
+#[test]
+fn bf16_lattice_roundtrips_through_dense() {
+    let data: Vec<Bf16> = (0..6).map(|i| Bf16::from_f32(i as f32)).collect();
+    let l = PaddedTileLattice::from_dense(2, 3, &data, Geometry::TPU_V).unwrap();
+    assert_eq!(l.to_dense(), data);
+}
+
