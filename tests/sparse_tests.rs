@@ -41,3 +41,12 @@ fn nonzero_coords_match_live_tiles() {
     assert_eq!(coords, vec![(0, 0)]);
 }
 
+#[test]
+fn sparsity_is_fraction_of_zero_tiles() {
+    let mut l = PaddedTileLattice::<f32>::zeroed(4, 8, Geometry::TINY).unwrap();
+    l.set(0, 0, 1.0).unwrap();
+    let total = l.num_tiles() as f64;
+    let expected = (total - 1.0) / total;
+    assert!((l.tile_sparsity() - expected).abs() < 1e-9);
+}
+
