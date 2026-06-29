@@ -103,3 +103,9 @@ fn shape_contains_logical_region_only() {
     assert!(!s.contains(0, 5));
 }
 
+#[test]
+fn tiny_geometry_pads_small() {
+    let s = Shape::new(3, 5, &Geometry::TINY);
+    assert_eq!(s.padded_rows, 4);
+    assert_eq!(s.padded_cols, 8);
+}
