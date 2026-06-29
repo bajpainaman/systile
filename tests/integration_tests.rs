@@ -195,3 +195,22 @@ fn map_in_place_and_map_agree() {
     assert_eq!(mapped.to_dense(), in_place.to_dense());
 }
 
+#[test]
+fn transpose_of_quantized_matches_quantized_transpose() {
+    let l = ramp(3, 4);
+    let params = QuantParams::symmetric(l.abs_max());
+    let a = l
+        .quantize(params)
+        .unwrap()
+        .dequantize(params)
+        .unwrap()
+        .transpose();
+    let b = l
+        .transpose()
+        .quantize(params)
+        .unwrap()
+        .dequantize(params)
+        .unwrap();
+    assert_eq!(a.to_dense(), b.to_dense());
+}
+
