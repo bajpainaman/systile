@@ -49,3 +49,11 @@ fn relayout_changes_geometry() {
     assert_eq!(*r.geometry(), Geometry::TINY);
 }
 
+#[test]
+fn relayout_changes_tile_count() {
+    let l = PaddedTileLattice::from_dense(3, 4, &[1.0; 12], Geometry::TPU_V).unwrap();
+    let r = l.relayout(Geometry::TINY).unwrap();
+    // TPU_V folds 3x4 into one tile; TINY (2x4) needs two row-tiles.
+    assert_eq!(l.num_tiles(), 1);
+    assert_eq!(r.num_tiles(), 2);
+}
