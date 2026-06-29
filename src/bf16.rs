@@ -267,3 +267,17 @@ impl Default for Bf16 {
     }
 }
 
+impl PartialEq for Bf16 {
+    #[inline]
+    fn eq(&self, other: &Self) -> bool {
+        if self.is_nan() || other.is_nan() {
+            return false;
+        }
+        // +0.0 and -0.0 must compare equal.
+        if self.is_zero() && other.is_zero() {
+            return true;
+        }
+        self.0 == other.0
+    }
+}
+
