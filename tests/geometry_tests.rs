@@ -72,3 +72,8 @@ fn shape_tracks_padding() {
     assert_eq!(s.padded_cols, 128);
 }
 
+#[test]
+fn shape_logical_len() {
+    assert_eq!(Shape::new(3, 5, &Geometry::TPU_V).logical_len(), 15);
+}
+
