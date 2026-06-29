@@ -20,3 +20,11 @@ fn dense_roundtrip_through_geometry_relayout() {
     assert_eq!(back.to_dense(), original);
 }
 
+#[test]
+fn transpose_then_matmul_is_gram_matrix() {
+    let a = ramp(2, 3);
+    let g = a.transpose().matmul(&a).unwrap();
+    assert_eq!(g.rows(), 3);
+    assert_eq!(g.cols(), 3);
+}
+
