@@ -7,3 +7,10 @@ fn sample() -> PaddedTileLattice<f32> {
     PaddedTileLattice::from_dense(2, 3, &[1.0, 2.0, 3.0, 4.0, 5.0, 6.0], Geometry::TPU_V).unwrap()
 }
 
+#[test]
+fn from_dense_preserves_dims() {
+    let l = sample();
+    assert_eq!(l.rows(), 2);
+    assert_eq!(l.cols(), 3);
+}
+
