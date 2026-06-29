@@ -40,3 +40,6 @@ impl Bf16 {
     /// A quiet not-a-number.
     pub const NAN: Bf16 = Bf16(0x7fc0);
 
+    /// The largest finite `bf16`.
+    pub const MAX: Bf16 = Bf16(0x7f7f);
+
