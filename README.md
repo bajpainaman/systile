@@ -33,3 +33,21 @@ Because padding is mandatory, the structure tracks both the *logical* shape you
 asked for and the *padded* shape it actually stores, plus a validity [`Mask`] so
 reductions and dense round-trips never fold in garbage.
 
+## Quick start
+
+```rust
+use systile::prelude::*;
+
+let a = PaddedTileLattice::from_dense(
+    2, 3, &[1.0f32, 2.0, 3.0, 4.0, 5.0, 6.0], Geometry::TPU_V,
+).unwrap();
+let b = PaddedTileLattice::from_dense(
+    3, 2, &[7.0f32, 8.0, 9.0, 10.0, 11.0, 12.0], Geometry::TPU_V,
+).unwrap();
+
+// Matmul runs in the same blocked dataflow a systolic array uses.
+let (c, stats) = a.matmul_with_stats(&b).unwrap();
+assert_eq!(c.to_dense(), vec![58.0, 64.0, 139.0, 154.0]);
+println!("array utilisation: {:.1}%", stats.utilisation() * 100.0);
+```
+
