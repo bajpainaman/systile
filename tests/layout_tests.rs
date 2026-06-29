@@ -39,3 +39,10 @@ fn second_tile_starts_after_first() {
     assert_eq!(layout.offset(0, 128), Geometry::TPU_V.tile_len());
 }
 
+#[test]
+fn tile_base_is_multiple_of_tile_len() {
+    let shape = Shape::new(16, 256, &Geometry::TPU_V);
+    let layout = Layout::new(&shape, &Geometry::TPU_V);
+    assert_eq!(layout.tile_base(1, 1), 3 * Geometry::TPU_V.tile_len());
+}
+
