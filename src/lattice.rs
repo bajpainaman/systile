@@ -127,3 +127,23 @@ impl<T> PaddedTileLattice<T> {
     }
 }
 
+impl<T: Clone + Default> PaddedTileLattice<T> {
+    /// Allocate a zero-padded lattice of the given logical shape, with every slot
+    /// (logical and padding alike) set to `T::default()`.
+    pub fn zeroed(rows: usize, cols: usize, geom: Geometry) -> Result<Self> {
+        if geom.sublanes == 0 || geom.lanes == 0 || geom.mxu == 0 {
+            return Err(LatticeError::ZeroTileDimension);
+        }
+        let shape = Shape::new(rows, cols, &geom);
+        let layout = Layout::new(&shape, &geom);
+        let mask = Mask::from_shape(&shape);
+        let data = vec![T::default(); shape.padded_len()];
+        Ok(PaddedTileLattice {
+            geom,
+            shape,
+            layout,
+            mask,
+            data,
+        })
+    }
+
