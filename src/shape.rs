@@ -30,3 +30,9 @@ impl Shape {
         }
     }
 
+    /// Number of logical elements (`rows * cols`).
+    #[inline]
+    pub const fn logical_len(&self) -> usize {
+        self.rows * self.cols
+    }
+
