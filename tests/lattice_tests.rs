@@ -21,3 +21,15 @@ fn dense_roundtrip_is_identity() {
     assert_eq!(l.to_dense(), data.to_vec());
 }
 
+#[test]
+fn wrong_buffer_length_is_rejected() {
+    let err = PaddedTileLattice::from_dense(2, 3, &[1.0, 2.0], Geometry::TPU_V).unwrap_err();
+    assert_eq!(
+        err,
+        LatticeError::BufferLengthMismatch {
+            expected: 6,
+            actual: 2
+        }
+    );
+}
+
