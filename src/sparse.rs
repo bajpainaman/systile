@@ -63,3 +63,14 @@ impl<T: IsZero> PaddedTileLattice<T> {
             .count()
     }
 
+    /// Collect the `(tile_row, tile_col)` coordinates of every non-zero tile.
+    ///
+    /// These are exactly the tiles a sparsity-aware kernel needs to feed through
+    /// the systolic array; the rest can be skipped.
+    pub fn nonzero_tile_coords(&self) -> Vec<(usize, usize)> {
+        self.iter_tiles()
+            .filter(|(_, _, slice)| !slice.iter().all(|x| x.is_zero()))
+            .map(|(r, c, _)| (r, c))
+            .collect()
+    }
+
