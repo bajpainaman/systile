@@ -21,3 +21,8 @@ fn zero_dimension_is_rejected() {
     assert_eq!(Geometry::new(0, 4, 4), Err(LatticeError::ZeroTileDimension));
 }
 
+#[test]
+fn valid_geometry_is_accepted() {
+    assert!(Geometry::new(8, 128, 128).is_ok());
+}
+
