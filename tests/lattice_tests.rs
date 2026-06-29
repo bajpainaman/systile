@@ -54,3 +54,12 @@ fn set_updates_value() {
     assert_eq!(l.get(0, 0), Some(&99.0));
 }
 
+#[test]
+fn set_out_of_bounds_errors() {
+    let mut l = sample();
+    assert_eq!(
+        l.set(5, 5, 0.0),
+        Err(LatticeError::IndexOutOfBounds { row: 5, col: 5 })
+    );
+}
+
