@@ -38,3 +38,31 @@ impl<T: Clone + Default> PaddedTileLattice<T> {
         }
     }
 
+    /// Combine two lattices element-wise with `f`. Both must share shape and geometry.
+    pub fn zip_with<F>(
+        &self,
+        other: &PaddedTileLattice<T>,
+        mut f: F,
+    ) -> Result<PaddedTileLattice<T>>
+    where
+        F: FnMut(&T, &T) -> T,
+    {
+        if self.geometry() != other.geometry() {
+            return Err(LatticeError::GeometryMismatch);
+        }
+        if self.rows() != other.rows() || self.cols() != other.cols() {
+            return Err(LatticeError::ContractionMismatch {
+                lhs_cols: self.cols(),
+                rhs_rows: other.rows(),
+            });
+        }
+        let mut out = PaddedTileLattice::<T>::zeroed(self.rows(), self.cols(), *self.geometry())?;
+        for row in 0..self.rows() {
+            for col in 0..self.cols() {
+                let combined = f(self.get(row, col).unwrap(), other.get(row, col).unwrap());
+                out.set(row, col, combined)?;
+            }
+        }
+        Ok(out)
+    }
+}
