@@ -13,3 +13,9 @@ fn symmetric_max_maps_to_127() {
     assert_eq!(q.quantize(1.0), 127);
 }
 
+#[test]
+fn symmetric_negation_is_representable() {
+    let q = QuantParams::symmetric(1.0);
+    assert_eq!(q.quantize(-1.0), -127);
+}
+
