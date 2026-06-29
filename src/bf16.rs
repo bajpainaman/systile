@@ -55,3 +55,9 @@ impl Bf16 {
         Bf16(bits)
     }
 
+    /// Return the raw 16-bit pattern of this value.
+    #[inline]
+    pub const fn to_bits(self) -> u16 {
+        self.0
+    }
+
