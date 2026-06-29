@@ -46,3 +46,9 @@ impl Geometry {
         })
     }
 
+    /// Number of elements in a single storage tile (`sublanes * lanes`).
+    #[inline]
+    pub const fn tile_len(&self) -> usize {
+        self.sublanes * self.lanes
+    }
+
