@@ -17,3 +17,8 @@ fn one_has_canonical_bits() {
     assert_eq!(Bf16::ONE.to_bits(), 0x3f80);
 }
 
+#[test]
+fn negation_flips_sign_bit() {
+    assert_eq!((-Bf16::ONE).to_bits(), 0xbf80);
+}
+
