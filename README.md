@@ -2,6 +2,8 @@
 
 **A TPU-native tiled tensor data structure, written from scratch in Rust.**
 
+[![crates.io](https://img.shields.io/crates/v/systile.svg)](https://crates.io/crates/systile)
+[![docs.rs](https://img.shields.io/docsrs/systile)](https://docs.rs/systile)
 [![CI](https://github.com/bajpainaman/systile/actions/workflows/ci.yml/badge.svg)](https://github.com/bajpainaman/systile/actions/workflows/ci.yml)
 [![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](#license)
 
