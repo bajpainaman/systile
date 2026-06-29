@@ -123,3 +123,10 @@ fn fill_padding_changes_padding_slots() {
     assert_eq!(l.as_storage_slice()[off], -1.0);
 }
 
+#[test]
+fn multi_tile_shape_has_many_tiles() {
+    let l = PaddedTileLattice::<f32>::zeroed(130, 257, Geometry::TPU_V).unwrap();
+    // 130 -> 17 row tiles (ceil 130/8 = 17), 257 -> 3 col tiles.
+    assert_eq!(l.num_tiles(), 17 * 3);
+}
+
