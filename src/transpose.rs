@@ -35,3 +35,12 @@ impl<T: Clone + Default> PaddedTileLattice<T> {
         Ok(out)
     }
 
+    /// True if transposing twice returns the original logical data. Always true;
+    /// exposed as a cheap invariant hook for the `paranoid` feature and tests.
+    pub fn is_transpose_involutive(&self) -> bool
+    where
+        T: PartialEq,
+    {
+        self.transpose().transpose().to_dense() == self.to_dense()
+    }
+}
