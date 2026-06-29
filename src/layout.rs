@@ -28,3 +28,18 @@ impl Layout {
         }
     }
 
+    /// Map a padded coordinate to its linear storage offset.
+    ///
+    /// The coordinate must already be inside the padded shape; callers that work
+    /// with logical coordinates should ensure `row < padded_rows` and likewise
+    /// for `col`.
+    #[inline]
+    pub fn offset(&self, row: usize, col: usize) -> usize {
+        let tile_row = row / self.sublanes;
+        let tile_col = col / self.lanes;
+        let sub = row % self.sublanes;
+        let lane = col % self.lanes;
+        let tile_index = tile_row * self.tiles_per_row + tile_col;
+        tile_index * self.tile_len + sub * self.lanes + lane
+    }
+
