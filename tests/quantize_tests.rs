@@ -68,3 +68,13 @@ fn lattice_quantize_preserves_shape() {
     assert_eq!(q.cols(), 3);
 }
 
+#[test]
+fn lattice_quantize_dequantize_roundtrip() {
+    let data: Vec<f32> = (0..16).map(|i| (i as f32 - 8.0) * 0.5).collect();
+    let l = PaddedTileLattice::from_dense(4, 4, &data, Geometry::TPU_V).unwrap();
+    let params = QuantParams::symmetric(l.abs_max());
+    let back = l.quantize(params).unwrap().dequantize(params).unwrap();
+    for (orig, got) in data.iter().zip(back.to_dense().iter()) {
+        assert!((orig - got).abs() <= params.scale, "orig={orig} got={got}");
+    }
+}
