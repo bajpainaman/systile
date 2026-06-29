@@ -169,3 +169,9 @@ fn recip_of_two_is_half() {
     assert_eq!(Bf16::from_f32(2.0).recip().to_f32(), 0.5);
 }
 
+#[test]
+fn mul_add_matches_f32() {
+    let r = Bf16::from_f32(2.0).mul_add(Bf16::from_f32(3.0), Bf16::from_f32(1.0));
+    assert_eq!(r.to_f32(), 7.0);
+}
+
