@@ -23,3 +23,15 @@ impl<T: Clone + Default> PaddedTileLattice<T> {
         out
     }
 
+    /// Re-tile the same logical data under a new geometry.
+    pub fn relayout(&self, geom: Geometry) -> crate::error::Result<PaddedTileLattice<T>> {
+        let mut out = PaddedTileLattice::zeroed(self.rows(), self.cols(), geom)?;
+        for row in 0..self.rows() {
+            for col in 0..self.cols() {
+                let value = self.get(row, col).unwrap().clone();
+                out.set(row, col, value)?;
+            }
+        }
+        Ok(out)
+    }
+
