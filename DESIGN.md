@@ -29,3 +29,10 @@ The whole design follows from three properties of the hardware:
 `Geometry` captures the first two as `(sublanes, lanes, mxu)`. The dtype facts live
 in the `bf16` and `quantize` modules.
 
+## Logical vs. padded shape
+
+Because tiling is mandatory, a `3 × 5` matrix cannot be stored as 15 elements. It
+is stored as a full `8 × 128` tile with 1009 padding slots. The structure therefore
+tracks two shapes at once — the logical one the user reasons about and the padded
+one the hardware stores — in the `Shape` type.
+
