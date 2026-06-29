@@ -36,3 +36,9 @@ impl<T> PaddedTileLattice<T> {
         &self.shape
     }
 
+    /// The address layout used to translate coordinates into storage offsets.
+    #[inline]
+    pub fn layout(&self) -> &Layout {
+        &self.layout
+    }
+
