@@ -89,3 +89,10 @@ impl Geometry {
     }
 }
 
+impl Default for Geometry {
+    #[inline]
+    fn default() -> Self {
+        Geometry::TPU_V
+    }
+}
+
