@@ -38,3 +38,8 @@ fn empty_mean_is_none() {
     assert_eq!(l.mean(), None);
 }
 
+#[test]
+fn row_sums_are_per_row() {
+    assert_eq!(sample().row_sums(), vec![6.0, 15.0]);
+}
+
