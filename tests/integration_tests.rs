@@ -105,3 +105,13 @@ fn matmul_associativity_holds_on_small_f32() {
     assert_eq!(left.to_dense(), right.to_dense());
 }
 
+#[test]
+fn padding_fill_does_not_affect_matmul() {
+    let mut a = ramp(2, 3);
+    let b = ramp(3, 2);
+    let clean = a.matmul(&b).unwrap().to_dense();
+    a.fill_padding(999.0);
+    let filled = a.matmul(&b).unwrap().to_dense();
+    assert_eq!(clean, filled);
+}
+
