@@ -57,3 +57,9 @@ impl Layout {
         (row, col)
     }
 
+    /// The linear offset of the first element of tile `(tile_row, tile_col)`.
+    #[inline]
+    pub fn tile_base(&self, tile_row: usize, tile_col: usize) -> usize {
+        (tile_row * self.tiles_per_row + tile_col) * self.tile_len
+    }
+
