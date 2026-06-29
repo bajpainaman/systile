@@ -116,3 +116,14 @@ impl<T> PaddedTileLattice<T> {
         Some(&mut self.data[off])
     }
 
+    /// Overwrite the logical element at `(row, col)`.
+    pub fn set(&mut self, row: usize, col: usize, value: T) -> Result<()> {
+        if !self.shape.contains(row, col) {
+            return Err(LatticeError::IndexOutOfBounds { row, col });
+        }
+        let off = self.layout.offset(row, col);
+        self.data[off] = value;
+        Ok(())
+    }
+}
+
