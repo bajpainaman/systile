@@ -121,3 +121,9 @@ impl Bf16 {
         Bf16(self.0 & 0x7fff)
     }
 
+    /// Return a number with the magnitude of `self` and the sign of `sign`.
+    #[inline]
+    pub fn copysign(self, sign: Self) -> Self {
+        Bf16((self.0 & 0x7fff) | (sign.0 & 0x8000))
+    }
+
