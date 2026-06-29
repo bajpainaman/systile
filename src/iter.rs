@@ -69,3 +69,9 @@ impl<'a, T> Iterator for TileIter<'a, T> {
         ))
     }
 
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        let remaining = self.total - self.next;
+        (remaining, Some(remaining))
+    }
+}
+
