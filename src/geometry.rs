@@ -96,3 +96,12 @@ impl Default for Geometry {
     }
 }
 
+impl core::fmt::Debug for Geometry {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(
+            f,
+            "Geometry {{ {}x{} tile, {}x{} mxu }}",
+            self.sublanes, self.lanes, self.mxu, self.mxu
+        )
+    }
+}
