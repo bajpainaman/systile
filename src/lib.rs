@@ -45,9 +45,12 @@
 #![warn(missing_docs)]
 
 pub mod bf16;
+pub mod codebook;
 pub mod elementwise;
 pub mod error;
 pub mod geometry;
+pub mod holo;
+pub mod hyper;
 pub mod iter;
 pub mod lattice;
 pub mod layout;
@@ -61,8 +64,11 @@ pub mod systolic;
 pub mod transpose;
 
 pub use bf16::Bf16;
+pub use codebook::Codebook;
 pub use error::{LatticeError, Result};
 pub use geometry::Geometry;
+pub use holo::HoloMemory;
+pub use hyper::Hyper;
 pub use lattice::PaddedTileLattice;
 pub use mask::Mask;
 pub use quantize::QuantParams;

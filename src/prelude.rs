@@ -2,8 +2,11 @@
 //! build, transform, and multiply lattices.
 
 pub use crate::bf16::Bf16;
+pub use crate::codebook::Codebook;
 pub use crate::error::{LatticeError, Result};
 pub use crate::geometry::Geometry;
+pub use crate::holo::HoloMemory;
+pub use crate::hyper::Hyper;
 pub use crate::lattice::PaddedTileLattice;
 pub use crate::mask::Mask;
 pub use crate::quantize::QuantParams;
