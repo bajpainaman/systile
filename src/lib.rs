@@ -60,3 +60,11 @@ pub mod sparse;
 pub mod systolic;
 pub mod transpose;
 
+pub use bf16::Bf16;
+pub use error::{LatticeError, Result};
+pub use geometry::Geometry;
+pub use lattice::PaddedTileLattice;
+pub use mask::Mask;
+pub use quantize::QuantParams;
+pub use shape::Shape;
+pub use systolic::SystolicStats;
