@@ -58,3 +58,13 @@ impl QuantParams {
     }
 }
 
+impl PaddedTileLattice<f32> {
+    /// Find the largest absolute logical value, useful for symmetric calibration.
+    pub fn abs_max(&self) -> f32 {
+        let mut m = 0.0f32;
+        for (_, _, v) in self.iter_logical() {
+            m = m.max(v.abs());
+        }
+        m
+    }
+
