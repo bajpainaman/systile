@@ -43,3 +43,17 @@ impl Layout {
         tile_index * self.tile_len + sub * self.lanes + lane
     }
 
+    /// Inverse of [`Layout::offset`]: recover the padded coordinate from an offset.
+    #[inline]
+    pub fn coord(&self, offset: usize) -> (usize, usize) {
+        let tile_index = offset / self.tile_len;
+        let within = offset % self.tile_len;
+        let tile_row = tile_index / self.tiles_per_row;
+        let tile_col = tile_index % self.tiles_per_row;
+        let sub = within / self.lanes;
+        let lane = within % self.lanes;
+        let row = tile_row * self.sublanes + sub;
+        let col = tile_col * self.lanes + lane;
+        (row, col)
+    }
+
