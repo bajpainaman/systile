@@ -52,3 +52,9 @@ fn tile_counts_are_correct() {
     assert_eq!(Geometry::TPU_V.tile_cols(129), 2);
 }
 
+#[test]
+fn alignment_detection() {
+    assert!(Geometry::TPU_V.is_aligned(8, 128));
+    assert!(!Geometry::TPU_V.is_aligned(3, 5));
+}
+
