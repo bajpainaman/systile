@@ -4,3 +4,5 @@
 //! fold in garbage. Every reduction here walks only logical elements, which is the
 //! whole reason the lattice keeps a [`crate::mask::Mask`] around.
 
+use crate::lattice::PaddedTileLattice;
+
