@@ -177,3 +177,17 @@ impl Bf16 {
         Bf16::from_f32(self.to_f32().mul_add(a.to_f32(), b.to_f32()))
     }
 
+    /// `1.0`, `0.0`, or `-1.0` according to the sign; NaN maps to NaN.
+    #[inline]
+    pub fn signum(self) -> Self {
+        if self.is_nan() {
+            Bf16::NAN
+        } else if self.is_zero() {
+            self
+        } else if self.is_sign_negative() {
+            Bf16::NEG_ONE
+        } else {
+            Bf16::ONE
+        }
+    }
+
