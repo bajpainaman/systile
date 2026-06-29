@@ -11,3 +11,10 @@ fn map_applies_to_logical_only() {
     assert_eq!(doubled.to_dense(), vec![2.0, 4.0, 6.0, 8.0, 10.0, 12.0]);
 }
 
+#[test]
+fn map_can_change_type() {
+    let l = PaddedTileLattice::from_dense(1, 2, &[1.5f32, 2.5], Geometry::TPU_V).unwrap();
+    let ints: PaddedTileLattice<i32> = l.map(|x| *x as i32);
+    assert_eq!(ints.to_dense(), vec![1, 2]);
+}
+
