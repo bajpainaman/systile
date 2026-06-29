@@ -48,3 +48,10 @@ fn col_sums_are_per_column() {
     assert_eq!(sample().col_sums(), vec![5.0, 7.0, 9.0]);
 }
 
+#[test]
+fn sum_with_negative_padding_fill_is_unaffected() {
+    let mut l = sample();
+    l.fill_padding(-1000.0);
+    // Padding is filled with a huge negative, but the sum still ignores it.
+    assert_eq!(l.sum(), 21.0);
+}
