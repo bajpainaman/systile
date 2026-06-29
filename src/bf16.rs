@@ -342,3 +342,10 @@ impl SubAssign for Bf16 {
     }
 }
 
+impl MulAssign for Bf16 {
+    #[inline]
+    fn mul_assign(&mut self, rhs: Self) {
+        *self = *self * rhs;
+    }
+}
+
