@@ -22,3 +22,14 @@ impl<T> PaddedTileLattice<T> {
         self.shape().padded_cols / self.geometry().lanes
     }
 
+    /// Iterate every tile in row-major tile order, yielding
+    /// `(tile_row, tile_col, slice)`.
+    pub fn iter_tiles(&self) -> TileIter<'_, T> {
+        TileIter {
+            lattice: self,
+            next: 0,
+            total: self.num_tiles(),
+        }
+    }
+}
+
