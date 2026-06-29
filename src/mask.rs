@@ -5,3 +5,5 @@
 //! is a real value or padding. It is the bookkeeping that lets a matmul skip
 //! garbage and a dense round-trip drop it.
 
+use crate::shape::Shape;
+
