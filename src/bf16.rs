@@ -370,3 +370,8 @@ impl fmt::Debug for Bf16 {
     }
 }
 
+impl fmt::Display for Bf16 {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        fmt::Display::fmt(&self.to_f32(), f)
+    }
+}
