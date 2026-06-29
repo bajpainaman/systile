@@ -131,3 +131,21 @@ fn num_tiles_matches_iter_count_for_many_shapes() {
     }
 }
 
+#[test]
+fn identity_matmul_via_quantized_path_is_close() {
+    let mut id = PaddedTileLattice::<f32>::zeroed(4, 4, Geometry::TPU_V).unwrap();
+    for i in 0..4 {
+        id.set(i, i, 1.0).unwrap();
+    }
+    let m = ramp(4, 4);
+    let params = QuantParams::symmetric(m.abs_max());
+    let mq = m.quantize(params).unwrap().dequantize(params).unwrap();
+    let out = mq.matmul(&id).unwrap();
+    for (got, want) in out.to_dense().iter().zip(m.to_dense().iter()) {
+        assert!(
+            (got - want).abs() <= params.scale + 1e-3,
+            "got={got} want={want}"
+        );
+    }
+}
+
