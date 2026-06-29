@@ -16,3 +16,8 @@ fn max_finds_largest() {
     assert_eq!(sample().max(), Some(6.0));
 }
 
+#[test]
+fn min_finds_smallest() {
+    assert_eq!(sample().min(), Some(1.0));
+}
+
