@@ -27,3 +27,10 @@ fn double_transpose_is_identity() {
     assert_eq!(l.transpose().transpose().to_dense(), data);
 }
 
+#[test]
+fn transpose_is_involutive_helper() {
+    let data: Vec<f32> = (0..12).map(|x| x as f32).collect();
+    let l = PaddedTileLattice::from_dense(3, 4, &data, Geometry::TPU_V).unwrap();
+    assert!(l.is_transpose_involutive());
+}
+
