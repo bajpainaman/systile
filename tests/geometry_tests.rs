@@ -63,3 +63,12 @@ fn default_geometry_is_tpu_v() {
     assert_eq!(Geometry::default(), Geometry::TPU_V);
 }
 
+#[test]
+fn shape_tracks_padding() {
+    let s = Shape::new(3, 5, &Geometry::TPU_V);
+    assert_eq!(s.rows, 3);
+    assert_eq!(s.cols, 5);
+    assert_eq!(s.padded_rows, 8);
+    assert_eq!(s.padded_cols, 128);
+}
+
