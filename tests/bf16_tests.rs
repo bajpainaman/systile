@@ -88,3 +88,9 @@ fn nan_is_nan() {
     assert!(Bf16::from_f32(f32::NAN).is_nan());
 }
 
+#[test]
+fn nan_never_equals_itself() {
+    let n = Bf16::NAN;
+    assert!(n != n);
+}
+
