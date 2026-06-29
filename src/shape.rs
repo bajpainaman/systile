@@ -48,3 +48,13 @@ impl Shape {
         self.padded_len() - self.logical_len()
     }
 
+    /// Fraction of stored elements that are pure padding, in `0.0..=1.0`.
+    #[inline]
+    pub fn padding_ratio(&self) -> f64 {
+        if self.padded_len() == 0 {
+            0.0
+        } else {
+            self.padding_len() as f64 / self.padded_len() as f64
+        }
+    }
+
