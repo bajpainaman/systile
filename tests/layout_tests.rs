@@ -84,3 +84,9 @@ fn iter_tiles_yields_num_tiles() {
     assert_eq!(l.iter_tiles().count(), l.num_tiles());
 }
 
+#[test]
+fn iter_logical_yields_len_items() {
+    let l = PaddedTileLattice::from_dense(2, 3, &[1.0; 6], Geometry::TPU_V).unwrap();
+    assert_eq!(l.iter_logical().count(), 6);
+}
+
