@@ -34,3 +34,15 @@ impl Geometry {
         mxu: 4,
     };
 
+    /// Build a geometry, validating that every dimension is non-zero.
+    pub fn new(sublanes: usize, lanes: usize, mxu: usize) -> Result<Self> {
+        if sublanes == 0 || lanes == 0 || mxu == 0 {
+            return Err(LatticeError::ZeroTileDimension);
+        }
+        Ok(Geometry {
+            sublanes,
+            lanes,
+            mxu,
+        })
+    }
+
