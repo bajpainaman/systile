@@ -186,3 +186,12 @@ fn mean_matches_sum_over_len() {
     assert_eq!(l.mean().unwrap(), l.sum() / l.len() as f32);
 }
 
+#[test]
+fn map_in_place_and_map_agree() {
+    let l = ramp(3, 3);
+    let mapped = l.map(|x| x + 1.0);
+    let mut in_place = l.clone();
+    in_place.map_in_place(|x| x + 1.0);
+    assert_eq!(mapped.to_dense(), in_place.to_dense());
+}
+
