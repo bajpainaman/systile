@@ -155,3 +155,12 @@ fn from_i8_works() {
     assert_eq!(Bf16::from(7i8).to_f32(), 7.0);
 }
 
+#[test]
+fn clamp_bounds_value() {
+    let lo = Bf16::from_f32(0.0);
+    let hi = Bf16::from_f32(1.0);
+    assert_eq!(Bf16::from_f32(2.0).clamp(lo, hi), hi);
+    assert_eq!(Bf16::from_f32(-1.0).clamp(lo, hi), lo);
+    assert_eq!(Bf16::from_f32(0.5).clamp(lo, hi).to_f32(), 0.5);
+}
+
