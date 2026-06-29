@@ -58,3 +58,9 @@ impl Shape {
         }
     }
 
+    /// True if the logical shape needs no padding under this geometry.
+    #[inline]
+    pub const fn is_exact(&self) -> bool {
+        self.rows == self.padded_rows && self.cols == self.padded_cols
+    }
+
