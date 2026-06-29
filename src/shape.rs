@@ -36,3 +36,9 @@ impl Shape {
         self.rows * self.cols
     }
 
+    /// Number of stored elements after padding (`padded_rows * padded_cols`).
+    #[inline]
+    pub const fn padded_len(&self) -> usize {
+        self.padded_rows * self.padded_cols
+    }
+
