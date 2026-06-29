@@ -66,3 +66,10 @@ fn division_matches_f32_for_exact_values() {
     assert_eq!((a / b).to_f32(), 3.0);
 }
 
+#[test]
+fn add_assign_works() {
+    let mut a = Bf16::from_f32(1.0);
+    a += Bf16::from_f32(1.0);
+    assert_eq!(a.to_f32(), 2.0);
+}
+
