@@ -19,3 +19,14 @@ pub struct Shape {
     pub padded_cols: usize,
 }
 
+impl Shape {
+    /// Derive a padded shape from a logical `rows x cols` and a geometry.
+    pub fn new(rows: usize, cols: usize, geom: &Geometry) -> Self {
+        Shape {
+            rows,
+            cols,
+            padded_rows: geom.pad_rows(rows),
+            padded_cols: geom.pad_cols(cols),
+        }
+    }
+
