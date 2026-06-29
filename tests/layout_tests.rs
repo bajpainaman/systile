@@ -63,3 +63,10 @@ fn mask_counts_match_shape() {
     assert_eq!(mask.count_padding(), 8 * 128 - 15);
 }
 
+#[test]
+fn exact_shape_has_full_mask() {
+    let shape = Shape::new(8, 128, &Geometry::TPU_V);
+    let mask = Mask::from_shape(&shape);
+    assert!(mask.is_full());
+}
+
