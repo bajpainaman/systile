@@ -81,3 +81,9 @@ without destroying the layout. The `quantize` module maps an `f32` lattice to an
 `i8` lattice element-by-element through the same `(row, col)` accessors, so the
 hardware tiling survives the dtype change untouched.
 
+## Non-goals
+
+`systile` is deliberately *not* a general n-dimensional tensor library, an autograd
+engine, or a device runtime. It is the host-side data structure and the reference
+numerics. Keeping that scope small is what lets the layout stay honest to the
+hardware.
