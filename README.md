@@ -66,3 +66,14 @@ println!("array utilisation: {:.1}%", stats.utilisation() * 100.0);
 - **Element-wise maps and reductions** — padding-correct by construction.
 - `#![forbid(unsafe_code)]`, no required dependencies.
 
+## Examples
+
+```
+cargo run --example quickstart
+cargo run --example bf16_roundtrip
+cargo run --example quantize_matmul
+cargo run --example sparsity_report
+cargo run --example padding_inspect
+cargo bench
+```
+
