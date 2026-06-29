@@ -88,3 +88,10 @@ fn shape_padding_len() {
     assert_eq!(s.padding_len(), 8 * 128 - 15);
 }
 
+#[test]
+fn exact_shape_has_no_padding() {
+    let s = Shape::new(8, 128, &Geometry::TPU_V);
+    assert!(s.is_exact());
+    assert_eq!(s.padding_len(), 0);
+}
+
