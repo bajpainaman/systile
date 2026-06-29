@@ -8,3 +8,12 @@
 use crate::geometry::Geometry;
 use crate::shape::Shape;
 
+/// Precomputed strides for translating coordinates into storage offsets.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub struct Layout {
+    sublanes: usize,
+    lanes: usize,
+    tile_len: usize,
+    tiles_per_row: usize,
+}
+
