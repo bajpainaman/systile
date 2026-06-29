@@ -28,3 +28,14 @@ fn transpose_then_matmul_is_gram_matrix() {
     assert_eq!(g.cols(), 3);
 }
 
+#[test]
+fn gram_matrix_is_symmetric() {
+    let a = ramp(2, 3);
+    let g = a.transpose().matmul(&a).unwrap();
+    for i in 0..3 {
+        for j in 0..3 {
+            assert_eq!(g.get(i, j), g.get(j, i));
+        }
+    }
+}
+
