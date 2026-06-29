@@ -168,3 +168,14 @@ impl<T: Clone + Default> PaddedTileLattice<T> {
         Ok(lattice)
     }
 
+    /// Materialise a dense, logical, row-major buffer, dropping all padding.
+    pub fn to_dense(&self) -> Vec<T> {
+        let mut out = Vec::with_capacity(self.shape.logical_len());
+        for row in 0..self.shape.rows {
+            for col in 0..self.shape.cols {
+                out.push(self.data[self.layout.offset(row, col)].clone());
+            }
+        }
+        out
+    }
+
