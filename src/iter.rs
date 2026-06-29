@@ -10,3 +10,9 @@ impl<T> PaddedTileLattice<T> {
         &self.as_storage_slice()[base..base + len]
     }
 
+    /// Number of storage tiles along the row axis.
+    #[inline]
+    pub fn tile_rows(&self) -> usize {
+        self.shape().padded_rows / self.geometry().sublanes
+    }
+
