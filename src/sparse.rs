@@ -34,3 +34,10 @@ impl IsZero for i8 {
     }
 }
 
+impl IsZero for i32 {
+    #[inline]
+    fn is_zero(&self) -> bool {
+        *self == 0
+    }
+}
+
