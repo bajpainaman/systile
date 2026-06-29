@@ -40,3 +40,13 @@ fn identity_is_neutral() {
     assert_eq!(c.to_dense(), data);
 }
 
+#[test]
+fn rectangular_matches_naive() {
+    let a: Vec<f32> = (0..6).map(|x| x as f32).collect();
+    let b: Vec<f32> = (0..6).map(|x| (x + 1) as f32).collect();
+    let la = PaddedTileLattice::from_dense(2, 3, &a, Geometry::TPU_V).unwrap();
+    let lb = PaddedTileLattice::from_dense(3, 2, &b, Geometry::TPU_V).unwrap();
+    let c = la.matmul(&lb).unwrap();
+    assert_eq!(c.to_dense(), naive(&a, &b, 2, 3, 2));
+}
+
