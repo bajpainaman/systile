@@ -35,3 +35,9 @@ fn quantize_dequantize_is_close() {
     }
 }
 
+#[test]
+fn quantize_saturates_high() {
+    let q = QuantParams::symmetric(1.0);
+    assert_eq!(q.quantize(1000.0), 127);
+}
+
