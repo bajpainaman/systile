@@ -91,3 +91,9 @@ impl<T> PaddedTileLattice<T> {
         &self.data
     }
 
+    /// Mutably borrow the raw padded storage buffer in tiled order.
+    #[inline]
+    pub fn as_storage_slice_mut(&mut self) -> &mut [T] {
+        &mut self.data
+    }
+
