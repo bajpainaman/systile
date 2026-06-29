@@ -171,3 +171,9 @@ impl Bf16 {
         Bf16::from_f32(self.to_f32().recip())
     }
 
+    /// `self * a + b` computed in f32 and narrowed once, like a fused multiply-add.
+    #[inline]
+    pub fn mul_add(self, a: Self, b: Self) -> Self {
+        Bf16::from_f32(self.to_f32().mul_add(a.to_f32(), b.to_f32()))
+    }
+
