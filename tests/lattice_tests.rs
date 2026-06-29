@@ -107,3 +107,10 @@ fn is_empty_only_when_no_elements() {
         .is_empty());
 }
 
+#[test]
+fn fill_padding_does_not_touch_logical() {
+    let mut l = sample();
+    l.fill_padding(-1.0);
+    assert_eq!(l.to_dense(), vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0]);
+}
+
