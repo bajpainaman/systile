@@ -143,3 +143,19 @@ impl Bf16 {
         }
     }
 
+    /// Return the smaller of two values, ignoring NaN where possible.
+    #[inline]
+    pub fn min(self, other: Self) -> Self {
+        if self.is_nan() {
+            return other;
+        }
+        if other.is_nan() {
+            return self;
+        }
+        if self.to_f32() <= other.to_f32() {
+            self
+        } else {
+            other
+        }
+    }
+
