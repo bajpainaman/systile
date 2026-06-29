@@ -114,3 +114,12 @@ fn fill_padding_does_not_touch_logical() {
     assert_eq!(l.to_dense(), vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0]);
 }
 
+#[test]
+fn fill_padding_changes_padding_slots() {
+    let mut l = sample();
+    l.fill_padding(-1.0);
+    // The slot just past the last logical column is padding.
+    let off = l.layout().offset(0, 3);
+    assert_eq!(l.as_storage_slice()[off], -1.0);
+}
+
