@@ -58,3 +58,13 @@ Tiles are visited row-major; within a tile, elements are row-major over
 what makes `as_storage_slice()` copy-ready. `Layout` precomputes the strides and
 also provides the inverse map, which the sparsity and padding-fill paths rely on.
 
+## The matmul simulator
+
+`systolic` is a *reference model*, not a timing model. It reproduces the part of a
+systolic array that affects results — the blocking into `mxu × mxu` weight loads and
+the f32 accumulation across the contraction dimension — and nothing about cycles or
+latency. Because the accumulation order matches the hardware, an `f32` result is
+bit-identical to the device and a `bf16` result tracks it closely. The simulator
+also reports padding MACs, so you can see the utilisation cost of an awkward shape
+before you pay for it on real silicon.
+
