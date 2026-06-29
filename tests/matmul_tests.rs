@@ -89,3 +89,12 @@ fn stats_count_useful_macs() {
     assert_eq!(stats.macs, 2 * 2 * 3);
 }
 
+#[test]
+fn utilisation_below_one_when_padded() {
+    let a = PaddedTileLattice::from_dense(2, 3, &[1.0; 6], Geometry::TPU_V).unwrap();
+    let b = PaddedTileLattice::from_dense(3, 2, &[1.0; 6], Geometry::TPU_V).unwrap();
+    let (_, stats) = a.matmul_with_stats(&b).unwrap();
+    assert!(stats.utilisation() < 1.0);
+    assert!(stats.padding_macs > 0);
+}
+
