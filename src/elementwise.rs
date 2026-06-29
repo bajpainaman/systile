@@ -25,3 +25,16 @@ impl<T: Clone + Default> PaddedTileLattice<T> {
         out
     }
 
+    /// Apply `f` to every logical element in place.
+    pub fn map_in_place<F>(&mut self, mut f: F)
+    where
+        F: FnMut(&T) -> T,
+    {
+        for row in 0..self.rows() {
+            for col in 0..self.cols() {
+                let mapped = f(self.get(row, col).unwrap());
+                self.set(row, col, mapped).unwrap();
+            }
+        }
+    }
+
