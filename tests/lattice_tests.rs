@@ -70,3 +70,9 @@ fn get_mut_allows_mutation() {
     assert_eq!(l.get(1, 1), Some(&42.0));
 }
 
+#[test]
+fn zeroed_starts_empty() {
+    let l = PaddedTileLattice::<f32>::zeroed(4, 4, Geometry::TPU_V).unwrap();
+    assert_eq!(l.to_dense(), vec![0.0; 16]);
+}
+
