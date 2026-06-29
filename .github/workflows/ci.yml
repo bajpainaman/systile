@@ -8,13 +8,13 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  RUSTFLAGS: "-D warnings"
 
 jobs:
   test:
     name: test (${{ matrix.rust }})
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         rust: [stable, beta]
     steps:
@@ -23,15 +23,25 @@ jobs:
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.rust }}
-          components: clippy, rustfmt
-      - name: Format
-        run: cargo fmt --all -- --check
-      - name: Clippy
-        run: cargo clippy --all-targets --all-features
       - name: Test
         run: cargo test --all-features
       - name: Doc
         run: cargo doc --no-deps --all-features
+
+  lint:
+    name: fmt + clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        # Pinned so a newly-released clippy lint cannot break a green build.
+        uses: dtolnay/rust-toolchain@1.88.0
+        with:
+          components: clippy, rustfmt
+      - name: Format
+        run: cargo fmt --all -- --check
+      - name: Clippy
+        run: cargo clippy --all-targets --all-features -- -D warnings
 
   msrv:
     name: msrv (1.74)

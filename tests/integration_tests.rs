@@ -41,7 +41,7 @@ fn gram_matrix_is_symmetric() {
 
 #[test]
 fn quantize_roundtrip_preserves_sign_pattern() {
-    let data: Vec<f32> = (0..16).map(|i| (i as f32 - 8.0)).collect();
+    let data: Vec<f32> = (0..16).map(|i| i as f32 - 8.0).collect();
     let l = PaddedTileLattice::from_dense(4, 4, &data, Geometry::TPU_V).unwrap();
     let params = QuantParams::symmetric(l.abs_max());
     let back = l.quantize(params).unwrap().dequantize(params).unwrap();
