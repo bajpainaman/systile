@@ -95,3 +95,13 @@ fn f32_to_bf16_lattice_via_map() {
     assert_eq!(b.get(1, 2).unwrap().to_f32(), 5.0);
 }
 
+#[test]
+fn matmul_associativity_holds_on_small_f32() {
+    let a = ramp(2, 2);
+    let b = ramp(2, 2);
+    let c = ramp(2, 2);
+    let left = a.matmul(&b).unwrap().matmul(&c).unwrap();
+    let right = a.matmul(&b.matmul(&c).unwrap()).unwrap();
+    assert_eq!(left.to_dense(), right.to_dense());
+}
+
