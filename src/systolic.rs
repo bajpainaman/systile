@@ -13,3 +13,11 @@ use crate::error::{LatticeError, Result};
 use crate::geometry::Geometry;
 use crate::lattice::PaddedTileLattice;
 
+/// A numeric element the systolic simulator can stream and accumulate.
+pub trait Numeric: Copy + Default {
+    /// Widen to the f32 accumulator domain.
+    fn to_acc(self) -> f32;
+    /// Narrow an f32 accumulator back to the element type.
+    fn from_acc(value: f32) -> Self;
+}
+
