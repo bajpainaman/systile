@@ -82,3 +82,10 @@ impl Geometry {
         cols.div_ceil(self.lanes)
     }
 
+    /// True if both row and column counts already sit on tile boundaries.
+    #[inline]
+    pub const fn is_aligned(&self, rows: usize, cols: usize) -> bool {
+        rows % self.sublanes == 0 && cols % self.lanes == 0
+    }
+}
+
