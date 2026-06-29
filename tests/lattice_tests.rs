@@ -76,3 +76,9 @@ fn zeroed_starts_empty() {
     assert_eq!(l.to_dense(), vec![0.0; 16]);
 }
 
+#[test]
+fn padded_len_includes_padding() {
+    let l = sample();
+    assert_eq!(l.padded_len(), 8 * 128);
+}
+
