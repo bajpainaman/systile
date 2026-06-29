@@ -79,3 +79,9 @@ impl Bf16 {
         Bf16((rounded >> 16) as u16)
     }
 
+    /// Convert this `bf16` back to an `f32` exactly (the low 16 bits are zero).
+    #[inline]
+    pub fn to_f32(self) -> f32 {
+        f32::from_bits((self.0 as u32) << 16)
+    }
+
