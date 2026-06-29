@@ -123,3 +123,11 @@ fn storage_slice_length_is_stable_across_set() {
     assert_eq!(l.as_storage_slice().len(), before);
 }
 
+#[test]
+fn num_tiles_matches_iter_count_for_many_shapes() {
+    for &(r, c) in &[(1, 1), (8, 128), (9, 129), (130, 257)] {
+        let l = PaddedTileLattice::<f32>::zeroed(r, c, Geometry::TPU_V).unwrap();
+        assert_eq!(l.num_tiles(), l.iter_tiles().count());
+    }
+}
+
