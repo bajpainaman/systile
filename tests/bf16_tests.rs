@@ -164,3 +164,8 @@ fn clamp_bounds_value() {
     assert_eq!(Bf16::from_f32(0.5).clamp(lo, hi).to_f32(), 0.5);
 }
 
+#[test]
+fn recip_of_two_is_half() {
+    assert_eq!(Bf16::from_f32(2.0).recip().to_f32(), 0.5);
+}
+
