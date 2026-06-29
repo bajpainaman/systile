@@ -32,3 +32,27 @@ pub enum LatticeError {
     },
 }
 
+impl fmt::Debug for LatticeError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            LatticeError::BufferLengthMismatch { expected, actual } => {
+                write!(
+                    f,
+                    "BufferLengthMismatch {{ expected: {expected}, actual: {actual} }}"
+                )
+            }
+            LatticeError::ZeroTileDimension => write!(f, "ZeroTileDimension"),
+            LatticeError::GeometryMismatch => write!(f, "GeometryMismatch"),
+            LatticeError::ContractionMismatch { lhs_cols, rhs_rows } => {
+                write!(
+                    f,
+                    "ContractionMismatch {{ lhs_cols: {lhs_cols}, rhs_rows: {rhs_rows} }}"
+                )
+            }
+            LatticeError::IndexOutOfBounds { row, col } => {
+                write!(f, "IndexOutOfBounds {{ row: {row}, col: {col} }}")
+            }
+        }
+    }
+}
+
