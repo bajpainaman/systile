@@ -30,3 +30,9 @@ impl<T> PaddedTileLattice<T> {
         &self.geom
     }
 
+    /// The logical-and-padded shape of this lattice.
+    #[inline]
+    pub fn shape(&self) -> &Shape {
+        &self.shape
+    }
+
