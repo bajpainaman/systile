@@ -81,3 +81,11 @@ fn geometry_mismatch_is_rejected() {
     assert_eq!(a.matmul(&b).unwrap_err(), LatticeError::GeometryMismatch);
 }
 
+#[test]
+fn stats_count_useful_macs() {
+    let a = PaddedTileLattice::from_dense(2, 3, &[1.0; 6], Geometry::TPU_V).unwrap();
+    let b = PaddedTileLattice::from_dense(3, 2, &[1.0; 6], Geometry::TPU_V).unwrap();
+    let (_, stats) = a.matmul_with_stats(&b).unwrap();
+    assert_eq!(stats.macs, 2 * 2 * 3);
+}
+
