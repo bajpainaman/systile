@@ -70,3 +70,9 @@ impl Geometry {
         Geometry::round_up(cols, self.lanes)
     }
 
+    /// How many storage tiles tall a padded `rows` is.
+    #[inline]
+    pub const fn tile_rows(&self, rows: usize) -> usize {
+        rows.div_ceil(self.sublanes)
+    }
+
