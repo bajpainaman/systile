@@ -73,3 +73,69 @@ impl SystolicStats {
     }
 }
 
+impl<T: Numeric> PaddedTileLattice<T> {
+    /// Multiply two lattices, returning the product and dataflow statistics.
+    ///
+    /// `self` is `m x k`, `rhs` is `k x n`, the result is `m x n`. The product is
+    /// accumulated entirely in f32 (like the hardware accumulator) and narrowed to
+    /// `T` exactly once per output element.
+    pub fn matmul_with_stats(
+        &self,
+        rhs: &PaddedTileLattice<T>,
+    ) -> Result<(PaddedTileLattice<T>, SystolicStats)> {
+        if self.cols() != rhs.rows() {
+            return Err(LatticeError::ContractionMismatch {
+                lhs_cols: self.cols(),
+                rhs_rows: rhs.rows(),
+            });
+        }
+        if self.geometry() != rhs.geometry() {
+            return Err(LatticeError::GeometryMismatch);
+        }
+
+        let geom: Geometry = *self.geometry();
+        let m = self.rows();
+        let k = self.cols();
+        let n = rhs.cols();
+        let mxu = geom.mxu;
+
+        // Dense f32 accumulator, exactly like a TPU's matrix accumulator banks.
+        let mut acc = vec![0.0f32; m * n];
+        let mut stats = SystolicStats::default();
+
+        for i0 in (0..m).step_by(mxu) {
+            for j0 in (0..n).step_by(mxu) {
+                stats.output_blocks += 1;
+                for k0 in (0..k).step_by(mxu) {
+                    stats.weight_block_loads += 1;
+                    let i_end = (i0 + mxu).min(m);
+                    let j_end = (j0 + mxu).min(n);
+                    let k_end = (k0 + mxu).min(k);
+                    for i in i0..i_end {
+                        for j in j0..j_end {
+                            let mut sum = acc[i * n + j];
+                            for kk in k0..k_end {
+                                let a = self.get(i, kk).unwrap().to_acc();
+                                let b = rhs.get(kk, j).unwrap().to_acc();
+                                sum += a * b;
+                                stats.macs += 1;
+                            }
+                            acc[i * n + j] = sum;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Account for the padding MACs the hardware would also have to spin through:
+        // the array always runs whole mxu-blocks, padding included.
+        let padded_macs = (Geometry::round_up(m, mxu) as u64)
+            * (Geometry::round_up(n, mxu) as u64)
+            * (Geometry::round_up(k, mxu) as u64);
+        stats.padding_macs = padded_macs.saturating_sub(stats.macs);
+
+        let dense: Vec<T> = acc.into_iter().map(T::from_acc).collect();
+        let out = PaddedTileLattice::from_dense(m, n, &dense, geom)?;
+        Ok((out, stats))
+    }
+
