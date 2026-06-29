@@ -6,3 +6,16 @@
 
 use crate::geometry::Geometry;
 
+/// A two-dimensional shape together with the padding implied by a [`Geometry`].
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub struct Shape {
+    /// The number of rows the user asked for.
+    pub rows: usize,
+    /// The number of columns the user asked for.
+    pub cols: usize,
+    /// The row count after padding up to a sublane-tile boundary.
+    pub padded_rows: usize,
+    /// The column count after padding up to a lane-tile boundary.
+    pub padded_cols: usize,
+}
+
