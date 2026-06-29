@@ -94,3 +94,8 @@ fn storage_slice_is_padded_length() {
     assert_eq!(l.as_storage_slice().len(), l.padded_len());
 }
 
+#[test]
+fn len_is_logical_product() {
+    assert_eq!(sample().len(), 6);
+}
+
