@@ -159,3 +159,11 @@ fn row_sums_equal_matmul_with_ones() {
     }
 }
 
+#[test]
+fn tile_density_plus_sparsity_is_one_after_quantize() {
+    let mut l = PaddedTileLattice::<f32>::zeroed(16, 16, Geometry::TPU_V).unwrap();
+    l.set(3, 3, 5.0).unwrap();
+    let q = l.quantize(QuantParams::symmetric(5.0)).unwrap();
+    assert!((q.tile_density() + q.tile_sparsity() - 1.0).abs() < 1e-9);
+}
+
