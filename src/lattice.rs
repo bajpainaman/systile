@@ -54,3 +54,9 @@ impl<T> PaddedTileLattice<T> {
         self.shape.rows
     }
 
+    /// Logical column count.
+    #[inline]
+    pub fn cols(&self) -> usize {
+        self.shape.cols
+    }
+
