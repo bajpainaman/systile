@@ -78,3 +78,9 @@ fn mask_tile_count_matches_manual() {
     assert_eq!(mask.count_valid_in_tile(0, 0, 8, 128), 15);
 }
 
+#[test]
+fn iter_tiles_yields_num_tiles() {
+    let l = PaddedTileLattice::<f32>::zeroed(16, 256, Geometry::TPU_V).unwrap();
+    assert_eq!(l.iter_tiles().count(), l.num_tiles());
+}
+
