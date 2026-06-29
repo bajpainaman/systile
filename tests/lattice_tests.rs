@@ -130,3 +130,10 @@ fn multi_tile_shape_has_many_tiles() {
     assert_eq!(l.num_tiles(), 17 * 3);
 }
 
+#[test]
+fn clone_is_independent() {
+    let l = sample();
+    let mut c = l.clone();
+    c.set(0, 0, 0.0).unwrap();
+    assert_eq!(l.get(0, 0), Some(&1.0));
+}
