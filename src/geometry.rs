@@ -6,3 +6,5 @@
 //! [`Geometry`] captures those three numbers so the rest of the crate can pad,
 //! lay out, and iterate in the order the hardware expects.
 
+use crate::error::{LatticeError, Result};
+
