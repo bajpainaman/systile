@@ -41,3 +41,10 @@ impl IsZero for i32 {
     }
 }
 
+impl IsZero for Bf16 {
+    #[inline]
+    fn is_zero(&self) -> bool {
+        Bf16::is_zero(*self)
+    }
+}
+
