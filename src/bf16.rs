@@ -49,3 +49,9 @@ impl Bf16 {
     /// The smallest positive normal `bf16`.
     pub const MIN_POSITIVE: Bf16 = Bf16(0x0080);
 
+    /// Construct a `bf16` directly from its raw 16-bit pattern.
+    #[inline]
+    pub const fn from_bits(bits: u16) -> Self {
+        Bf16(bits)
+    }
+
