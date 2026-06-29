@@ -99,3 +99,11 @@ fn len_is_logical_product() {
     assert_eq!(sample().len(), 6);
 }
 
+#[test]
+fn is_empty_only_when_no_elements() {
+    assert!(!sample().is_empty());
+    assert!(PaddedTileLattice::<f32>::zeroed(0, 0, Geometry::TPU_V)
+        .unwrap()
+        .is_empty());
+}
+
