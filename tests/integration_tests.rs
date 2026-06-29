@@ -149,3 +149,13 @@ fn identity_matmul_via_quantized_path_is_close() {
     }
 }
 
+#[test]
+fn row_sums_equal_matmul_with_ones() {
+    let a = ramp(3, 4);
+    let ones = PaddedTileLattice::from_dense(4, 1, &[1.0; 4], Geometry::TPU_V).unwrap();
+    let prod = a.matmul(&ones).unwrap();
+    for (i, sum) in a.row_sums().iter().enumerate() {
+        assert_eq!(prod.get(i, 0).unwrap(), sum);
+    }
+}
+
