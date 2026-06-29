@@ -98,3 +98,17 @@ fn utilisation_below_one_when_padded() {
     assert!(stats.padding_macs > 0);
 }
 
+#[test]
+fn bf16_matmul_is_approximately_correct() {
+    let a: Vec<Bf16> = (0..4).map(|x| Bf16::from_f32(x as f32)).collect();
+    let b: Vec<Bf16> = (0..4).map(|x| Bf16::from_f32((x + 1) as f32)).collect();
+    let la = PaddedTileLattice::from_dense(2, 2, &a, Geometry::TPU_V).unwrap();
+    let lb = PaddedTileLattice::from_dense(2, 2, &b, Geometry::TPU_V).unwrap();
+    let c = la.matmul(&lb).unwrap();
+    let af: Vec<f32> = a.iter().map(|x| x.to_f32()).collect();
+    let bf: Vec<f32> = b.iter().map(|x| x.to_f32()).collect();
+    let reference = naive(&af, &bf, 2, 2, 2);
+    for (got, want) in c.to_dense().iter().zip(reference.iter()) {
+        assert!((got.to_f32() - want).abs() < 0.5, "got {got:?} want {want}");
+    }
+}
