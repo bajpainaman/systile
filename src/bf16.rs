@@ -281,3 +281,10 @@ impl PartialEq for Bf16 {
     }
 }
 
+impl PartialOrd for Bf16 {
+    #[inline]
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.to_f32().partial_cmp(&other.to_f32())
+    }
+}
+
