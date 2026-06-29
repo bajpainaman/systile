@@ -40,3 +40,9 @@ fn pad_rows_uses_sublanes() {
     assert_eq!(Geometry::TPU_V.pad_rows(9), 16);
 }
 
+#[test]
+fn pad_cols_uses_lanes() {
+    assert_eq!(Geometry::TPU_V.pad_cols(1), 128);
+    assert_eq!(Geometry::TPU_V.pad_cols(129), 256);
+}
+
