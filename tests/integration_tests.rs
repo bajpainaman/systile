@@ -167,3 +167,9 @@ fn tile_density_plus_sparsity_is_one_after_quantize() {
     assert!((q.tile_density() + q.tile_sparsity() - 1.0).abs() < 1e-9);
 }
 
+#[test]
+fn empty_lattice_to_dense_is_empty() {
+    let l = PaddedTileLattice::<f32>::zeroed(0, 0, Geometry::TPU_V).unwrap();
+    assert!(l.to_dense().is_empty());
+}
+
