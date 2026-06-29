@@ -145,3 +145,8 @@ fn sum_accumulates_in_f32() {
     assert!((total.to_f32() - 1.0).abs() < 0.05);
 }
 
+#[test]
+fn default_is_zero() {
+    assert_eq!(Bf16::default(), Bf16::ZERO);
+}
+
