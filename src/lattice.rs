@@ -66,3 +66,9 @@ impl<T> PaddedTileLattice<T> {
         self.shape.logical_len()
     }
 
+    /// True if the lattice has no logical elements.
+    #[inline]
+    pub fn is_empty(&self) -> bool {
+        self.shape.logical_len() == 0
+    }
+
