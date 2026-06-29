@@ -88,3 +88,9 @@ fn one_small_matrix_is_a_single_tile() {
     assert_eq!(l.num_tiles(), 1);
 }
 
+#[test]
+fn storage_slice_is_padded_length() {
+    let l = sample();
+    assert_eq!(l.as_storage_slice().len(), l.padded_len());
+}
+
