@@ -83,3 +83,8 @@ impl<T: IsZero> PaddedTileLattice<T> {
         self.count_zero_tiles() as f64 / total as f64
     }
 
+    /// Fraction of storage tiles that contain at least one non-zero element.
+    pub fn tile_density(&self) -> f64 {
+        1.0 - self.tile_sparsity()
+    }
+}
