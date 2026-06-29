@@ -62,3 +62,14 @@ impl SystolicStats {
         self.macs + self.padding_macs
     }
 
+    /// Fraction of MAC work that did useful (non-padding) computation.
+    pub fn utilisation(&self) -> f64 {
+        let total = self.total_macs();
+        if total == 0 {
+            0.0
+        } else {
+            self.macs as f64 / total as f64
+        }
+    }
+}
+
