@@ -48,3 +48,11 @@ impl IsZero for Bf16 {
     }
 }
 
+impl<T: IsZero> PaddedTileLattice<T> {
+    /// True if every element of tile `(tile_row, tile_col)` is zero.
+    pub fn is_tile_zero(&self, tile_row: usize, tile_col: usize) -> bool {
+        self.tile_slice(tile_row, tile_col)
+            .iter()
+            .all(|x| x.is_zero())
+    }
+
