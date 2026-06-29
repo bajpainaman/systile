@@ -23,3 +23,12 @@ fn offset_and_coord_are_inverses() {
     }
 }
 
+#[test]
+fn within_tile_is_row_major_sublane_lane() {
+    let shape = Shape::new(8, 128, &Geometry::TPU_V);
+    let layout = Layout::new(&shape, &Geometry::TPU_V);
+    // Same tile: moving one column moves one slot; moving one sublane moves `lanes`.
+    assert_eq!(layout.offset(0, 1), 1);
+    assert_eq!(layout.offset(1, 0), 128);
+}
+
