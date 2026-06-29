@@ -54,3 +54,13 @@ fn quantize_roundtrip_preserves_sign_pattern() {
     }
 }
 
+#[test]
+fn sparsity_survives_relayout() {
+    let mut l = PaddedTileLattice::<f32>::zeroed(16, 16, Geometry::TPU_V).unwrap();
+    l.set(0, 0, 1.0).unwrap();
+    let dense_nonzero = l.to_dense().iter().filter(|x| **x != 0.0).count();
+    let r = l.relayout(Geometry::TINY).unwrap();
+    let dense_nonzero_after = r.to_dense().iter().filter(|x| **x != 0.0).count();
+    assert_eq!(dense_nonzero, dense_nonzero_after);
+}
+
