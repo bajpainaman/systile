@@ -60,3 +60,11 @@ fn lattice_abs_max_finds_extreme() {
     assert_eq!(l.abs_max(), 7.0);
 }
 
+#[test]
+fn lattice_quantize_preserves_shape() {
+    let l = PaddedTileLattice::from_dense(2, 3, &[1.0; 6], Geometry::TPU_V).unwrap();
+    let q = l.quantize(QuantParams::symmetric(1.0)).unwrap();
+    assert_eq!(q.rows(), 2);
+    assert_eq!(q.cols(), 3);
+}
+
