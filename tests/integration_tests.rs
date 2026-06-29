@@ -115,3 +115,11 @@ fn padding_fill_does_not_affect_matmul() {
     assert_eq!(clean, filled);
 }
 
+#[test]
+fn storage_slice_length_is_stable_across_set() {
+    let mut l = ramp(3, 5);
+    let before = l.as_storage_slice().len();
+    l.set(0, 0, 42.0).unwrap();
+    assert_eq!(l.as_storage_slice().len(), before);
+}
+
