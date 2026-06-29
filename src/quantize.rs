@@ -6,3 +6,6 @@
 //! dequantise. This module provides the per-tensor affine map and the lattice
 //! conversions, preserving the hardware tiling throughout.
 
+use crate::error::Result;
+use crate::lattice::PaddedTileLattice;
+
