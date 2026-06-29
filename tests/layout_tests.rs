@@ -70,3 +70,11 @@ fn exact_shape_has_full_mask() {
     assert!(mask.is_full());
 }
 
+#[test]
+fn mask_tile_count_matches_manual() {
+    let shape = Shape::new(3, 5, &Geometry::TPU_V);
+    let mask = Mask::from_shape(&shape);
+    // The single tile holds the whole 3x5 logical block: 15 valid slots.
+    assert_eq!(mask.count_valid_in_tile(0, 0, 8, 128), 15);
+}
+
