@@ -3,6 +3,7 @@
 
 pub use crate::automaton::TensorAutomaton;
 pub use crate::bf16::Bf16;
+pub use crate::classifier::HoloClassifier;
 pub use crate::codebook::Codebook;
 pub use crate::error::{LatticeError, Result};
 pub use crate::geometry::Geometry;
@@ -10,6 +11,7 @@ pub use crate::graph::TensorGraph;
 pub use crate::holo::HoloMemory;
 pub use crate::holoset::HoloSet;
 pub use crate::hyper::Hyper;
+pub use crate::index::{Hit, TensorIndex};
 pub use crate::lattice::PaddedTileLattice;
 pub use crate::mask::Mask;
 pub use crate::quantize::QuantParams;

@@ -46,6 +46,7 @@
 
 pub mod automaton;
 pub mod bf16;
+pub mod classifier;
 pub mod codebook;
 pub mod elementwise;
 pub mod error;
@@ -54,6 +55,7 @@ pub mod graph;
 pub mod holo;
 pub mod holoset;
 pub mod hyper;
+pub mod index;
 pub mod iter;
 pub mod lattice;
 pub mod layout;
@@ -71,6 +73,7 @@ pub mod transpose;
 
 pub use automaton::TensorAutomaton;
 pub use bf16::Bf16;
+pub use classifier::HoloClassifier;
 pub use codebook::Codebook;
 pub use error::{LatticeError, Result};
 pub use geometry::Geometry;
@@ -78,6 +81,7 @@ pub use graph::TensorGraph;
 pub use holo::HoloMemory;
 pub use holoset::HoloSet;
 pub use hyper::Hyper;
+pub use index::{Hit, TensorIndex};
 pub use lattice::PaddedTileLattice;
 pub use mask::Mask;
 pub use quantize::QuantParams;
