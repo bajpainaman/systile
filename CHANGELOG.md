@@ -6,6 +6,22 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.10.0]
+
+### Added
+
+- `pillars_bench` benchmark: a dependency-free micro-benchmark of each pillar's
+  headline operation (`cargo bench --bench pillars_bench`).
+- `capstone_rag` example: composes pillars into a retrieval-augmented classifier
+  (`TensorIndex` → `TensorAttention` → decision), all matmuls, 100% on the demo.
+
+### Changed
+
+- The systolic reference matmul now materialises both operands to flat buffers
+  once and streams them contiguously (RHS transposed), making it ~6× faster on the
+  headline holographic lookup while preserving the dataflow and results.
+- Crate-level documentation rewritten as a pillar landing page.
+
 ## [0.9.0]
 
 ### Added — spectra, decoding, and attention as matmul
@@ -134,7 +150,8 @@ engine, built on a new hyperdimensional (VSA) substrate:
 - Transpose, relayout, element-wise maps, and padding-correct reductions.
 - Examples, integration tests, and a dependency-free benchmark harness.
 
-[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.10.0...HEAD
+[0.10.0]: https://github.com/bajpainaman/systile/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/bajpainaman/systile/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/bajpainaman/systile/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/bajpainaman/systile/compare/v0.6.0...v0.7.0

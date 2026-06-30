@@ -71,7 +71,7 @@ cargo add systile
 ```toml
 # Cargo.toml
 [dependencies]
-systile = "0.9"
+systile = "0.10"
 ```
 
 No required dependencies; `#![forbid(unsafe_code)]`; builds on stable Rust ≥ 1.74.
@@ -143,7 +143,21 @@ cargo run --release --example pagerank_demo    # PageRank as power-iteration mat
 cargo run --release --example dft_spectrum     # DFT as a Fourier-matrix matmul
 cargo run --release --example viterbi_decode   # most-likely HMM path via max-plus matmul
 cargo run --release --example attention_retrieval # softmax attention as soft retrieval
+cargo run --release --example capstone_rag     # compose pillars: index → attention → decide
 ```
+
+## Benchmarks
+
+A dependency-free benchmark of each pillar's headline operation:
+
+```
+cargo bench --bench pillars_bench
+```
+
+The systolic matmul is a reference model (correctness over raw speed), but it is
+tuned to materialise operands once and stream them contiguously, so the pillar ops
+run at usable sizes — e.g. a 200×8192×1000 holographic lookup, an exact k-NN over
+2000 vectors, a 256-point DFT, and 32×128 attention all complete in milliseconds.
 
 ## Features
 
