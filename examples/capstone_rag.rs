@@ -43,9 +43,9 @@ fn main() {
     // Build the corpus index and remember each item's class as a one-hot vector.
     let mut index = TensorIndex::new(dim);
     let mut labels: Vec<Vec<f32>> = Vec::new();
-    for c in 0..n_classes {
+    for (c, centroid) in centroids.iter().enumerate() {
         for i in 0..per_class {
-            index.add(noisy(&centroids[c], 0x1000 + (c as u64) * 1000 + i, 0.6));
+            index.add(noisy(centroid, 0x1000 + (c as u64) * 1000 + i, 0.6));
             let mut onehot = vec![0.0f32; n_classes];
             onehot[c] = 1.0;
             labels.push(onehot);
@@ -60,9 +60,9 @@ fn main() {
     let k = 8;
     let mut correct = 0;
     let mut total = 0;
-    for c in 0..n_classes {
+    for (c, centroid) in centroids.iter().enumerate() {
         for i in 0..30 {
-            let query = noisy(&centroids[c], 0x9000 + (c as u64) * 1000 + i, 0.6);
+            let query = noisy(centroid, 0x9000 + (c as u64) * 1000 + i, 0.6);
 
             // 1. retrieve nearest neighbours (one matmul inside).
             let hits = index.search(&query, k);
