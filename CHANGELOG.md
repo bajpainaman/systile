@@ -6,6 +6,21 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.5.0]
+
+### Added — learning and retrieval as matmul
+
+- `classifier` module: `HoloClassifier`, a hyperdimensional classifier that trains
+  by bundling samples into per-class prototype vectors (no gradients) and classifies
+  a whole batch with one matmul against the prototype matrix. Includes scalar/level
+  encoding for quantised features.
+- `index` module: `TensorIndex`, an exact nearest-neighbour index that scores a
+  batch of queries against the entire corpus in a single matmul and returns top-k
+  hits (`Hit`).
+- Examples `classifier_demo` (100% on a synthetic clustering task) and
+  `index_search` (exact k-NN over 2000 vectors in one GEMM).
+- README rewritten around the five-pillar framing.
+
 ## [0.4.0]
 
 ### Added — finite-state computation as matmul
@@ -68,7 +83,8 @@ engine, built on a new hyperdimensional (VSA) substrate:
 - Transpose, relayout, element-wise maps, and padding-correct reductions.
 - Examples, integration tests, and a dependency-free benchmark harness.
 
-[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/bajpainaman/systile/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/bajpainaman/systile/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/bajpainaman/systile/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/bajpainaman/systile/compare/v0.1.0...v0.2.0

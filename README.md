@@ -1,24 +1,40 @@
 # systile
 
-**A TPU-native tiled tensor data structure, written from scratch in Rust.**
+**Matmul-native data structures & algorithms, written from scratch in Rust.**
 
 [![crates.io](https://img.shields.io/crates/v/systile.svg)](https://crates.io/crates/systile)
 [![docs.rs](https://img.shields.io/docsrs/systile)](https://docs.rs/systile)
 [![CI](https://github.com/bajpainaman/systile/actions/workflows/ci.yml/badge.svg)](https://github.com/bajpainaman/systile/actions/workflows/ci.yml)
 [![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](#license)
 
-Most tensor libraries store a flat row-major buffer and bolt on a layout pass when
-it is time to talk to an accelerator. `systile` inverts that: its core data
-structure, the **Padded Tile Lattice**, is laid out the way a Tensor Processing
-Unit's memory is addressed from the very first allocation. The flat buffer it owns
-is *already* in device order, so handing data to hardware is a `memcpy` rather than
-a transpose.
+One idea, taken to its conclusion: **build data structures and algorithms whose
+dominant operation is a dense matrix multiply.** On a CPU that is usually a bad
+trade — a hash map beats a matmul-based map, a queue beats matrix powers. But on a
+systolic accelerator (a TPU's matrix unit, a GPU's tensor cores) dense matmul is the
+*cheap* primitive and branch-y pointer chasing is the expensive one, so the trade
+flips. `systile` is a library of structures built for that world.
 
-This is a host-side data structure and a CPU reference simulator. You do **not**
-need a TPU to use it — the point is to model the constraints a TPU imposes
-(mandatory tiling, padding, `(sublane, lane)` addressing, bf16/int8 dtypes, square
-matrix-unit blocking) so you can prepare, validate, and reason about layouts before
-anything touches real silicon.
+It starts with a substrate — the **Padded Tile Lattice**, a tensor laid out the way
+a TPU's memory is actually addressed (`8 × 128` `(sublane, lane)` tiles, padding,
+bf16/int8 dtypes) with a CPU reference simulator of the systolic matmul — and then
+builds five pillars on top of it. You do **not** need a TPU: everything runs on the
+CPU model, honestly framed as *matmul-native* (maps efficiently onto the MXU), not
+*TPU-exclusive*.
+
+## Five pillars
+
+| # | Pillar | Structures | One-line demo |
+| --- | --- | --- | --- |
+| 0 | **Tensor substrate** | `PaddedTileLattice`, `Bf16`, `systolic`, `quantize` | a matmul in true device layout |
+| 1 | **Data as superposition** (VSA) | `HoloMemory`, `HoloSet`, `HoloSequence`, `Resonator` | 200 KV pairs in one 32 KB vector, 1 matmul, 100% recall |
+| 2 | **Algorithms as semiring matrix powers** | `TensorGraph`, `semiring` | shortest paths as `⌈log₂n⌉` GEMMs |
+| 3 | **Computation as matmul** | `TensorAutomaton` | decide divisibility by matrix multiply |
+| 4 | **Learning as bundling** | `HoloClassifier` | train by addition, classify by one matmul |
+| 5 | **Retrieval as matmul** | `TensorIndex` | exact k-NN over a corpus in one GEMM |
+
+Every structure reduces its core operation to a matmul through the same systolic
+engine. The honest framing, capacity math, and citations live in
+**[HOLOGRAPHIC.md](HOLOGRAPHIC.md)**.
 
 ## Why a data structure "for TPUs"?
 
@@ -89,6 +105,8 @@ cargo run --release --example holo_precision   # f32 vs bf16 cleanup recall
 cargo run           --example holo_analogy      # "Dollar of Mexico?" -> peso, zero training
 cargo run --release --example graph_paths      # shortest paths as tropical matrix powers
 cargo run --release --example automaton_divisibility  # decide divisibility by matmul
+cargo run --release --example classifier_demo  # train by bundling, classify by matmul
+cargo run --release --example index_search     # exact k-NN search as one matmul
 ```
 
 ## Features
@@ -108,6 +126,12 @@ cargo run --release --example automaton_divisibility  # decide divisibility by m
   vector × per-symbol transition matrix. Branchless string recognition; a whole
   batch advances with `|alphabet|` masked matmuls per position (e.g. decide
   divisibility by matrix multiply).
+- **`HoloClassifier`** — a hyperdimensional classifier: *train by bundling* (no
+  gradients, no epochs — fitting is vector addition) and *classify by matmul*
+  against the class-prototype matrix. 100% on the synthetic clustering demo.
+- **`TensorIndex`** — exact nearest-neighbour / similarity search (the vector-DB
+  workload): score a batch of queries against the whole corpus in one
+  `(b × dim)·(dim × n)` matmul, then take top-k.
 - **`PaddedTileLattice<T>`** — the core 2-D tiled tensor, generic over element type.
 - **`bf16`** — a from-scratch bfloat16 with round-to-nearest-even and a full set of
   arithmetic / comparison / conversion impls.

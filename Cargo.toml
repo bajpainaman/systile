@@ -1,6 +1,6 @@
 [package]
 name = "systile"
-version = "0.4.0"
+version = "0.5.0"
 edition = "2021"
 rust-version = "1.74"
 description = "A TPU-native tiled tensor data structure: the Systolic Tile Lattice. Padding-aware, sublane/lane laid out, bf16/int8 first, with a CPU reference simulator of systolic dataflow."
