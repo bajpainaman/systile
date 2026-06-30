@@ -33,6 +33,9 @@ MXU), not *TPU-exclusive*.
 | 5 | **Retrieval as matmul** | `TensorIndex` | exact k-NN over a corpus in one GEMM |
 | 6 | **Probabilistic membership as matmul** | `TensorBloom` | a Bloom filter whose batch query is one matmul |
 | 7 | **Sorting as comparison matmul** | `TensorSort` | ranks = `C·1`, sort = `P·x` |
+| 8 | **Scan as triangular matmul** | `TensorScan` | prefix sums as `L·x`, `O(1)` depth |
+| 9 | **Pattern search as convolution matmul** | `TensorConv` | locate a motif via one im2col matmul |
+| 10 | **Frequency as matmul** | `CountMinSketch` | Count-Min estimates as one matmul per hash row |
 
 Every structure reduces its core operation to a matmul through the same systolic
 engine. The honest framing, capacity math, and citations live in
@@ -111,6 +114,9 @@ cargo run --release --example classifier_demo  # train by bundling, classify by 
 cargo run --release --example index_search     # exact k-NN search as one matmul
 cargo run --release --example bloom_membership # Bloom membership as one matmul
 cargo run --release --example sort_by_matmul   # sort via comparison + permutation matmul
+cargo run --release --example scan_prefix      # prefix sums as a triangular matmul
+cargo run --release --example conv_search      # pattern search as im2col correlation
+cargo run --release --example sketch_frequency # Count-Min frequency estimates by matmul
 ```
 
 ## Features
@@ -142,6 +148,12 @@ cargo run --release --example sort_by_matmul   # sort via comparison + permutati
 - **`TensorSort`** — sorting as comparison matmul: the rank vector is `C·1` (row
   sums of the pairwise comparison matrix) and the sorted output is `P·x`, an
   `O(n²)`-matmul trade against `O(n log n)` branches.
+- **`TensorScan`** — prefix sums as a triangular matmul (`L·x`): inclusive,
+  exclusive, and suffix scans with `O(1)` dependency depth.
+- **`TensorConv`** — 1-D pattern search as im2col cross-correlation: gather all
+  windows and dot them against the kernel in one matmul, then argmax for the match.
+- **`CountMinSketch`** — frequency estimation where each row's query is a matmul of
+  a one-hot column selection against that row's counters; never underestimates.
 - **`PaddedTileLattice<T>`** — the core 2-D tiled tensor, generic over element type.
 - **`bf16`** — a from-scratch bfloat16 with round-to-nearest-even and a full set of
   arithmetic / comparison / conversion impls.

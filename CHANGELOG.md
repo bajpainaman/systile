@@ -6,6 +6,19 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.7.0]
+
+### Added — scan, convolution, and frequency as matmul
+
+- `scan` module: `TensorScan`, prefix sums as a triangular matmul (`L·x`) —
+  inclusive, exclusive, suffix, and total.
+- `conv` module: `TensorConv`, 1-D pattern search as im2col cross-correlation —
+  `correlate`, `best_offset`, `find_all`.
+- `sketch` module: `CountMinSketch`, frequency estimation where each hash row's
+  batch query is a matmul of a one-hot column selection against that row's
+  counters, taking the min across rows. Never underestimates.
+- Examples `scan_prefix`, `conv_search`, `sketch_frequency`.
+
 ## [0.6.0]
 
 ### Added — probabilistic membership and sorting as matmul
@@ -95,7 +108,8 @@ engine, built on a new hyperdimensional (VSA) substrate:
 - Transpose, relayout, element-wise maps, and padding-correct reductions.
 - Examples, integration tests, and a dependency-free benchmark harness.
 
-[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/bajpainaman/systile/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/bajpainaman/systile/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/bajpainaman/systile/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/bajpainaman/systile/compare/v0.3.0...v0.4.0
