@@ -103,6 +103,20 @@ impl<T: Numeric> PaddedTileLattice<T> {
         let mut acc = vec![0.0f32; m * n];
         let mut stats = SystolicStats::default();
 
+        // Materialise both operands to flat f32 buffers in logical row-major order
+        // once, so the inner loop never pays for tile-offset arithmetic. The
+        // dataflow (mxu blocking, f32 accumulation order) is unchanged.
+        let a_buf: Vec<f32> = self.to_dense().into_iter().map(|x| x.to_acc()).collect();
+        let b_buf: Vec<f32> = rhs.to_dense().into_iter().map(|x| x.to_acc()).collect();
+        // Transpose B to column-major so the contraction loop reads both operands
+        // contiguously (cache-friendly, lets the compiler vectorise the inner loop).
+        let mut b_t = vec![0.0f32; k * n];
+        for kk in 0..k {
+            for j in 0..n {
+                b_t[j * k + kk] = b_buf[kk * n + j];
+            }
+        }
+
         for i0 in (0..m).step_by(mxu) {
             for j0 in (0..n).step_by(mxu) {
                 stats.output_blocks += 1;
@@ -114,12 +128,12 @@ impl<T: Numeric> PaddedTileLattice<T> {
                     for i in i0..i_end {
                         for j in j0..j_end {
                             let mut sum = acc[i * n + j];
-                            for kk in k0..k_end {
-                                let a = self.get(i, kk).unwrap().to_acc();
-                                let b = rhs.get(kk, j).unwrap().to_acc();
+                            let a_row = &a_buf[i * k + k0..i * k + k_end];
+                            let b_col = &b_t[j * k + k0..j * k + k_end];
+                            for (&a, &b) in a_row.iter().zip(b_col) {
                                 sum += a * b;
-                                stats.macs += 1;
                             }
+                            stats.macs += (k_end - k0) as u64;
                             acc[i * n + j] = sum;
                         }
                     }

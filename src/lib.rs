@@ -1,22 +1,48 @@
-//! # systile — a TPU-native tiled tensor data structure
+//! # systile — matmul-native data structures & algorithms
 //!
-//! `systile` provides the [`PaddedTileLattice`], a two-dimensional tensor whose
-//! in-memory representation is dictated by the hardware that consumes it: a
-//! Tensor Processing Unit. Where a normal matrix type stores a flat row-major
-//! buffer, a lattice stores a *padded grid of tiles* in `(sublane, lane)` order,
-//! which is exactly the layout a TPU's vector memory addresses and its matrix
-//! unit consumes.
+//! `systile` takes one idea to its conclusion: **build data structures and
+//! algorithms whose dominant operation is a dense matrix multiply.** On a CPU that
+//! is often a bad trade, but on a systolic accelerator (a TPU's matrix unit, a
+//! GPU's tensor cores) dense matmul is the cheap primitive and branch-y pointer
+//! chasing is the expensive one — so the trade flips.
 //!
-//! Designing the data structure around the hardware — rather than bolting a
-//! layout pass on afterwards — buys three things:
+//! It begins with a substrate — the [`PaddedTileLattice`], a tensor laid out the
+//! way a TPU's memory is actually addressed (`8 × 128` `(sublane, lane)` tiles,
+//! padding, bf16/int8 dtypes) with a CPU reference simulator of the systolic matmul
+//! ([`systolic`]) — and builds a stack of pillars on top of it.
+//!
+//! ## The pillars
+//!
+//! | Pillar | Type | Idea |
+//! | --- | --- | --- |
+//! | [`holo`], [`holoset`], [`sequence`], [`resonator`] | data | hold a whole structure in *superposition*, recover by matmul cleanup |
+//! | [`graph`], [`semiring`] | algorithm | graph algorithms as semiring matrix powers |
+//! | [`automaton`] | computation | a finite-state machine run as matmuls |
+//! | [`classifier`] | learning | train by bundling, classify by matmul |
+//! | [`index`] | retrieval | exact k-NN as one matmul over the corpus |
+//! | [`bloom`] | membership | a Bloom filter whose query is a matmul |
+//! | [`sort`], [`topk`] | order | sort and select via comparison matmuls |
+//! | [`scan`] | scan | prefix sums as a triangular matmul |
+//! | [`conv`] | search | pattern search as im2col cross-correlation |
+//! | [`sketch`] | frequency | Count-Min estimation as a matmul per hash row |
+//! | [`editdist`] | strings | Levenshtein as a tropical (min-plus) shortest path |
+//! | [`pagerank`] | ranking | PageRank as power iteration |
+//! | [`dft`] | spectra | the discrete Fourier transform as a Fourier-matrix matmul |
+//! | [`viterbi`] | decoding | most-likely HMM path as max-plus matmul stepping |
+//! | [`attention`] | retrieval | scaled dot-product attention as a soft memory |
+//!
+//! Everything is honestly *matmul-native* (maps efficiently onto the MXU), not
+//! *TPU-exclusive*: it all runs on the CPU reference model. The full design
+//! rationale, capacity math, and citations are in `HOLOGRAPHIC.md`.
+//!
+//! Designing around the hardware buys, for the substrate:
 //!
 //! 1. **Zero-copy handoff.** [`PaddedTileLattice::as_storage_slice`] is already in
 //!    device order; moving it to a TPU is a `memcpy`, not a transpose.
 //! 2. **Honest padding.** The structure tracks logical vs. padded shape and keeps
 //!    a [`Mask`], so reductions and dense round-trips never fold in garbage.
-//! 3. **Hardware-shaped operations.** Matmul ([`systolic`]), sparsity
-//!    ([`sparse`]), quantisation ([`quantize`]), and transpose ([`transpose`]) are
-//!    all expressed in terms of tiles and `mxu` blocks.
+//! 3. **Hardware-shaped operations.** Matmul, sparsity, quantisation, and transpose
+//!    are all expressed in terms of tiles and `mxu` blocks.
 //!
 //! ## Quick start
 //!

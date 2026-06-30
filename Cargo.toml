@@ -1,6 +1,6 @@
 [package]
 name = "systile"
-version = "0.9.0"
+version = "0.10.0"
 edition = "2021"
 rust-version = "1.74"
 description = "A TPU-native tiled tensor data structure: the Systolic Tile Lattice. Padding-aware, sublane/lane laid out, bf16/int8 first, with a CPU reference simulator of systolic dataflow."
@@ -25,6 +25,10 @@ path = "src/lib.rs"
 
 [[bench]]
 name = "lattice_bench"
+harness = false
+
+[[bench]]
+name = "pillars_bench"
 harness = false
 
 [profile.release]
