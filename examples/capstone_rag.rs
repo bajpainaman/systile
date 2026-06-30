@@ -51,7 +51,10 @@ fn main() {
             labels.push(onehot);
         }
     }
-    println!("corpus: {} items, {n_classes} classes, dim {dim}", index.len());
+    println!(
+        "corpus: {} items, {n_classes} classes, dim {dim}",
+        index.len()
+    );
 
     // Evaluate the retrieve→attend→decide pipeline on fresh queries.
     let k = 8;
