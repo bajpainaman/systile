@@ -6,6 +6,18 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.6.0]
+
+### Added — probabilistic membership and sorting as matmul
+
+- `bloom` module: `TensorBloom`, a counting Bloom filter whose batch membership
+  test is one matmul of item signatures against the filter's presence vector. No
+  false negatives, supports removal, exposes the false-positive rate.
+- `sort` module: `TensorSort`, sorting as a comparison matmul — ranks are `C·1`
+  (row sums of the pairwise comparison matrix) and the sort is the permutation
+  matmul `P·x`. `argsort`, `sort`, `sort_via_matmul`, `permutation_matrix`.
+- Examples `bloom_membership` and `sort_by_matmul`.
+
 ## [0.5.0]
 
 ### Added — learning and retrieval as matmul
@@ -83,7 +95,8 @@ engine, built on a new hyperdimensional (VSA) substrate:
 - Transpose, relayout, element-wise maps, and padding-correct reductions.
 - Examples, integration tests, and a dependency-free benchmark harness.
 
-[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/bajpainaman/systile/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/bajpainaman/systile/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/bajpainaman/systile/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/bajpainaman/systile/compare/v0.2.0...v0.3.0

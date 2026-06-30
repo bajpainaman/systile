@@ -17,11 +17,11 @@ flips. `systile` is a library of structures built for that world.
 It starts with a substrate — the **Padded Tile Lattice**, a tensor laid out the way
 a TPU's memory is actually addressed (`8 × 128` `(sublane, lane)` tiles, padding,
 bf16/int8 dtypes) with a CPU reference simulator of the systolic matmul — and then
-builds five pillars on top of it. You do **not** need a TPU: everything runs on the
-CPU model, honestly framed as *matmul-native* (maps efficiently onto the MXU), not
-*TPU-exclusive*.
+builds a stack of pillars on top of it. You do **not** need a TPU: everything runs
+on the CPU model, honestly framed as *matmul-native* (maps efficiently onto the
+MXU), not *TPU-exclusive*.
 
-## Five pillars
+## The pillars
 
 | # | Pillar | Structures | One-line demo |
 | --- | --- | --- | --- |
@@ -31,6 +31,8 @@ CPU model, honestly framed as *matmul-native* (maps efficiently onto the MXU), n
 | 3 | **Computation as matmul** | `TensorAutomaton` | decide divisibility by matrix multiply |
 | 4 | **Learning as bundling** | `HoloClassifier` | train by addition, classify by one matmul |
 | 5 | **Retrieval as matmul** | `TensorIndex` | exact k-NN over a corpus in one GEMM |
+| 6 | **Probabilistic membership as matmul** | `TensorBloom` | a Bloom filter whose batch query is one matmul |
+| 7 | **Sorting as comparison matmul** | `TensorSort` | ranks = `C·1`, sort = `P·x` |
 
 Every structure reduces its core operation to a matmul through the same systolic
 engine. The honest framing, capacity math, and citations live in
@@ -107,6 +109,8 @@ cargo run --release --example graph_paths      # shortest paths as tropical matr
 cargo run --release --example automaton_divisibility  # decide divisibility by matmul
 cargo run --release --example classifier_demo  # train by bundling, classify by matmul
 cargo run --release --example index_search     # exact k-NN search as one matmul
+cargo run --release --example bloom_membership # Bloom membership as one matmul
+cargo run --release --example sort_by_matmul   # sort via comparison + permutation matmul
 ```
 
 ## Features
@@ -132,6 +136,12 @@ cargo run --release --example index_search     # exact k-NN search as one matmul
 - **`TensorIndex`** — exact nearest-neighbour / similarity search (the vector-DB
   workload): score a batch of queries against the whole corpus in one
   `(b × dim)·(dim × n)` matmul, then take top-k.
+- **`TensorBloom`** — a counting Bloom filter whose batch membership test is one
+  matmul of item signatures against the filter's presence vector; no false
+  negatives, deletion supported, false-positive rate exposed.
+- **`TensorSort`** — sorting as comparison matmul: the rank vector is `C·1` (row
+  sums of the pairwise comparison matrix) and the sorted output is `P·x`, an
+  `O(n²)`-matmul trade against `O(n log n)` branches.
 - **`PaddedTileLattice<T>`** — the core 2-D tiled tensor, generic over element type.
 - **`bf16`** — a from-scratch bfloat16 with round-to-nearest-even and a full set of
   arithmetic / comparison / conversion impls.
