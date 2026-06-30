@@ -142,6 +142,24 @@ impl Codebook {
             .map(|row| row.to_vec())
             .collect()
     }
+
+    /// Re-superpose the codebook by a weight per symbol: `X · w`, a `dim`-vector.
+    ///
+    /// This is the second matmul of a cleanup projection: given similarity weights
+    /// (e.g. from [`Codebook::scores_batch`]), it rebuilds the weighted sum of
+    /// atoms. Together, `superpose(scores_batch(v))` is the projection `X Xᵀ v`
+    /// that a resonator network iterates.
+    pub fn superpose(&self, weights: &[f32]) -> Hyper {
+        assert_eq!(weights.len(), self.count, "one weight per symbol");
+        let wlat = PaddedTileLattice::from_dense(self.count, 1, weights, self.geom)
+            .expect("weight buffer is exactly count*1");
+        // (dim × count) · (count × 1) → (dim × 1).
+        let product = self
+            .matrix
+            .matmul(&wlat)
+            .expect("contraction dim and geometry match by construction");
+        Hyper::from_vec(product.to_dense())
+    }
 }
 
 impl core::fmt::Debug for Codebook {
