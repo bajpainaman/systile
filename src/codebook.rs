@@ -9,6 +9,7 @@
 //! matrix unit exists to do, and it resolves the *entire* batch against the
 //! *entire* vocabulary in one shot.
 
+use crate::bf16::Bf16;
 use crate::geometry::Geometry;
 use crate::hyper::Hyper;
 use crate::lattice::PaddedTileLattice;
@@ -140,6 +141,45 @@ impl Codebook {
         dense
             .chunks_exact(self.count)
             .map(|row| row.to_vec())
+            .collect()
+    }
+
+    /// Cleanup run in `bf16`, the dtype a TPU matrix unit actually consumes.
+    ///
+    /// Both operands are narrowed to `bf16` and the matmul accumulates in `f32`,
+    /// exactly as a TPU does. Returns the winning `(symbol_id, score)` per query.
+    /// Recall is slightly lower than the `f32` path near capacity — that is the
+    /// precision/throughput trade an int8/bf16 accelerator makes.
+    pub fn cleanup_batch_bf16(&self, queries: &[Hyper]) -> Vec<(usize, f32)> {
+        let b = queries.len();
+        if b == 0 {
+            return Vec::new();
+        }
+        let mut qdense = vec![Bf16::ZERO; b * self.dim];
+        for (i, q) in queries.iter().enumerate() {
+            for (p, &value) in q.as_slice().iter().enumerate() {
+                qdense[i * self.dim + p] = Bf16::from_f32(value);
+            }
+        }
+        let qlat = PaddedTileLattice::from_dense(b, self.dim, &qdense, self.geom)
+            .expect("query buffer is exactly b*dim");
+        let cb_bf16 = self.matrix.map(|x| Bf16::from_f32(*x));
+        let product = qlat
+            .matmul(&cb_bf16)
+            .expect("contraction dim and geometry match by construction");
+        product
+            .to_dense()
+            .chunks_exact(self.count)
+            .map(|row| {
+                let mut best = (0usize, f32::NEG_INFINITY);
+                for (j, s) in row.iter().enumerate() {
+                    let s = s.to_f32();
+                    if s > best.1 {
+                        best = (j, s);
+                    }
+                }
+                best
+            })
             .collect()
     }
 

@@ -115,6 +115,25 @@ deliberately tiled for the systolic MXU (reusing the same `Geometry`/`Bf16`/matm
 substrate as the rest of the crate), with capacity and load exposed through an
 ordinary map API.
 
+## Beyond key-value: analogy, factoring, and precision
+
+The same algebra gives more than a map:
+
+- **Records and analogy.** A record is a bundle of `role ⊛ filler` bindings — which
+  is exactly what `HoloMemory` stores. Binding two records produces a *mapping*
+  between their slots, so Kanerva's "What is the Dollar of Mexico?" is answered by
+  `(USA ⊛ MEXICO) ⊛ dollar → peso`, with no training and one cleanup matmul. See the
+  `holo_analogy` example.
+- **Factoring.** When the factors of a product are unknown, a **resonator network**
+  ([`crate::resonator`]) recovers them by iterating cleanup projections — an `Mᶠ`
+  search expressed as a short sequence of GEMMs, made reliable by exact
+  recomposition checks and random restarts. See `resonator_factor`.
+- **Precision.** Cleanup runs equally well in `bf16` ([`Codebook::cleanup_batch_bf16`]),
+  the dtype a TPU matrix unit actually consumes. Empirically recall in `bf16` tracks
+  `f32` almost exactly below capacity (the `holo_precision` example measures it) — so
+  the ~4x throughput of low-precision matmul is close to free here, which is precisely
+  why this representation suits the hardware.
+
 ## References
 
 - Gayler, "Vector Symbolic Architectures answer Jackendoff's challenges," 2003 — arXiv:cs/0412059

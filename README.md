@@ -79,8 +79,15 @@ GEMM. On a CPU this is a *worse* map than a hash table — it only pays off wher
 dense matmul is the cheap primitive and you batch thousands of probes: a TPU. It's
 approximate and bounded (`K_max ≈ d / (2 ln M)`), degrading gracefully past
 capacity. The full mechanism, capacity math, honest novelty assessment, and
-citations are in **[HOLOGRAPHIC.md](HOLOGRAPHIC.md)**; run it with
-`cargo run --release --example holo_kv` and `--example holo_capacity`.
+citations are in **[HOLOGRAPHIC.md](HOLOGRAPHIC.md)**. Try it:
+
+```
+cargo run --release --example holo_kv          # 200 pairs in one vector, 1 matmul
+cargo run --release --example holo_capacity    # recall vs the d/(2 ln M) bound
+cargo run --release --example resonator_factor # factor a product with no known factors
+cargo run --release --example holo_precision   # f32 vs bf16 cleanup recall
+cargo run           --example holo_analogy      # "Dollar of Mexico?" -> peso, zero training
+```
 
 ## Features
 

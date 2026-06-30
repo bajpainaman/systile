@@ -91,3 +91,30 @@ fn matrix_is_dim_by_count() {
     assert_eq!(cb.matrix().rows(), 512);
     assert_eq!(cb.matrix().cols(), 20);
 }
+
+#[test]
+fn bf16_cleanup_recovers_clean_atoms() {
+    let cb = Codebook::new(2048, 64, 21);
+    let queries: Vec<Hyper> = (0..64).map(|i| cb.atom(i)).collect();
+    let hits = cb.cleanup_batch_bf16(&queries);
+    for (i, (best, _)) in hits.iter().enumerate() {
+        assert_eq!(*best, i, "bf16 cleanup missed atom {i}");
+    }
+}
+
+#[test]
+fn bf16_cleanup_matches_f32_on_clean_atoms() {
+    let cb = Codebook::new(1024, 32, 22);
+    let queries: Vec<Hyper> = (0..32).map(|i| cb.atom(i)).collect();
+    let f32_hits = cb.cleanup_batch(&queries);
+    let bf16_hits = cb.cleanup_batch_bf16(&queries);
+    for (a, b) in f32_hits.iter().zip(&bf16_hits) {
+        assert_eq!(a.0, b.0);
+    }
+}
+
+#[test]
+fn bf16_empty_batch_is_empty() {
+    let cb = Codebook::new(256, 8, 1);
+    assert!(cb.cleanup_batch_bf16(&[]).is_empty());
+}
