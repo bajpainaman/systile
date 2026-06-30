@@ -1,6 +1,7 @@
 //! The common imports. `use systile::prelude::*;` brings in everything you need to
 //! build, transform, and multiply lattices.
 
+pub use crate::automaton::TensorAutomaton;
 pub use crate::bf16::Bf16;
 pub use crate::codebook::Codebook;
 pub use crate::error::{LatticeError, Result};

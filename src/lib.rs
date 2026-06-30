@@ -44,6 +44,7 @@
 #![forbid(unsafe_code)]
 #![warn(missing_docs)]
 
+pub mod automaton;
 pub mod bf16;
 pub mod codebook;
 pub mod elementwise;
@@ -68,6 +69,7 @@ pub mod sparse;
 pub mod systolic;
 pub mod transpose;
 
+pub use automaton::TensorAutomaton;
 pub use bf16::Bf16;
 pub use codebook::Codebook;
 pub use error::{LatticeError, Result};
