@@ -6,17 +6,28 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-### Added
+## [0.2.0]
 
-- **Holographic Tensor Store** (`holo` module): `HoloMemory`, a key→value
-  associative store that holds all entries in superposition inside a single
-  fixed-width vector, with batched lookup realized as one systolic matmul.
+### Added — matmul-native data structures
+
+A family of containers whose dominant operation is a dense matmul on the systolic
+engine, built on a new hyperdimensional (VSA) substrate:
+
 - `hyper` module: `Hyper`, the bipolar MAP/VSA algebra (bind, bundle, permute,
   similarity) with deterministic atom generation.
-- `codebook` module: `Codebook`, a tile-aligned symbol vocabulary whose cleanup is
-  a matmul through the systolic engine.
-- `holo_kv` and `holo_capacity` examples; `hyper`, `codebook`, and `holo` test
-  suites; `HOLOGRAPHIC.md` design note with capacity math and citations.
+- `codebook` module: `Codebook`, a tile-aligned symbol vocabulary whose cleanup
+  (`scores_batch`, `superpose`) is a matmul through the systolic engine.
+- **Holographic Tensor Store** (`holo`): `HoloMemory`, a key→value store holding
+  all entries in superposition in one vector; batched lookup is one matmul.
+- **Holographic Set** (`holoset`): `HoloSet`, set membership as a matmul, with
+  union by bundling and a squared-norm cardinality estimate.
+- **Holographic Sequence** (`sequence`): `HoloSequence`, order encoded by
+  permutation binding; whole-sequence decode in one batched matmul.
+- **Resonator Network** (`resonator`): `Resonator`, factoring a bound product back
+  into its unknown symbols by iterated matmul cleanup, with exact recomposition
+  checking and random restarts.
+- Examples `holo_kv`, `holo_capacity`, `resonator_factor`; test suites for every
+  new module; `HOLOGRAPHIC.md` design note with capacity math and citations.
 
 ## [0.1.0]
 
@@ -31,5 +42,6 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Transpose, relayout, element-wise maps, and padding-correct reductions.
 - Examples, integration tests, and a dependency-free benchmark harness.
 
-[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/bajpainaman/systile/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/bajpainaman/systile/releases/tag/v0.1.0

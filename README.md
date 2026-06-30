@@ -84,8 +84,14 @@ citations are in **[HOLOGRAPHIC.md](HOLOGRAPHIC.md)**; run it with
 
 ## Features
 
-- **`HoloMemory`** — the holographic key→value store above, with `Hyper` (VSA
-  algebra: bind/bundle/permute) and `Codebook` (matmul-backed cleanup) beneath it.
+- **A family of matmul-native containers** on a hyperdimensional (VSA) substrate
+  (`Hyper` algebra + `Codebook` matmul cleanup):
+  - `HoloMemory` — key→value store in superposition; batched lookup is one matmul.
+  - `HoloSet` — set membership as a matmul; union by bundling; norm-based cardinality.
+  - `HoloSequence` — order via permutation binding; whole-sequence decode in one matmul.
+  - `Resonator` — factor a bound product back into its unknown symbols by iterated
+    matmul cleanup (an `Mᶠ` search run as a short sequence of GEMMs), with exact
+    verification and restarts.
 - **`PaddedTileLattice<T>`** — the core 2-D tiled tensor, generic over element type.
 - **`bf16`** — a from-scratch bfloat16 with round-to-nearest-even and a full set of
   arithmetic / comparison / conversion impls.
