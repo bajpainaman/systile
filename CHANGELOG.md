@@ -6,6 +6,19 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.9.0]
+
+### Added — spectra, decoding, and attention as matmul
+
+- `dft` module: `TensorDFT`, the discrete Fourier transform as a matmul by the
+  Fourier matrix — forward, inverse, complex, and magnitude spectra.
+- `viterbi` module: `TensorViterbi`, most-likely HMM state decoding by max-plus
+  matmul stepping with back-pointer traceback; adds the `MaxPlus` semiring.
+- `attention` module: `TensorAttention`, scaled dot-product attention
+  `softmax(QKᵀ/√d)·V` as a soft associative memory.
+- `semiring::MaxPlus` (max, +) semiring.
+- Examples `dft_spectrum`, `viterbi_decode`, `attention_retrieval`.
+
 ## [0.8.0]
 
 ### Added — selection, edit distance, and ranking as matmul
@@ -121,7 +134,8 @@ engine, built on a new hyperdimensional (VSA) substrate:
 - Transpose, relayout, element-wise maps, and padding-correct reductions.
 - Examples, integration tests, and a dependency-free benchmark harness.
 
-[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/bajpainaman/systile/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/bajpainaman/systile/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/bajpainaman/systile/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/bajpainaman/systile/compare/v0.5.0...v0.6.0

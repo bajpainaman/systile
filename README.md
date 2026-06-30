@@ -39,6 +39,9 @@ MXU), not *TPU-exclusive*.
 | 11 | **Selection as comparison matmul** | `TensorTopK` | top-k via `count = C·1`, no full sort |
 | 12 | **Edit distance as tropical matmul** | `TensorEditDistance` | Levenshtein as min-plus shortest path |
 | 13 | **Ranking as power iteration** | `TensorPageRank` | PageRank as repeated `M·r` matmuls |
+| 14 | **Spectra as matmul** | `TensorDFT` | the DFT is a multiply by the Fourier matrix |
+| 15 | **Decoding as max-plus matmul** | `TensorViterbi` | most-likely HMM path by max-plus stepping |
+| 16 | **Attention as soft retrieval** | `TensorAttention` | `softmax(QKᵀ/√d)·V`, the transformer core |
 
 Every structure reduces its core operation to a matmul through the same systolic
 engine. The honest framing, capacity math, and citations live in
@@ -68,7 +71,7 @@ cargo add systile
 ```toml
 # Cargo.toml
 [dependencies]
-systile = "0.8"
+systile = "0.9"
 ```
 
 No required dependencies; `#![forbid(unsafe_code)]`; builds on stable Rust ≥ 1.74.
@@ -137,6 +140,9 @@ cargo run --release --example sketch_frequency # Count-Min frequency estimates b
 cargo run --release --example topk_select      # top-k via comparison-count matmul
 cargo run --release --example edit_distance    # Levenshtein as tropical matmul
 cargo run --release --example pagerank_demo    # PageRank as power-iteration matmuls
+cargo run --release --example dft_spectrum     # DFT as a Fourier-matrix matmul
+cargo run --release --example viterbi_decode   # most-likely HMM path via max-plus matmul
+cargo run --release --example attention_retrieval # softmax attention as soft retrieval
 ```
 
 ## Features
@@ -180,6 +186,12 @@ cargo run --release --example pagerank_demo    # PageRank as power-iteration mat
   path through the alignment grid, relaxed by iterated min-plus matmuls.
 - **`TensorPageRank`** — PageRank by power iteration: repeated `M·r` matmuls against
   the column-stochastic Google matrix until the ranks converge.
+- **`TensorDFT`** — the discrete Fourier transform as a matmul by the Fourier
+  matrix: forward/inverse and magnitude spectra, real and complex.
+- **`TensorViterbi`** — most-likely HMM state decoding by max-plus (`MaxPlus`
+  semiring) matmul stepping with a back-pointer traceback.
+- **`TensorAttention`** — scaled dot-product attention `softmax(QKᵀ/√d)·V`, the
+  transformer core, read as a soft associative memory.
 - **`PaddedTileLattice<T>`** — the core 2-D tiled tensor, generic over element type.
 - **`bf16`** — a from-scratch bfloat16 with round-to-nearest-even and a full set of
   arithmetic / comparison / conversion impls.
