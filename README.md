@@ -71,7 +71,7 @@ cargo add systile
 ```toml
 # Cargo.toml
 [dependencies]
-systile = "0.10"
+systile = "1.0"
 ```
 
 No required dependencies; `#![forbid(unsafe_code)]`; builds on stable Rust ≥ 1.74.
@@ -243,11 +243,14 @@ offset = tile_index * (sublanes * lanes) + sublane * lanes + lane
 over `(sublane, lane)`. That is exactly the order a TPU's vector memory expects, so
 `as_storage_slice()` is copy-ready.
 
-## Status
+## Stability
 
-`systile` is young and the API may shift before `1.0`. The simulator is a reference
-model, not a cycle-accurate one: it reproduces the **blocking and accumulation
-order** of a systolic array (and so its numerics), not its timing.
+As of `1.0.0` the public API is stable and follows semantic versioning: breaking
+changes wait for a `2.0`. The systolic engine is a **reference model**, not a
+cycle-accurate one — it reproduces the blocking and accumulation order of a systolic
+array (and therefore its numerics), not its timing. The holographic structures are
+**approximate** by design (bounded, tunable error; see
+[HOLOGRAPHIC.md](HOLOGRAPHIC.md)); everything else is exact.
 
 ## License
 

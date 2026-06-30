@@ -6,6 +6,27 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.0.0]
+
+First stable release. The public API is now covered by semantic versioning —
+breaking changes wait for a `2.0`.
+
+### Summary
+
+`systile` is a library of **17 matmul-native data structures and algorithms** built
+on a TPU-style tiled-tensor substrate with a systolic reference engine. Each
+structure reduces its core operation to a dense matrix multiply: holographic
+key/value, set, and sequence memories and a resonator factoriser; semiring graph
+algorithms; a finite automaton; a hyperdimensional classifier; exact k-NN; a Bloom
+filter; comparison sort and top-k; prefix scan; convolution search; a Count-Min
+sketch; tropical edit distance; PageRank; the DFT; Viterbi decoding; and
+scaled-dot-product attention.
+
+### Changed
+
+- Crate `description`, `keywords`, and `categories` updated to reflect the full
+  library rather than just the tiling substrate.
+
 ## [0.10.0]
 
 ### Added
@@ -150,7 +171,8 @@ engine, built on a new hyperdimensional (VSA) substrate:
 - Transpose, relayout, element-wise maps, and padding-correct reductions.
 - Examples, integration tests, and a dependency-free benchmark harness.
 
-[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/bajpainaman/systile/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/bajpainaman/systile/compare/v0.10.0...v1.0.0
 [0.10.0]: https://github.com/bajpainaman/systile/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/bajpainaman/systile/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/bajpainaman/systile/compare/v0.7.0...v0.8.0

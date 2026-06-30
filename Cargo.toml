@@ -1,16 +1,16 @@
 [package]
 name = "systile"
-version = "0.10.0"
+version = "1.0.0"
 edition = "2021"
 rust-version = "1.74"
-description = "A TPU-native tiled tensor data structure: the Systolic Tile Lattice. Padding-aware, sublane/lane laid out, bf16/int8 first, with a CPU reference simulator of systolic dataflow."
+description = "Matmul-native data structures & algorithms: 17 structures (holographic memory, semiring graphs, automata, attention, DFT, Viterbi, k-NN, Bloom, sort, scan, …) whose core operation reduces to a dense matmul, built on a TPU-style tiled tensor with a systolic reference engine."
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/bajpainaman/systile"
 homepage = "https://github.com/bajpainaman/systile"
 documentation = "https://docs.rs/systile"
 readme = "README.md"
-keywords = ["tpu", "tensor", "systolic", "bf16", "tiling"]
-categories = ["data-structures", "science", "hardware-support"]
+keywords = ["tpu", "tensor", "matmul", "data-structures", "systolic"]
+categories = ["data-structures", "science", "hardware-support", "algorithms"]
 exclude = ["/.github", "/scripts"]
 
 [features]
