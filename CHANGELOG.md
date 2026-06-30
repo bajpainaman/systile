@@ -6,6 +6,18 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.4.0]
+
+### Added — finite-state computation as matmul
+
+- `automaton` module: `TensorAutomaton`, a deterministic finite automaton executed
+  as matrix multiplies. The state is a one-hot vector, each symbol is a `Q × Q`
+  transition matrix, and a step is `state · T_symbol`. Includes `mod_k` (accept
+  binary strings divisible by `k`), single-string `run`/`accepts`, and a branchless
+  batched `run_batch`/`batch_accepts` that advances a whole batch with `|alphabet|`
+  masked matmuls per position.
+- Example `automaton_divisibility` (divisibility decided purely by matmul).
+
 ## [0.3.0]
 
 ### Added — graph algorithms as semiring matmul
@@ -56,7 +68,8 @@ engine, built on a new hyperdimensional (VSA) substrate:
 - Transpose, relayout, element-wise maps, and padding-correct reductions.
 - Examples, integration tests, and a dependency-free benchmark harness.
 
-[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/bajpainaman/systile/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/bajpainaman/systile/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/bajpainaman/systile/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/bajpainaman/systile/releases/tag/v0.1.0

@@ -88,6 +88,7 @@ cargo run --release --example resonator_factor # factor a product with no known 
 cargo run --release --example holo_precision   # f32 vs bf16 cleanup recall
 cargo run           --example holo_analogy      # "Dollar of Mexico?" -> peso, zero training
 cargo run --release --example graph_paths      # shortest paths as tropical matrix powers
+cargo run --release --example automaton_divisibility  # decide divisibility by matmul
 ```
 
 ## Features
@@ -103,6 +104,10 @@ cargo run --release --example graph_paths      # shortest paths as tropical matr
 - **`TensorGraph`** — graph algorithms as semiring matrix powers (GraphBLAS-style):
   reachability (boolean), all-pairs shortest paths (tropical/min-plus), and walk
   counting (ordinary) — each in `⌈log₂ n⌉` dense matmuls via repeated squaring.
+- **`TensorAutomaton`** — a finite-state machine run as matmuls: one-hot state
+  vector × per-symbol transition matrix. Branchless string recognition; a whole
+  batch advances with `|alphabet|` masked matmuls per position (e.g. decide
+  divisibility by matrix multiply).
 - **`PaddedTileLattice<T>`** — the core 2-D tiled tensor, generic over element type.
 - **`bf16`** — a from-scratch bfloat16 with round-to-nearest-even and a full set of
   arithmetic / comparison / conversion impls.
