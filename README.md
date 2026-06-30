@@ -36,6 +36,9 @@ MXU), not *TPU-exclusive*.
 | 8 | **Scan as triangular matmul** | `TensorScan` | prefix sums as `L·x`, `O(1)` depth |
 | 9 | **Pattern search as convolution matmul** | `TensorConv` | locate a motif via one im2col matmul |
 | 10 | **Frequency as matmul** | `CountMinSketch` | Count-Min estimates as one matmul per hash row |
+| 11 | **Selection as comparison matmul** | `TensorTopK` | top-k via `count = C·1`, no full sort |
+| 12 | **Edit distance as tropical matmul** | `TensorEditDistance` | Levenshtein as min-plus shortest path |
+| 13 | **Ranking as power iteration** | `TensorPageRank` | PageRank as repeated `M·r` matmuls |
 
 Every structure reduces its core operation to a matmul through the same systolic
 engine. The honest framing, capacity math, and citations live in
@@ -65,7 +68,7 @@ cargo add systile
 ```toml
 # Cargo.toml
 [dependencies]
-systile = "0.7"
+systile = "0.8"
 ```
 
 No required dependencies; `#![forbid(unsafe_code)]`; builds on stable Rust ≥ 1.74.
@@ -131,6 +134,9 @@ cargo run --release --example sort_by_matmul   # sort via comparison + permutati
 cargo run --release --example scan_prefix      # prefix sums as a triangular matmul
 cargo run --release --example conv_search      # pattern search as im2col correlation
 cargo run --release --example sketch_frequency # Count-Min frequency estimates by matmul
+cargo run --release --example topk_select      # top-k via comparison-count matmul
+cargo run --release --example edit_distance    # Levenshtein as tropical matmul
+cargo run --release --example pagerank_demo    # PageRank as power-iteration matmuls
 ```
 
 ## Features
@@ -168,6 +174,12 @@ cargo run --release --example sketch_frequency # Count-Min frequency estimates b
   windows and dot them against the kernel in one matmul, then argmax for the match.
 - **`CountMinSketch`** — frequency estimation where each row's query is a matmul of
   a one-hot column selection against that row's counters; never underestimates.
+- **`TensorTopK`** — top-k selection as a comparison-count matmul (`count = C·1`,
+  keep `count < k`), batched, no full sort.
+- **`TensorEditDistance`** — Levenshtein distance as a tropical (min-plus) shortest
+  path through the alignment grid, relaxed by iterated min-plus matmuls.
+- **`TensorPageRank`** — PageRank by power iteration: repeated `M·r` matmuls against
+  the column-stochastic Google matrix until the ranks converge.
 - **`PaddedTileLattice<T>`** — the core 2-D tiled tensor, generic over element type.
 - **`bf16`** — a from-scratch bfloat16 with round-to-nearest-even and a full set of
   arithmetic / comparison / conversion impls.

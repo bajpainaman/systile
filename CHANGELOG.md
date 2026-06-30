@@ -6,6 +6,19 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.8.0]
+
+### Added — selection, edit distance, and ranking as matmul
+
+- `topk` module: `TensorTopK`, top-k selection by a comparison-count matmul
+  (`count = C·1`, keep `count < k`), batched, with `kth_largest`.
+- `editdist` module: `TensorEditDistance`, Levenshtein distance as a tropical
+  (min-plus) shortest path through the alignment grid, relaxed by iterated min-plus
+  matmuls. `distance` and `distance_str`.
+- `pagerank` module: `TensorPageRank`, PageRank by power iteration — repeated `M·r`
+  matmuls against the column-stochastic Google matrix, with dangling-node handling.
+- Examples `topk_select`, `edit_distance`, `pagerank_demo`.
+
 ## [0.7.0]
 
 ### Added — scan, convolution, and frequency as matmul
@@ -108,7 +121,8 @@ engine, built on a new hyperdimensional (VSA) substrate:
 - Transpose, relayout, element-wise maps, and padding-correct reductions.
 - Examples, integration tests, and a dependency-free benchmark harness.
 
-[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/bajpainaman/systile/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/bajpainaman/systile/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/bajpainaman/systile/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/bajpainaman/systile/compare/v0.4.0...v0.5.0
