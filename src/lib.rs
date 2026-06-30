@@ -44,12 +44,14 @@
 #![forbid(unsafe_code)]
 #![warn(missing_docs)]
 
+pub mod attention;
 pub mod automaton;
 pub mod bf16;
 pub mod bloom;
 pub mod classifier;
 pub mod codebook;
 pub mod conv;
+pub mod dft;
 pub mod editdist;
 pub mod elementwise;
 pub mod error;
@@ -78,13 +80,16 @@ pub mod sparse;
 pub mod systolic;
 pub mod topk;
 pub mod transpose;
+pub mod viterbi;
 
+pub use attention::TensorAttention;
 pub use automaton::TensorAutomaton;
 pub use bf16::Bf16;
 pub use bloom::TensorBloom;
 pub use classifier::HoloClassifier;
 pub use codebook::Codebook;
 pub use conv::TensorConv;
+pub use dft::TensorDFT;
 pub use editdist::TensorEditDistance;
 pub use error::{LatticeError, Result};
 pub use geometry::Geometry;
@@ -105,3 +110,4 @@ pub use sketch::CountMinSketch;
 pub use sort::TensorSort;
 pub use systolic::SystolicStats;
 pub use topk::TensorTopK;
+pub use viterbi::TensorViterbi;

@@ -85,6 +85,33 @@ impl Semiring for Tropical {
     }
 }
 
+/// Max-plus (max-tropical) semiring: `⊕ = max`, `⊗ = +`, `zero = −∞`, `one = 0`.
+/// Powers give longest/most-likely paths (e.g. Viterbi decoding).
+pub struct MaxPlus;
+
+impl Semiring for MaxPlus {
+    #[inline]
+    fn zero() -> f32 {
+        f32::NEG_INFINITY
+    }
+    #[inline]
+    fn one() -> f32 {
+        0.0
+    }
+    #[inline]
+    fn add(a: f32, b: f32) -> f32 {
+        if a > b {
+            a
+        } else {
+            b
+        }
+    }
+    #[inline]
+    fn mul(a: f32, b: f32) -> f32 {
+        a + b
+    }
+}
+
 /// Counting semiring: ordinary `⊕ = +`, `⊗ = ×`. Powers count walks.
 pub struct Counting;
 
