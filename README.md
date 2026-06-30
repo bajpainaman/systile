@@ -56,6 +56,20 @@ Because padding is mandatory, the structure tracks both the *logical* shape you
 asked for and the *padded* shape it actually stores, plus a validity [`Mask`] so
 reductions and dense round-trips never fold in garbage.
 
+## Install
+
+```sh
+cargo add systile
+```
+
+```toml
+# Cargo.toml
+[dependencies]
+systile = "0.7"
+```
+
+No required dependencies; `#![forbid(unsafe_code)]`; builds on stable Rust ≥ 1.74.
+
 ## Quick start
 
 ```rust
