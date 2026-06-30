@@ -46,6 +46,7 @@
 
 pub mod automaton;
 pub mod bf16;
+pub mod bloom;
 pub mod classifier;
 pub mod codebook;
 pub mod elementwise;
@@ -67,12 +68,14 @@ pub mod resonator;
 pub mod semiring;
 pub mod sequence;
 pub mod shape;
+pub mod sort;
 pub mod sparse;
 pub mod systolic;
 pub mod transpose;
 
 pub use automaton::TensorAutomaton;
 pub use bf16::Bf16;
+pub use bloom::TensorBloom;
 pub use classifier::HoloClassifier;
 pub use codebook::Codebook;
 pub use error::{LatticeError, Result};
@@ -88,4 +91,5 @@ pub use quantize::QuantParams;
 pub use resonator::{Factorization, Resonator};
 pub use sequence::HoloSequence;
 pub use shape::Shape;
+pub use sort::TensorSort;
 pub use systolic::SystolicStats;

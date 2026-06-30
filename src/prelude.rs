@@ -3,6 +3,7 @@
 
 pub use crate::automaton::TensorAutomaton;
 pub use crate::bf16::Bf16;
+pub use crate::bloom::TensorBloom;
 pub use crate::classifier::HoloClassifier;
 pub use crate::codebook::Codebook;
 pub use crate::error::{LatticeError, Result};
@@ -19,5 +20,6 @@ pub use crate::resonator::{Factorization, Resonator};
 pub use crate::semiring::{Boolean, Counting, Semiring, Tropical};
 pub use crate::sequence::HoloSequence;
 pub use crate::shape::Shape;
+pub use crate::sort::TensorSort;
 pub use crate::sparse::IsZero;
 pub use crate::systolic::{Numeric, SystolicStats};
