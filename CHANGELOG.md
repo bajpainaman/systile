@@ -6,6 +6,20 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.3.0]
+
+### Added — graph algorithms as semiring matmul
+
+- `semiring` module: the `Semiring` trait with `Boolean`, `Tropical` (min-plus),
+  and `Counting` instances, plus `semiring_matmul` over a `PaddedTileLattice`.
+- `graph` module: `TensorGraph`, a directed weighted graph whose algorithms are
+  matrix powers — reachability/transitive closure (boolean), all-pairs shortest
+  paths (tropical), and walk counting (ordinary) — each computed in `⌈log₂ n⌉`
+  dense matmuls by repeated squaring.
+- `holo::HoloMemory::probe` exposed publicly; `Codebook::cleanup_batch_bf16` and
+  `Codebook::superpose` added in support of the holographic and resonator paths.
+- Examples `graph_paths`, `holo_precision`, `holo_analogy`.
+
 ## [0.2.0]
 
 ### Added — matmul-native data structures
@@ -42,6 +56,7 @@ engine, built on a new hyperdimensional (VSA) substrate:
 - Transpose, relayout, element-wise maps, and padding-correct reductions.
 - Examples, integration tests, and a dependency-free benchmark harness.
 
-[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/bajpainaman/systile/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/bajpainaman/systile/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/bajpainaman/systile/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/bajpainaman/systile/releases/tag/v0.1.0

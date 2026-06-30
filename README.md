@@ -87,6 +87,7 @@ cargo run --release --example holo_capacity    # recall vs the d/(2 ln M) bound
 cargo run --release --example resonator_factor # factor a product with no known factors
 cargo run --release --example holo_precision   # f32 vs bf16 cleanup recall
 cargo run           --example holo_analogy      # "Dollar of Mexico?" -> peso, zero training
+cargo run --release --example graph_paths      # shortest paths as tropical matrix powers
 ```
 
 ## Features
@@ -99,6 +100,9 @@ cargo run           --example holo_analogy      # "Dollar of Mexico?" -> peso, z
   - `Resonator` — factor a bound product back into its unknown symbols by iterated
     matmul cleanup (an `Mᶠ` search run as a short sequence of GEMMs), with exact
     verification and restarts.
+- **`TensorGraph`** — graph algorithms as semiring matrix powers (GraphBLAS-style):
+  reachability (boolean), all-pairs shortest paths (tropical/min-plus), and walk
+  counting (ordinary) — each in `⌈log₂ n⌉` dense matmuls via repeated squaring.
 - **`PaddedTileLattice<T>`** — the core 2-D tiled tensor, generic over element type.
 - **`bf16`** — a from-scratch bfloat16 with round-to-nearest-even and a full set of
   arithmetic / comparison / conversion impls.
